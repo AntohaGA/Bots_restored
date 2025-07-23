@@ -2,13 +2,11 @@ using UnityEngine;
 
 public class FollowerCamera : MonoBehaviour
 {
-    [Header("Movement Settings")]
     [SerializeField] private float _moveSpeed = 30f;
     [SerializeField] private float _borderThickness = 20f; // зона у краёв экрана в пикселях
     [SerializeField] private Vector2 _minPosition; // x,z минимальные координаты карты
     [SerializeField] private Vector2 _maxPosition; // x,z максимальные координаты карты
 
-    [Header("Zoom Settings")]
     [SerializeField] private float _zoomSpeed = 10f;
     [SerializeField] private float _minZoom = 10f; // минимальная высота камеры (Y)
     [SerializeField] private float _maxZoom = 50f; // максимальная высота камеры (Y)
@@ -42,7 +40,6 @@ public class FollowerCamera : MonoBehaviour
         if (mouse.y >= screenHeight - _borderThickness)
             _cursorPosition.z += _moveSpeed * Time.deltaTime;
 
-        // Ограничение позиции по X и Z
         _cursorPosition.x = Mathf.Clamp(_cursorPosition.x, _minPosition.x, _maxPosition.x);
         _cursorPosition.z = Mathf.Clamp(_cursorPosition.z, _minPosition.y, _maxPosition.y);
 
@@ -52,7 +49,9 @@ public class FollowerCamera : MonoBehaviour
     private void HandleZoom()
     {
         float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (Mathf.Approximately(scroll, 0f)) return;
+
+        if (Mathf.Approximately(scroll, 0f))
+            return;
 
         float newY = transform.position.y - scroll * _zoomSpeed * 100f * Time.deltaTime;
         newY = Mathf.Clamp(newY, _minZoom, _maxZoom);

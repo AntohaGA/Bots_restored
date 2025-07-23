@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Box : MonoBehaviour
 {
     [SerializeField] private Transform _spotForLift;
+
     private NavMeshObstacle _obstacle;
 
     public bool IsTaken { get; set; }

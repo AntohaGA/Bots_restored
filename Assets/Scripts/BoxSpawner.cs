@@ -14,7 +14,7 @@ public class BoxSpawner : MonoBehaviour
 
     private readonly Collider[] _overlapResults = new Collider[10];
 
-    public event Action<Vector3> BoxCreated;
+   // public event Action<Vector3> BoxCreated;
 
     private void Awake()
     {
@@ -36,22 +36,36 @@ public class BoxSpawner : MonoBehaviour
         }
     }
 
-    private void TrySpawnResource()
+    private bool TryFindSpawnPosition(out Vector3 spawnPos)
     {
         for (int attempt = 0; attempt < _maxAttempts; attempt++)
         {
-            Vector3 spawnPos = _map.GetSpawnPosition();
-            int count = Physics.OverlapSphereNonAlloc(spawnPos, _checkRadius, _overlapResults);
+            Vector3 pos = _map.GetSpawnPosition();
+            int count = Physics.OverlapSphereNonAlloc(pos, _checkRadius, _overlapResults);
 
             if (count == 0)
             {
-                Box box = _poolBoxes.GetInstance();
-                Debug.Log("_poolBoxes.ActiveCount" + _poolBoxes.ActiveCount);
-                box.Init(spawnPos);
-                BoxCreated?.Invoke(spawnPos);
-
-                return;
+                spawnPos = pos;
+                return true;
             }
+        }
+
+        spawnPos = default;
+        return false;
+    }
+
+    private void SpawnBoxAtPosition(Vector3 position)
+    {
+        Box box = _poolBoxes.GetInstance();
+        box.Init(position);
+     //   BoxCreated?.Invoke(position);
+    }
+
+    private void TrySpawnResource()
+    {
+        if (TryFindSpawnPosition(out Vector3 position))
+        {
+            SpawnBoxAtPosition(position);
         }
     }
 }

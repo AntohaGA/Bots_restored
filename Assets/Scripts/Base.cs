@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Base : MonoBehaviour
 {
-    [SerializeField] private Bot _bot;
+    [SerializeField] private Bot _botPrefab;
     [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private PoolBots _poolBots;
     [SerializeField] private float _scanInterval;
@@ -15,7 +15,7 @@ public class Base : MonoBehaviour
 
     private void Awake()
     {
-        _poolBots.Init(_bot);
+        _poolBots.Init(_botPrefab);
     }
 
     private void Start()
@@ -46,10 +46,10 @@ public class Base : MonoBehaviour
         box.IsTaken = false;
         box.transform.SetParent(null);
 
-        Rigidbody rb = box.GetComponent<Rigidbody>();
-
-        if (rb != null)
+        if (box.TryGetComponent<Rigidbody>(out var rb))
+        {
             rb.isKinematic = false;
+        }
 
         _countBoxes++;
         Debug.Log("box count" + _countBoxes);

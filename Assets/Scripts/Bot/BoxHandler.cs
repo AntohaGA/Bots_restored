@@ -11,38 +11,37 @@ public class BoxHandler : MonoBehaviour
     {
         _currentBox = box;
 
-        if (_currentBox == null) 
+        if (_currentBox == null)
             return;
 
         _currentBox.IsTaken = true;
 
-        Rigidbody rb = _currentBox.GetComponent<Rigidbody>();
-
-        if (rb != null)
+        if (_currentBox.TryGetComponent<Rigidbody>(out var rb))
+        {
             rb.isKinematic = true;
+        }
 
         _currentBox.transform.SetParent(_handHolder);
-        _currentBox.transform.localPosition = Vector3.zero;
-        _currentBox.transform.localRotation = Quaternion.identity;
+        _currentBox.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 
-        NavMeshObstacle obstacle = _currentBox.GetComponent<NavMeshObstacle>();
-
-        if (obstacle != null)
+        if (_currentBox.TryGetComponent<NavMeshObstacle>(out var obstacle))
+        {
             obstacle.enabled = false;
+        }
     }
 
     public void DropBox(Base homeBase)
     {
-        if (_currentBox == null) 
+        if (_currentBox == null)
             return;
 
         _currentBox.IsTaken = false;
         _currentBox.transform.SetParent(null);
 
-        Rigidbody rb = _currentBox.GetComponent<Rigidbody>();
-
-        if (rb != null) 
+        if (_currentBox.TryGetComponent<Rigidbody>(out var rb))
+        {
             rb.isKinematic = false;
+        }
 
         homeBase.TakeBox(_currentBox);
         _currentBox = null;

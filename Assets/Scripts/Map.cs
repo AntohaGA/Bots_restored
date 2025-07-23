@@ -14,8 +14,6 @@ public class Map : MonoBehaviour
     {
         _renderer = GetComponent<Renderer>();
         CalculateBounds();
-        /*    Debug.Log(MinBounds);
-            Debug.Log(MaxBounds);*/
     }
 
     public Vector3 GetSpawnPosition()
@@ -29,11 +27,8 @@ public class Map : MonoBehaviour
 
     private void CalculateBounds()
     {
-        if (_renderer != null)
-        {
-            Bounds bounds = _renderer.bounds;
-            MinBounds = new Vector2(bounds.min.x + _borderThickness, bounds.min.z + _borderThickness);
-            MaxBounds = new Vector2(bounds.max.x - _borderThickness, bounds.max.z - _borderThickness);
-        }
+        Bounds bounds = _renderer.bounds;
+        MinBounds = new Vector2(bounds.min.x + _borderThickness, bounds.min.z + _borderThickness);
+        MaxBounds = new Vector2(bounds.max.x - _borderThickness, bounds.max.z - _borderThickness);
     }
 }

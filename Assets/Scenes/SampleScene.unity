@@ -397,6 +397,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!114 &854425847 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5366778799061660757, guid: 0049aaf59b785b847bb56b884206f746, type: 3}
+  m_PrefabInstance: {fileID: 1353727828}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8715ca77b2c4454fb56360a3e2becb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1030478181 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3412877378389697992, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
@@ -457,6 +468,10 @@ PrefabInstance:
       propertyPath: _map
       value: 
       objectReference: {fileID: 1030478187}
+    - target: {fileID: 3109683666671472339, guid: 0049aaf59b785b847bb56b884206f746, type: 3}
+      propertyPath: _spawnInterval
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4872924644489997411, guid: 0049aaf59b785b847bb56b884206f746, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.62
@@ -557,6 +572,18 @@ PrefabInstance:
     - target: {fileID: 5868952572833910253, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _botPrefab
+      value: 
+      objectReference: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _poolBoxes
+      value: 
+      objectReference: {fileID: 854425847}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _scanInterval
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
