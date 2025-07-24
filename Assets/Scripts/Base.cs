@@ -12,7 +12,7 @@ public class Base : MonoBehaviour
     [SerializeField] private Transform _pointOut;
     [SerializeField] private Transform _pointIn;
 
-    private int _countMaxBots = 3;
+    private int _countMaxBots = 30;
     private int _countBoxes = 0;
 
     private void Awake()
@@ -48,10 +48,7 @@ public class Base : MonoBehaviour
         box.IsTaken = false;
         box.transform.SetParent(null);
 
-        if (box.TryGetComponent<Rigidbody>(out var rb))
-        {
-            rb.isKinematic = false;
-        }
+        box.SetRigidBodyKinematic(false);
 
         _countBoxes++;
         Debug.Log("box count" + _countBoxes);

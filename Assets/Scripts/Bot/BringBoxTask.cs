@@ -34,7 +34,7 @@ public class BringBoxTask
         _isLifting = false;
         _isLifted = false;
 
-        yield return _botMovement.MoveTo(_box.GetSpotForLift());
+        yield return _botMovement.MoveTo(_box.SpotForLift);
         yield return _botRotation.SmoothLookAt(_box.transform);
 
         _botAnimator.PlayLift();

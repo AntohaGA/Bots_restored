@@ -37,11 +37,7 @@ public class BoxHandler : MonoBehaviour
 
         _currentBox.IsTaken = false;
         _currentBox.transform.SetParent(null);
-
-        if (_currentBox.TryGetComponent<Rigidbody>(out var rb))
-        {
-            rb.isKinematic = false;
-        }
+        _currentBox.SetRigidBodyKinematic(false);
 
         homeBase.TakeBox(_currentBox);
         _currentBox = null;

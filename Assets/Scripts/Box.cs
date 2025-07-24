@@ -8,12 +8,16 @@ public class Box : MonoBehaviour
     [SerializeField] private Transform _spotForLift;
 
     private NavMeshObstacle _obstacle;
+    private Rigidbody _rigidbody;
+
+    public Vector3 SpotForLift => _spotForLift.position;
 
     public bool IsTaken { get; set; }
 
     private void Awake()
     {
         _obstacle = GetComponent<NavMeshObstacle>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     public void Init(Vector3 position)
@@ -23,8 +27,11 @@ public class Box : MonoBehaviour
         IsTaken = false;
     }
 
-    public Vector3 GetSpotForLift()
+    public void SetRigidBodyKinematic(bool isKinematic)
     {
-        return _spotForLift.position;
+        if (_rigidbody != null)
+        {
+            _rigidbody.isKinematic = isKinematic;
+        }
     }
 }
