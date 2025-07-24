@@ -14,7 +14,6 @@ public class BotRotation : MonoBehaviour
     public IEnumerator SmoothLookAt(Transform target)
     {
         PrepareForRotation();
-
         Quaternion endRot = CalculateTargetRotation(target);
 
         yield return RotateTowards(endRot);

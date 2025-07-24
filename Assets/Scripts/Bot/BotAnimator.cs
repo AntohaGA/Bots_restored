@@ -5,7 +5,7 @@ using UnityEngine;
 public class BotAnimator : MonoBehaviour
 {
     private const string LiftTrigger = "lift";
-    private const string RunWithTrigger = "runWith";
+    private const string RunWithBoxTrigger = "runWithBox";
 
     private Animator _animator;
 
@@ -24,7 +24,7 @@ public class BotAnimator : MonoBehaviour
 
     public void PlayRunWith()
     {
-        _animator.SetTrigger(RunWithTrigger);
+        _animator.SetTrigger(RunWithBoxTrigger);
     }
 
     private void OnLifting()

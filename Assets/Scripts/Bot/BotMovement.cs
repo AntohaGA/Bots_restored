@@ -28,7 +28,8 @@ public class BotMovement : MonoBehaviour
         _agent.isStopped = false;
         _agent.SetDestination(destination);
 
-        while (_agent.pathPending || _agent.remainingDistance > minTargetDistante || _agent.velocity.sqrMagnitude > minTargetVelocity)
+        while (_agent.pathPending || _agent.remainingDistance > minTargetDistante
+                                                        || _agent.velocity.sqrMagnitude > minTargetVelocity)
         {
             yield return null;
         }

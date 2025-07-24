@@ -5,7 +5,7 @@ public class Map : MonoBehaviour
 {
     private Renderer _renderer;
     private float _borderThickness = 2;
-    private float _fixedY = 1.3f;
+    private float _ySpawnPosition = 1.3f;
 
     public Vector2 MinBounds { get; private set; }
     public Vector2 MaxBounds { get; private set; }
@@ -20,7 +20,7 @@ public class Map : MonoBehaviour
     {
         float x = Random.Range(MinBounds.x, MaxBounds.x);
         float z = Random.Range(MinBounds.y, MaxBounds.y);
-        float y = _fixedY;
+        float y = _ySpawnPosition;
 
         return new Vector3(x, y, z);
     }

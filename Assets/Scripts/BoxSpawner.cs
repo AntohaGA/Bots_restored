@@ -1,9 +1,10 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class BoxSpawner : MonoBehaviour
 {
+    private const int CountCollideOverlap = 10;
+
     [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private Box _prefabBox;
     [SerializeField] private Map _map;
@@ -12,9 +13,7 @@ public class BoxSpawner : MonoBehaviour
     private int _maxAttempts = 10;
     private float _checkRadius = 1f;
 
-    private readonly Collider[] _overlapResults = new Collider[10];
-
-   // public event Action<Vector3> BoxCreated;
+    private readonly Collider[] _overlapResults = new Collider[CountCollideOverlap];
 
     private void Awake()
     {
@@ -36,21 +35,21 @@ public class BoxSpawner : MonoBehaviour
         }
     }
 
-    private bool TryFindSpawnPosition(out Vector3 spawnPos)
+    private bool TryFindSpawnPosition(out Vector3 spawnPosition)
     {
         for (int attempt = 0; attempt < _maxAttempts; attempt++)
         {
-            Vector3 pos = _map.GetSpawnPosition();
-            int count = Physics.OverlapSphereNonAlloc(pos, _checkRadius, _overlapResults);
+            Vector3 position = _map.GetSpawnPosition();
+            int count = Physics.OverlapSphereNonAlloc(position, _checkRadius, _overlapResults);
 
             if (count == 0)
             {
-                spawnPos = pos;
+                spawnPosition = position;
                 return true;
             }
         }
 
-        spawnPos = default;
+        spawnPosition = default;
         return false;
     }
 
@@ -58,7 +57,6 @@ public class BoxSpawner : MonoBehaviour
     {
         Box box = _poolBoxes.GetInstance();
         box.Init(position);
-     //   BoxCreated?.Invoke(position);
     }
 
     private void TrySpawnResource()

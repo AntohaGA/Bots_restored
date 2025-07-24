@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2681655532559276049}
   - component: {fileID: 9047651089736403063}
   - component: {fileID: 7402220084408745442}
+  - component: {fileID: 7183511250486180376}
   m_Layer: 0
   m_Name: Basa_bots
   m_TagString: Untagged
@@ -102,10 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9357c92d5d456c4cb748f7865212cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bot: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
-  _poolResources: {fileID: 5366778799061660757, guid: 0049aaf59b785b847bb56b884206f746, type: 3}
+  _botPrefab: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
+  _poolBoxes: {fileID: 0}
   _poolBots: {fileID: 7402220084408745442}
-  _scanInterval: 0.2
+  _scanInterval: 0.1
   _pointOut: {fileID: 4386548275279230139}
   _pointIn: {fileID: 3071196249471463540}
 --- !u!114 &7402220084408745442
@@ -120,6 +121,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89778c5d99432fa42ba72a289d2d4d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &7183511250486180376
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294069233453343403}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 10.025, y: 0.5, z: 6.3}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &5994963084569923091
 GameObject:
   m_ObjectHideFlags: 0

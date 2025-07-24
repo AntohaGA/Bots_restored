@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshObstacle))]
 public class Base : MonoBehaviour
 {
     [SerializeField] private Bot _botPrefab;

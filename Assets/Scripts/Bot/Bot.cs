@@ -12,10 +12,7 @@ public class Bot : MonoBehaviour
     private BotRotation _botRotation;
     private BotAnimator _botAnimator;
     private BoxHandler _boxHandler;
-    private Coroutine _currentRoutine;
-
-    private bool _isLifted;
-    private bool _isLifting;
+    private BringBoxTask _currentTask;
 
     public bool IsBusy { get; private set; } = false;
     public Box Box { get; private set; }
@@ -26,9 +23,6 @@ public class Bot : MonoBehaviour
         _movement = GetComponent<BotMovement>();
         _botRotation = GetComponent<BotRotation>();
         _boxHandler = GetComponent<BoxHandler>();
-
-        _botAnimator.OnLiftingEvent += () => _isLifting = true;
-        _botAnimator.OnLiftedEvent += () => _isLifted = true;
     }
 
     public void Init(Base basePoint)
@@ -42,45 +36,18 @@ public class Bot : MonoBehaviour
         if (IsBusy)
             return;
 
-        Box = box;
         IsBusy = true;
+        Box = box;
 
-        if (_currentRoutine != null)
-            StopCoroutine(_currentRoutine);
-
-        _currentRoutine = StartCoroutine(ProcessBringBox());
+        _currentTask = new BringBoxTask(Box, _homeBase, _botAnimator, _movement, _botRotation, _boxHandler);
+        StartCoroutine(RunTask(_currentTask));
     }
 
-    private IEnumerator ProcessBringBox()
+    private IEnumerator RunTask(BringBoxTask task)
     {
-        _isLifted = false;
-        _isLifting = false;
+        yield return task.Run();
 
-        yield return _movement.MoveTo(Box.GetSpotForLift());
-
-        yield return _botRotation.SmoothLookAt(Box.transform);
-
-        _botAnimator.PlayLift();
-
-        yield return new WaitUntil(() => _isLifting);
-
-        _boxHandler.LiftBox(Box);
-
-        yield return new WaitUntil(() => _isLifted);
-
-        _botAnimator.PlayRunWith();
-
-        yield return _movement.MoveTo(_homeBase.GetPointIn());
-
-        _boxHandler.DropBox(_homeBase);
-
-        OnProcessCompleted();
-    }
-
-    private void OnProcessCompleted()
-    {
         IsBusy = false;
         _homeBase.TakeBot(this);
-        _currentRoutine = null;
     }
 }

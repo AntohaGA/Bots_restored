@@ -3,13 +3,13 @@ using UnityEngine;
 public class FollowerCamera : MonoBehaviour
 {
     [SerializeField] private float _moveSpeed = 30f;
-    [SerializeField] private float _borderThickness = 20f; // зона у краёв экрана в пикселях
-    [SerializeField] private Vector2 _minPosition; // x,z минимальные координаты карты
-    [SerializeField] private Vector2 _maxPosition; // x,z максимальные координаты карты
+    [SerializeField] private float _borderThickness = 20f;
+    [SerializeField] private Vector2 _minPosition;
+    [SerializeField] private Vector2 _maxPosition;
 
     [SerializeField] private float _zoomSpeed = 10f;
-    [SerializeField] private float _minZoom = 10f; // минимальная высота камеры (Y)
-    [SerializeField] private float _maxZoom = 50f; // максимальная высота камеры (Y)
+    [SerializeField] private float _minZoom = 10f;
+    [SerializeField] private float _maxZoom = 50f;
 
     private Vector3 _cursorPosition;
 
