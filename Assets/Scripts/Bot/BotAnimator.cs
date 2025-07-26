@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -9,12 +8,21 @@ public class BotAnimator : MonoBehaviour
 
     private Animator _animator;
 
-    public event Action OnLiftingEvent;
-    public event Action OnLiftedEvent;
+    public bool IsLifting { get ;private set; }
+    public bool IsLifted { get ;private set; }
+
+    private void OnLifting() => IsLifting = true;
+    private void OnLifted() => IsLifted = true;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        IsLifting = false;
+        IsLifted =false;
     }
 
     public void PlayLift()
@@ -25,15 +33,5 @@ public class BotAnimator : MonoBehaviour
     public void PlayRunWith()
     {
         _animator.SetTrigger(RunWithBoxTrigger);
-    }
-
-    private void OnLifting()
-    {
-        OnLiftingEvent?.Invoke();
-    }
-
-    private void OnLifted()
-    {
-        OnLiftedEvent?.Invoke();
     }
 }

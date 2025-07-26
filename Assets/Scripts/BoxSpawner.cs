@@ -8,7 +8,7 @@ public class BoxSpawner : MonoBehaviour
     [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private Box _prefabBox;
     [SerializeField] private Map _map;
-    [SerializeField] private float _spawnInterval = 0.2f;
+    [SerializeField] private float _spawnInterval = 2f;
 
     private int _maxAttempts = 10;
     private float _checkRadius = 1f;

@@ -15,14 +15,16 @@ public class Bot : MonoBehaviour
     private BringBoxTask _currentTask;
 
     public bool IsBusy { get; private set; } = false;
+
     public Box Box { get; private set; }
+    public BoxHandler BoxHandler { get => _boxHandler; set => _boxHandler = value; }
 
     private void Awake()
     {
         _botAnimator = GetComponent<BotAnimator>();
         _movement = GetComponent<BotMovement>();
         _botRotation = GetComponent<BotRotation>();
-        _boxHandler = GetComponent<BoxHandler>();
+        BoxHandler = GetComponent<BoxHandler>();
     }
 
     public void Init(Base basePoint)
@@ -38,8 +40,7 @@ public class Bot : MonoBehaviour
 
         IsBusy = true;
         Box = box;
-
-        _currentTask = new BringBoxTask(Box, _homeBase, _botAnimator, _movement, _botRotation, _boxHandler);
+        _currentTask = new BringBoxTask(Box, _homeBase, _botAnimator, _movement, _botRotation, BoxHandler);
         StartCoroutine(RunTask(_currentTask));
     }
 
@@ -48,6 +49,5 @@ public class Bot : MonoBehaviour
         yield return task.Run();
 
         IsBusy = false;
-        _homeBase.TakeBot(this);
     }
 }

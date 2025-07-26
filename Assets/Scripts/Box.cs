@@ -34,4 +34,12 @@ public class Box : MonoBehaviour
             _rigidbody.isKinematic = isKinematic;
         }
     }
+
+    public void SetNavMeshObstacle(bool isEnabled)
+    {
+        if (_obstacle != null)
+        {
+            _obstacle.enabled = isEnabled;
+        }
+    }
 }

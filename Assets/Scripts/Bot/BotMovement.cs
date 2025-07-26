@@ -22,18 +22,38 @@ public class BotMovement : MonoBehaviour
 
     public IEnumerator MoveTo(Vector3 destination)
     {
-        float minTargetDistante = 1.5f;
-        float minTargetVelocity = 0.1f;
-
         _agent.isStopped = false;
         _agent.SetDestination(destination);
 
-        while (_agent.pathPending || _agent.remainingDistance > minTargetDistante
-                                                        || _agent.velocity.sqrMagnitude > minTargetVelocity)
-        {
-            yield return null;
-        }
+        yield return new WaitUntil(IsAtDestination);
 
         _agent.isStopped = true;
+    }
+
+    public void GoToPoint(Vector3 destination)
+    {
+        _agent.isStopped = false;
+        _agent.SetDestination(destination);
+    }
+
+    private bool IsAtDestination()
+    {
+        float minTargetDistante = 1.5f;
+        float minTargetVelocity = 0.1f;
+
+        if (_agent.pathPending)
+        {
+            return false;
+        }
+
+        if (_agent.remainingDistance <= minTargetDistante)
+        {
+            if (_agent.hasPath==false || _agent.velocity.sqrMagnitude < minTargetVelocity)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
