@@ -11,13 +11,11 @@ public class Bot : MonoBehaviour
     private BotMovement _movement;
     private BotRotation _botRotation;
     private BotAnimator _botAnimator;
-    private BoxHandler _boxHandler;
     private BringBoxTask _currentTask;
 
     public bool IsBusy { get; private set; } = false;
-
     public Box Box { get; private set; }
-    public BoxHandler BoxHandler { get => _boxHandler; set => _boxHandler = value; }
+    public BoxHandler BoxHandler { get ; private set; }
 
     private void Awake()
     {

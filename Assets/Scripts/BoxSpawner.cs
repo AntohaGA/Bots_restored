@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ public class BoxSpawner : MonoBehaviour
     private float _checkRadius = 1f;
 
     private readonly Collider[] _overlapResults = new Collider[CountCollideOverlap];
+
+    public event Action<Box> BoxCreated; 
 
     private void Awake()
     {
@@ -45,11 +48,13 @@ public class BoxSpawner : MonoBehaviour
             if (count == 0)
             {
                 spawnPosition = position;
+
                 return true;
             }
         }
 
         spawnPosition = default;
+
         return false;
     }
 
@@ -57,6 +62,7 @@ public class BoxSpawner : MonoBehaviour
     {
         Box box = _poolBoxes.GetInstance();
         box.Init(position);
+        BoxCreated?.Invoke(box);
     }
 
     private void TrySpawnResource()

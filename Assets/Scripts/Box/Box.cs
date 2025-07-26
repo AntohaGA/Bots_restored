@@ -12,8 +12,6 @@ public class Box : MonoBehaviour
 
     public Vector3 SpotForLift => _spotForLift.position;
 
-    public bool IsTaken { get; set; }
-
     private void Awake()
     {
         _obstacle = GetComponent<NavMeshObstacle>();
@@ -24,7 +22,6 @@ public class Box : MonoBehaviour
     {
         _obstacle.enabled = true;
         transform.SetPositionAndRotation(position, Quaternion.identity);
-        IsTaken = false;
     }
 
     public void SetRigidBodyKinematic(bool isKinematic)

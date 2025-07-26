@@ -1,13 +1,27 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class ResourceScanner : MonoBehaviour
+public class BoxScanner : MonoBehaviour
 {
+    [SerializeField] private BoxSpawner _spawner;
     [SerializeField] private PoolBoxes _poolBoxes;
-    [SerializeField] private float _scanInterval;
+    [SerializeField] private float _scanInterval = 0.2f;
 
-    public event Action<Box> OnBoxFound;
+    private Dictionary<Box, BoxState> _boxBusyStates = new Dictionary<Box, BoxState>();
+
+    public event Action<Box> OfferedClosestBox;
+
+    private void OnEnable()
+    {
+        _spawner.BoxCreated += RegisterBox;
+    }
+
+    private void OnDisable()
+    {
+        _spawner.BoxCreated -= RegisterBox;
+    }
 
     public IEnumerator ScanRoutine()
     {
@@ -25,15 +39,11 @@ public class ResourceScanner : MonoBehaviour
         float minDistance = float.MaxValue;
 
         if (_poolBoxes == null)
-        {
-            OnBoxFound?.Invoke(null);
-
             return;
-        }
 
         foreach (Box box in _poolBoxes)
         {
-            if (!box.IsTaken)
+            if (_boxBusyStates.TryGetValue(box, out var state) && state == BoxState.Free)
             {
                 float distant = Vector3.Distance(center, box.transform.position);
 
@@ -45,7 +55,7 @@ public class ResourceScanner : MonoBehaviour
             }
         }
 
-        OnBoxFound?.Invoke(closestBox);
+        OfferedClosestBox?.Invoke(closestBox);
     }
 
     public void ReturnBox(Box box)
@@ -53,6 +63,17 @@ public class ResourceScanner : MonoBehaviour
         if (box == null || _poolBoxes == null)
             return;
 
+        _boxBusyStates.Remove(box);
         _poolBoxes.ReturnInstance(box);
+    }
+
+    public void AcceptBox(Box box)
+    {
+        _boxBusyStates[box] = BoxState.Taken;
+    }
+
+    private void RegisterBox(Box box)
+    {
+        _boxBusyStates.Add(box, BoxState.Free);
     }
 }
