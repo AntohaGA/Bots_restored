@@ -3,26 +3,24 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(BotDetector))]
 [RequireComponent(typeof(NavMeshObstacle))]
+[RequireComponent(typeof(BotCreator))]
 public class Base : MonoBehaviour
 {
     [SerializeField] private Bot _botPrefab;
-    [SerializeField] private PoolBots _poolBots;
     [SerializeField] private Transform _pointOut;
     [SerializeField] private Transform _pointIn;
     [SerializeField] private BoxScanner _boxScanner;
 
     private BotDetector _botDetector;
-    private BotReceiver _botReceiver;
-    private BoxReceiver _boxManager;
-
-    private int _countMaxBots = 5;
+    private BoxReceiver _boxReceiver;
+    private BotCreator _botCreator;
 
     private void Awake()
     {
+        _botCreator = GetComponent<BotCreator>();
+        _botCreator.Init(this);
         _botDetector = GetComponent<BotDetector>();
-        _botReceiver = new BotReceiver(_poolBots, _countMaxBots);
-        _botReceiver.Init(_botPrefab);
-        _boxManager = new BoxReceiver(_boxScanner);
+        _boxReceiver = new BoxReceiver(_boxScanner);
     }
 
     private void OnEnable()
@@ -55,8 +53,8 @@ public class Base : MonoBehaviour
         if (bot == null)
             return;
 
-        _boxManager.TakeBox(bot.Box);
-        _botReceiver.TakeBot(bot);
+        _boxReceiver.TakeBox(bot.Box);
+        _botCreator.ReturnBot(bot);
     }
 
     public Vector3 GetPointIn() => _pointIn.position;
@@ -65,7 +63,7 @@ public class Base : MonoBehaviour
 
     private void AssignBot(Box box)
     {
-        Bot bot = _botReceiver.GetBot();
+        Bot bot = _botCreator.GetFreeBot();
 
         if (bot != null)
         {

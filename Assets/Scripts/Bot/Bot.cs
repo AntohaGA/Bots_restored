@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(BotMovement))]
 [RequireComponent(typeof(BotAnimator))]
@@ -13,7 +14,7 @@ public class Bot : MonoBehaviour
     private BotAnimator _botAnimator;
     private BringBoxTask _currentTask;
 
-    public bool IsBusy { get; private set; } = false;
+    public bool IsBusy { get; set; }
     public Box Box { get; private set; }
     public BoxHandler BoxHandler { get ; private set; }
 
@@ -29,6 +30,7 @@ public class Bot : MonoBehaviour
     {
         _movement.ResetPosition(basePoint.GetPointOut());
         _homeBase = basePoint;
+        IsBusy = false;
     }
 
     public void BringBox(Box box)

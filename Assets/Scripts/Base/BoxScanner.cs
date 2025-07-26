@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BoxScanner : MonoBehaviour
@@ -8,10 +7,15 @@ public class BoxScanner : MonoBehaviour
     [SerializeField] private BoxSpawner _spawner;
     [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private float _scanInterval = 0.2f;
+    [SerializeField] private BoxStorage _boxStorage;
 
-    private Dictionary<Box, BoxState> _boxBusyStates = new Dictionary<Box, BoxState>();
-
+    private WaitForSeconds _waitForSeconds;
     public event Action<Box> OfferedClosestBox;
+
+    private void Awake()
+    {
+        _waitForSeconds = new WaitForSeconds(_scanInterval);
+    }
 
     private void OnEnable()
     {
@@ -27,7 +31,7 @@ public class BoxScanner : MonoBehaviour
     {
         while (enabled)
         {
-            yield return new WaitForSeconds(_scanInterval);
+            yield return _waitForSeconds;
 
             FindNearestBox(transform.position);
         }
@@ -41,17 +45,17 @@ public class BoxScanner : MonoBehaviour
         if (_poolBoxes == null)
             return;
 
-        foreach (Box box in _poolBoxes)
+        foreach (Box box in _boxStorage.FreeBoxes)
         {
-            if (_boxBusyStates.TryGetValue(box, out var state) && state == BoxState.Free)
-            {
-                float distant = Vector3.Distance(center, box.transform.position);
+            if (box == null)
+                continue;
 
-                if (distant < minDistance)
-                {
-                    closestBox = box;
-                    minDistance = distant;
-                }
+            float distance = Vector3.Distance(center, box.transform.position);
+
+            if (distance < minDistance)
+            {
+                closestBox = box;
+                minDistance = distance;
             }
         }
 
@@ -63,17 +67,17 @@ public class BoxScanner : MonoBehaviour
         if (box == null || _poolBoxes == null)
             return;
 
-        _boxBusyStates.Remove(box);
+        _boxStorage.RemoveBox(box);
         _poolBoxes.ReturnInstance(box);
     }
 
     public void AcceptBox(Box box)
     {
-        _boxBusyStates[box] = BoxState.Taken;
+        _boxStorage.AcceptBox(box);
     }
 
     private void RegisterBox(Box box)
     {
-        _boxBusyStates.Add(box, BoxState.Free);
+        _boxStorage.AddBox(box);
     }
 }
