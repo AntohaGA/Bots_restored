@@ -3,13 +3,15 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class BotAnimator : MonoBehaviour
 {
+    private const string RunTrigger = "run";
+    private const string WaitTrigger = "wait";
     private const string LiftTrigger = "lift";
     private const string RunWithBoxTrigger = "runWithBox";
 
     private Animator _animator;
 
-    public bool IsLifting { get ;private set; }
-    public bool IsLifted { get ;private set; }
+    public bool IsLifting { get; private set; } = false;
+    public bool IsLifted { get; private set; } = false;
 
     private void OnLifting() => IsLifting = true;
     private void OnLifted() => IsLifted = true;
@@ -19,18 +21,24 @@ public class BotAnimator : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
+    public void PlayWait()
     {
-        IsLifting = false;
-        IsLifted =false;
+        _animator.SetTrigger(WaitTrigger);
+    }
+
+    public void PlayRun()
+    {
+        _animator.SetTrigger(RunTrigger);
     }
 
     public void PlayLift()
     {
+        IsLifting = false;
+        IsLifted = false;
         _animator.SetTrigger(LiftTrigger);
     }
 
-    public void PlayRunWith()
+    public void PlayRunWithBox()
     {
         _animator.SetTrigger(RunWithBoxTrigger);
     }

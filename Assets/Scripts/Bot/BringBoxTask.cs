@@ -22,13 +22,16 @@ public class BringBoxTask
 
     public IEnumerator Run()
     {
+        _botAnimator.PlayRun();
         yield return _botMovement.MoveTo(_box.SpotForLift);
         yield return _botRotation.SmoothLookAt(_box.transform);
+
         _botAnimator.PlayLift();
         yield return new WaitUntil(() => _botAnimator.IsLifting);
         _boxHandler.LiftBox(_box);
         yield return new WaitUntil(() => _botAnimator.IsLifted);
-        _botAnimator.PlayRunWith();
+
+        _botAnimator.PlayRunWithBox();
         _botMovement.GoToPoint(_homeBase.GetPointIn());
     }
 }

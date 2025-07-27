@@ -2,36 +2,38 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class BoxScanner : MonoBehaviour
+public class BoxFounder : MonoBehaviour
 {
     [SerializeField] private BoxSpawner _spawner;
-    [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private float _scanInterval = 0.2f;
-    [SerializeField] private BoxStorage _boxStorage;
+    [SerializeField] private PoolBoxes _poolBoxes;
 
-    private WaitForSeconds _waitForSeconds;
+    private BoxStorage _boxStorage;
+    private WaitForSeconds _delayBetweenScanNewBox;
+
     public event Action<Box> OfferedClosestBox;
 
     private void Awake()
     {
-        _waitForSeconds = new WaitForSeconds(_scanInterval);
+        _delayBetweenScanNewBox = new WaitForSeconds(_scanInterval);
+        _boxStorage = new BoxStorage();
     }
 
     private void OnEnable()
     {
-        _spawner.BoxCreated += RegisterBox;
+        _spawner.BoxCreated += RegisterSpawnedBox;
     }
 
     private void OnDisable()
     {
-        _spawner.BoxCreated -= RegisterBox;
+        _spawner.BoxCreated -= RegisterSpawnedBox;
     }
 
     public IEnumerator ScanRoutine()
     {
         while (enabled)
         {
-            yield return _waitForSeconds;
+            yield return _delayBetweenScanNewBox;
 
             FindNearestBox(transform.position);
         }
@@ -42,14 +44,11 @@ public class BoxScanner : MonoBehaviour
         Box closestBox = null;
         float minDistance = float.MaxValue;
 
-        if (_poolBoxes == null)
+        if (_boxStorage.FreeBoxes.Count == 0)
             return;
 
         foreach (Box box in _boxStorage.FreeBoxes)
         {
-            if (box == null)
-                continue;
-
             float distance = Vector3.Distance(center, box.transform.position);
 
             if (distance < minDistance)
@@ -59,24 +58,29 @@ public class BoxScanner : MonoBehaviour
             }
         }
 
-        OfferedClosestBox?.Invoke(closestBox);
+        if (closestBox != null)
+        {
+            OfferedClosestBox?.Invoke(closestBox);
+        }
     }
 
     public void ReturnBox(Box box)
     {
-        if (box == null || _poolBoxes == null)
+        if (box == null)
             return;
 
-        _boxStorage.RemoveBox(box);
+        box.transform.SetParent(null);
+        box.SetRigidBodyKinematic(false);
+        _boxStorage.AddBoxOnBase(box);
         _poolBoxes.ReturnInstance(box);
     }
 
-    public void AcceptBox(Box box)
+    public void SetBoxReserved(Box box)
     {
-        _boxStorage.AcceptBox(box);
+        _boxStorage.ReserveBox(box);
     }
 
-    private void RegisterBox(Box box)
+    private void RegisterSpawnedBox(Box box)
     {
         _boxStorage.AddBox(box);
     }

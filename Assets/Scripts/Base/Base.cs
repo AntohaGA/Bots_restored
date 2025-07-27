@@ -9,66 +9,55 @@ public class Base : MonoBehaviour
     [SerializeField] private Bot _botPrefab;
     [SerializeField] private Transform _pointOut;
     [SerializeField] private Transform _pointIn;
-    [SerializeField] private BoxScanner _boxScanner;
+    [SerializeField] private BoxFounder _boxFounder;
 
     private BotDetector _botDetector;
-    private BoxReceiver _boxReceiver;
     private BotCreator _botCreator;
+
+    public Vector3 GetPointIn() => _pointIn.position;
+    public Vector3 GetPointOut() => _pointOut.position;
+
 
     private void Awake()
     {
         _botCreator = GetComponent<BotCreator>();
-        _botCreator.Init(this);
         _botDetector = GetComponent<BotDetector>();
-        _boxReceiver = new BoxReceiver(_boxScanner);
     }
 
     private void OnEnable()
     {
-        _botDetector.BotReceived += TakeBot;
-        _boxScanner.OfferedClosestBox += HandleBoxFound;
+        _botDetector.BotReceived += TakeBotWithBox;
+        _boxFounder.OfferedClosestBox += TryAssignBot;
     }
 
     private void OnDisable()
     {
-        _botDetector.BotReceived -= TakeBot;
-        _boxScanner.OfferedClosestBox -= HandleBoxFound;
+        _botDetector.BotReceived -= TakeBotWithBox;
+        _boxFounder.OfferedClosestBox -= TryAssignBot;
     }
 
     private void Start()
     {
-        StartCoroutine(_boxScanner.ScanRoutine());
+        StartCoroutine(_boxFounder.ScanRoutine());
     }
 
-    private void HandleBoxFound(Box box)
-    {
-        if (box != null)
-        {
-            AssignBot(box);
-        }
-    }
-
-    public void TakeBot(Bot bot)
+    public void TakeBotWithBox(Bot bot)
     {
         if (bot == null)
             return;
 
-        _boxReceiver.TakeBox(bot.Box);
-        _botCreator.ReturnBot(bot);
+        _boxFounder.ReturnBox(bot.Box);
+
+        bot.SetFree();
     }
 
-    public Vector3 GetPointIn() => _pointIn.position;
-
-    public Vector3 GetPointOut() => _pointOut.position;
-
-    private void AssignBot(Box box)
+    private void TryAssignBot(Box box)
     {
-        Bot bot = _botCreator.GetFreeBot();
+        Bot bot = _botCreator.TryGetFreeBot(this);
 
         if (bot != null)
         {
-            _boxScanner.AcceptBox(box);
-            bot.Init(this);
+            _boxFounder.SetBoxReserved(box);
             bot.BringBox(box);
         }
     }

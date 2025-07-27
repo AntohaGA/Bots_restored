@@ -583,6 +583,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Size.x
+      value: 15.955387
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Size.z
+      value: 9.429999
+      objectReference: {fileID: 0}
+    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Center.x
+      value: 5.906274
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071196249471463540, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 10.25
+      objectReference: {fileID: 0}
     - target: {fileID: 3294069233453343403, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_Name
       value: Basa_bots
@@ -659,6 +675,10 @@ PrefabInstance:
       propertyPath: m_Extents.z
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 8996250987288001804, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _poolBoxes
+      value: 
+      objectReference: {fileID: 854425847}
     - target: {fileID: 9000764415155789385, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: _botPrefab
       value: 
@@ -667,6 +687,10 @@ PrefabInstance:
       propertyPath: _poolBoxes
       value: 
       objectReference: {fileID: 854425847}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _boxFounder
+      value: 
+      objectReference: {fileID: 1748329391}
     - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: _boxScanner
       value: 

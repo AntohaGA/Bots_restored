@@ -1,17 +1,16 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class BoxStorage : MonoBehaviour
+public class BoxStorage
 {
     private int _countBasesBoxes = 0;
 
     public HashSet<Box> FreeBoxes { get; private set; }
-    public HashSet<Box> TakenBoxes { get; private set; }
+    public HashSet<Box> ReservedBoxes { get; private set; }
 
-    private void Awake()
+    public BoxStorage()
     {
         FreeBoxes = new HashSet<Box>();
-        TakenBoxes = new HashSet<Box>();
+        ReservedBoxes = new HashSet<Box>();
     }
 
     public void AddBox(Box box)
@@ -22,22 +21,21 @@ public class BoxStorage : MonoBehaviour
         FreeBoxes.Add(box);
     }
 
-    public void AcceptBox(Box box)
+    public void ReserveBox(Box box)
     {
         if (box == null)
             return;
 
         FreeBoxes.Remove(box);
-        TakenBoxes.Add(box);
+        ReservedBoxes.Add(box);
     }
 
-    public void RemoveBox(Box box)
+    public void AddBoxOnBase(Box box)
     {
         if (box == null)
             return;
 
-        TakenBoxes.Remove(box);
+        ReservedBoxes.Remove(box);
         _countBasesBoxes++;
-        Debug.Log(_countBasesBoxes);
     }
 }

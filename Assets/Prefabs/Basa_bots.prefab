@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2681655532559276049}
   - component: {fileID: 9047651089736403063}
   - component: {fileID: 6864891967801611146}
-  - component: {fileID: 8996250987288001804}
   - component: {fileID: 9013187201807750556}
   - component: {fileID: 9000764415155789385}
   - component: {fileID: 7183511250486180376}
@@ -108,10 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _botPrefab: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
-  _poolBots: {fileID: 0}
   _pointOut: {fileID: 4386548275279230139}
   _pointIn: {fileID: 3071196249471463540}
-  _boxScanner: {fileID: 6864891967801611146}
+  _boxFounder: {fileID: 0}
 --- !u!114 &6864891967801611146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,21 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawner: {fileID: 0}
-  _poolBoxes: {fileID: 0}
   _scanInterval: 0.2
-  _boxStorage: {fileID: 8996250987288001804}
---- !u!114 &8996250987288001804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4408bddca0c54fd46b4744500e5cca8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9013187201807750556
 MonoBehaviour:
   m_ObjectHideFlags: 0
