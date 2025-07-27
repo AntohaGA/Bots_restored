@@ -9,7 +9,7 @@ public class BotCreator : MonoBehaviour
 
     private int _maxBots = 3;
 
-    public Bot TryGetFreeBot(Base homeBase)
+    public Bot TryGetFreeBot(Vector3 spawnPosition)
     {
         foreach (var bot in _bots)
         {
@@ -21,16 +21,16 @@ public class BotCreator : MonoBehaviour
 
         if (_bots.Count < _maxBots)
         {
-             return CreateNewBot(homeBase);
+             return CreateNewBot(spawnPosition);
         }
 
         return null;
     }
 
-    private Bot CreateNewBot(Base homeBase)
+    private Bot CreateNewBot(Vector3 spawnPosition)
     {
         Bot bot = Instantiate(_botPrefab);
-        bot.Init(homeBase);
+        bot.Init(spawnPosition);
         _bots.Add(bot);
 
         return bot;

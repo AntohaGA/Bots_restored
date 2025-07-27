@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(BotRotation))]
 public class Bot : MonoBehaviour
 {
-    private Base _homeBase;
     private BotMovement _movement;
     private BotRotation _botRotation;
     private BringBoxTask _currentTask;
@@ -25,22 +24,21 @@ public class Bot : MonoBehaviour
         BoxHandler = GetComponent<BoxHandler>();
     }
 
-    public void Init(Base basePoint)
+    public void Init(Vector3 spawnPosition)
     {
-        _movement.ResetPosition(basePoint.GetPointOut());
-        SetFree();
-        _homeBase = basePoint;
+        _movement.ResetPosition(spawnPosition);
+        MadeFree();
     }
 
-    public void BringBox(Box box)
+    public void BringBox(Box box, Vector3 positionBase)
     {
         IsBusy = true;
         Box = box;
-        _currentTask = new BringBoxTask(Box, _homeBase, _botAnimator, _movement, _botRotation, BoxHandler);
+        _currentTask = new BringBoxTask(Box, positionBase, _botAnimator, _movement, _botRotation, BoxHandler);
         StartCoroutine(RunTask(_currentTask));
     }
 
-    public void SetFree()
+    public void MadeFree()
     {
         IsBusy = false;
         _botAnimator.PlayWait();

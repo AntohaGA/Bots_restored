@@ -6,7 +6,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BotCreator))]
 public class Base : MonoBehaviour
 {
-    [SerializeField] private Bot _botPrefab;
     [SerializeField] private Transform _pointOut;
     [SerializeField] private Transform _pointIn;
     [SerializeField] private BoxFounder _boxFounder;
@@ -47,18 +46,17 @@ public class Base : MonoBehaviour
             return;
 
         _boxFounder.ReturnBox(bot.Box);
-
-        bot.SetFree();
+        bot.MadeFree();
     }
 
     private void TryAssignBot(Box box)
     {
-        Bot bot = _botCreator.TryGetFreeBot(this);
+        Bot bot = _botCreator.TryGetFreeBot(GetPointOut());
 
         if (bot != null)
         {
             _boxFounder.SetBoxReserved(box);
-            bot.BringBox(box);
+            bot.BringBox(box, GetPointIn());
         }
     }
 }
