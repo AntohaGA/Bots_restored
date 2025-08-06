@@ -6,9 +6,12 @@ public class BotRotation : MonoBehaviour
 {
     private NavMeshAgent _agent;
 
+    private Transform _transform;
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _transform = GetComponent<Transform>();
     }
 
     public IEnumerator SmoothLookAt(Transform target)
@@ -29,11 +32,11 @@ public class BotRotation : MonoBehaviour
 
     private Quaternion CalculateTargetRotation(Transform target)
     {
-        Vector3 direction = (target.position - transform.position).normalized;
+        Vector3 direction = (target.position - _transform.position).normalized;
 
         if (direction == Vector3.zero)
         {
-            direction = transform.forward;
+            direction = _transform.forward;
         }
 
         return Quaternion.LookRotation(direction);
@@ -41,19 +44,19 @@ public class BotRotation : MonoBehaviour
 
     private IEnumerator RotateTowards(Quaternion targetRotation)
     {
-        Quaternion startRotation = transform.rotation;
+        Quaternion startRotation = _transform.rotation;
         float elapsed = 0f;
         float duration = 0.2f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsed / duration);
+            _transform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsed / duration);
 
             yield return null;
         }
 
-        transform.rotation = targetRotation;
+        _transform.rotation = targetRotation;
     }
 
     private void RestoreAgent()

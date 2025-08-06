@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(BotMovement))]
 [RequireComponent(typeof(BotAnimator))]
-[RequireComponent(typeof(BoxHandler))]
+[RequireComponent(typeof(BoxLifter))]
 [RequireComponent(typeof(BotRotation))]
 public class Bot : MonoBehaviour
 {
@@ -14,14 +14,14 @@ public class Bot : MonoBehaviour
 
     public bool IsBusy { get; private set; }
     public Box Box { get; private set; }
-    public BoxHandler BoxHandler { get; private  set; }
+    public BoxLifter BoxHandler { get; private  set; }
 
     private void Awake()
     {
         _botAnimator = GetComponent<BotAnimator>();
         _movement = GetComponent<BotMovement>();
         _botRotation = GetComponent<BotRotation>();
-        BoxHandler = GetComponent<BoxHandler>();
+        BoxHandler = GetComponent<BoxLifter>();
     }
 
     public void Init(Vector3 spawnPosition)

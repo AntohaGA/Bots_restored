@@ -8,9 +8,9 @@ public class BringBoxTask
     private BotAnimator _botAnimator;
     private BotMovement _botMovement;
     private BotRotation _botRotation;
-    private BoxHandler _boxHandler;
+    private BoxLifter _boxHandler;
 
-    public BringBoxTask(Box box, Vector3 pointDestination, BotAnimator botAnimator, BotMovement botMovement, BotRotation botRotation, BoxHandler boxHandler)
+    public BringBoxTask(Box box, Vector3 pointDestination, BotAnimator botAnimator, BotMovement botMovement, BotRotation botRotation, BoxLifter boxHandler)
     {
         _box = box;
         _pointDestination = pointDestination;
@@ -28,7 +28,7 @@ public class BringBoxTask
 
         _botAnimator.PlayLift();
         yield return new WaitUntil(() => _botAnimator.IsLifting);
-        _boxHandler.LiftBox(_box);
+        _boxHandler.Lift(_box);
         yield return new WaitUntil(() => _botAnimator.IsLifted);
 
         _botAnimator.PlayRunWithBox();

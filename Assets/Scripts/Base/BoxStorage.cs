@@ -1,24 +1,17 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class BoxStorage
 {
+    [SerializeField] private PoolBoxes _poolBoxes;
+
     private int _countBasesBoxes = 0;
 
-    public HashSet<Box> FreeBoxes { get; private set; }
     public HashSet<Box> ReservedBoxes { get; private set; }
 
     public BoxStorage()
     {
-        FreeBoxes = new HashSet<Box>();
         ReservedBoxes = new HashSet<Box>();
-    }
-
-    public void AddBox(Box box)
-    {
-        if (box == null)
-            return;
-
-        FreeBoxes.Add(box);
     }
 
     public void ReserveBox(Box box)
@@ -26,7 +19,6 @@ public class BoxStorage
         if (box == null)
             return;
 
-        FreeBoxes.Remove(box);
         ReservedBoxes.Add(box);
     }
 
@@ -35,7 +27,10 @@ public class BoxStorage
         if (box == null)
             return;
 
+        box.transform.SetParent(null); 
+        box.SetRigidBodyKinematic(false);
         ReservedBoxes.Remove(box);
+        _poolBoxes.ReturnInstance(box);
         _countBasesBoxes++;
     }
 }

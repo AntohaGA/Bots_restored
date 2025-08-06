@@ -9,14 +9,14 @@ public class BoxSpawner : MonoBehaviour
     [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private Box _prefabBox;
     [SerializeField] private Map _map;
-    [SerializeField] private float _spawnInterval = 10;
+    [SerializeField] private float _spawnInterval = 3;
 
     private int _maxAttempts = 10;
     private float _checkRadius = 1f;
 
     private readonly Collider[] _overlapResults = new Collider[CountCollideOverlap];
 
-    public event Action<Box> BoxCreated; 
+    public event Action<Box> BoxCreated;
 
     private void Awake()
     {
@@ -38,6 +38,21 @@ public class BoxSpawner : MonoBehaviour
         }
     }
 
+    private void TrySpawnResource()
+    {
+        if (TryFindSpawnPosition(out Vector3 position))
+        {
+            SpawnBoxAtPosition(position);
+        }
+    }
+
+    private void SpawnBoxAtPosition(Vector3 position)
+    {
+        Box box = _poolBoxes.GetInstance();
+        box.Init(position);
+        BoxCreated?.Invoke(box);
+    }
+
     private bool TryFindSpawnPosition(out Vector3 spawnPosition)
     {
         for (int attempt = 0; attempt < _maxAttempts; attempt++)
@@ -56,20 +71,5 @@ public class BoxSpawner : MonoBehaviour
         spawnPosition = default;
 
         return false;
-    }
-
-    private void SpawnBoxAtPosition(Vector3 position)
-    {
-        Box box = _poolBoxes.GetInstance();
-        box.Init(position);
-        BoxCreated?.Invoke(box);
-    }
-
-    private void TrySpawnResource()
-    {
-        if (TryFindSpawnPosition(out Vector3 position))
-        {
-            SpawnBoxAtPosition(position);
-        }
     }
 }
