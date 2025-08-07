@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoxStorage
+public class BoxStorage : MonoBehaviour
 {
     [SerializeField] private PoolBoxes _poolBoxes;
 
@@ -27,7 +27,7 @@ public class BoxStorage
         if (box == null)
             return;
 
-        box.transform.SetParent(null); 
+        box.transform.SetParent(null);
         box.SetRigidBodyKinematic(false);
         ReservedBoxes.Remove(box);
         _poolBoxes.ReturnInstance(box);

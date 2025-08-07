@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BoxStorage))]
 public class Base : MonoBehaviour
 {
-    [SerializeField] private Transform _pointOut;
     [SerializeField] private Transform _pointIn;
     [SerializeField] private BoxKeeper _boxKeeper;
 
@@ -19,7 +19,6 @@ public class Base : MonoBehaviour
     private BoxStorage _boxStorage;
 
     public Vector3 GetPointIn() => _pointIn.position;
-    public Vector3 GetPointOut() => _pointOut.position;
 
     private void Awake()
     {
@@ -29,21 +28,22 @@ public class Base : MonoBehaviour
         _boxStorage = GetComponent<BoxStorage>();
     }
 
+    private void Start()
+    {
+        StartCoroutine(TryAssignBot());
+    }
+
     private void OnEnable()
     {
         _botDetector.BotReceived += TakeBotWithBox;
-        _boxKeeper.OfferedClosestBox += TryAssignBot;
-        _mapFlagPlacer.FlagPlaced += TryBildNewBase;
     }
 
     private void OnDisable()
     {
         _botDetector.BotReceived -= TakeBotWithBox;
-        _boxKeeper.OfferedClosestBox -= TryAssignBot;
-        _mapFlagPlacer.FlagPlaced -= TryBildNewBase;
     }
 
-    public void TakeBotWithBox(Bot bot)
+    private void TakeBotWithBox(Bot bot)
     {
         if (bot == null)
             return;
@@ -52,19 +52,18 @@ public class Base : MonoBehaviour
         bot.MadeFree();
     }
 
-    private void TryAssignBot(Box box)
+    private IEnumerator TryAssignBot()
     {
-        Bot bot = _botCreator.TryGetFreeBot(GetPointOut());
-
-        if (bot != null)
+        while (enabled)
         {
-           _boxStorage.ReserveBox(box);
-            bot.BringBox(box, GetPointIn());
+            if (_boxKeeper.TryFindNearestBox(transform.position, out Box box) && _botCreator.TryGetFreeBot(out Bot bot))
+            {
+                _boxKeeper.ReserveBox(box);
+                _boxStorage.ReserveBox(box);
+                bot.BringBox(box, GetPointIn());               
+            }
+
+            yield return new WaitForSeconds(0.2f);
         }
-    }
-
-    private void TryBildNewBase(Vector3 position)
-    {
-
     }
 }

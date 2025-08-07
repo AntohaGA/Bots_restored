@@ -4,27 +4,34 @@ using UnityEngine;
 public class BotCreator : MonoBehaviour
 {
     [SerializeField] private Bot _botPrefab;
+    [SerializeField] private Transform _botTransform;
 
     private List<Bot> _bots = new();
 
     private int _maxBots = 3;
 
-    public Bot TryGetFreeBot(Vector3 spawnPosition)
+    public bool TryGetFreeBot(out Bot bot)
     {
-        foreach (var bot in _bots)
+        foreach (var possibleBot in _bots)
         {
-            if (bot.IsBusy == false)
+            if (possibleBot.IsBusy == false)
             {
-                return bot;
+                bot = possibleBot;
+
+                return true;
             }
         }
 
         if (_bots.Count < _maxBots)
         {
-             return CreateNewBot(spawnPosition);
+            bot = CreateNewBot(_botTransform.position);
+
+            return true;
         }
 
-        return null;
+        bot = null;
+
+        return false;
     }
 
     private Bot CreateNewBot(Vector3 spawnPosition)

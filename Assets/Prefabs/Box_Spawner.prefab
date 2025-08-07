@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 4941680341506370899}
   - component: {fileID: 4205061474870398365}
   - component: {fileID: 3109683666671472339}
-  - component: {fileID: 5366778799061660757}
+  - component: {fileID: 4237637246442532211}
   m_Layer: 0
   m_Name: Box_Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &4872924644489997411
 Transform:
@@ -122,11 +122,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09566ea8f03846f4c8729f04b88623b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolBoxes: {fileID: 5366778799061660757}
+  _poolBoxes: {fileID: 0}
   _prefabBox: {fileID: 5135942565792788186, guid: 94b2266c1af75bb4ba0e88760a01dcae, type: 3}
   _map: {fileID: 0}
-  _spawnInterval: 1
---- !u!114 &5366778799061660757
+  _spawnInterval: 2
+--- !u!114 &4237637246442532211
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,6 +135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6301036759441028474}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8715ca77b2c4454fb56360a3e2becb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 425263b54189b354495a785776944615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spawner: {fileID: 3109683666671472339}

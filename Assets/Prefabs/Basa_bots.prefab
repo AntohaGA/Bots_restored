@@ -15,12 +15,12 @@ GameObject:
   - component: {fileID: 6864891967801611146}
   - component: {fileID: 9013187201807750556}
   - component: {fileID: 9000764415155789385}
-  - component: {fileID: 5791491653195722953}
-  - component: {fileID: 7183511250486180376}
-  - component: {fileID: 1114288066497204651}
   - component: {fileID: 6759320814465155782}
   - component: {fileID: 3870012077987321323}
+  - component: {fileID: 5718823368815982192}
+  - component: {fileID: 7183511250486180376}
   - component: {fileID: 3215369850361106135}
+  - component: {fileID: 1114288066497204651}
   m_Layer: 0
   m_Name: Basa_bots
   m_TagString: Untagged
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointOut: {fileID: 4386548275279230139}
   _pointIn: {fileID: 3071196249471463540}
-  _boxFounder: {fileID: 6864891967801611146}
+  _boxKeeper: {fileID: 0}
 --- !u!114 &6864891967801611146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,8 +126,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawner: {fileID: 0}
-  _scanInterval: 0.2
-  _poolBoxes: {fileID: 0}
 --- !u!114 &9013187201807750556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,56 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _botPrefab: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
---- !u!114 &5791491653195722953
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 125837a8b982c8141bf06cf35f88e646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
---- !u!208 &7183511250486180376
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 9.5, y: 0.5, z: 6.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
---- !u!65 &1114288066497204651
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6.28, y: 1.93, z: 3.94}
-  m_Center: {x: 5.5, y: 1.1855171, z: 8.583273}
+  _botTransform: {fileID: 4386548275279230139}
 --- !u!114 &6759320814465155782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,11 +178,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _flagPrefab: {fileID: -550033922953199667, guid: f9e060bea3a553942ba306c6e3b6b727, type: 3}
-  _mainCamera: {fileID: 0}
-  _mapLayerMask:
-    serializedVersion: 2
-    m_Bits: 8
   _map: {fileID: 0}
+--- !u!114 &5718823368815982192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294069233453343403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4408bddca0c54fd46b4744500e5cca8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _poolBoxes: {fileID: 0}
+--- !u!208 &7183511250486180376
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294069233453343403}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 9.5, y: 0.5, z: 6.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!65 &3215369850361106135
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -255,6 +229,27 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 19.876339, y: 5.0991387, z: 13.857671}
   m_Center: {x: 0.0000023841858, y: 2.5438855, z: -0.0000011920929}
+--- !u!65 &1114288066497204651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294069233453343403}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.28, y: 1.93, z: 3.94}
+  m_Center: {x: 5.5, y: 1.1855171, z: 8.583273}
 --- !u!1 &5994963084569923091
 GameObject:
   m_ObjectHideFlags: 0
