@@ -2,14 +2,7 @@ using UnityEngine;
 
 public class BaseStorage : MonoBehaviour
 {
-    private PoolBoxes _poolBoxes;
-
     private int _countBoxes = 0;
-
-    public void Init(PoolBoxes poolBoxes)
-    {
-        _poolBoxes = poolBoxes;
-    }
 
     public void AddBoxOnBase(Box box)
     {
@@ -18,7 +11,7 @@ public class BaseStorage : MonoBehaviour
 
         box.transform.SetParent(null);
         box.SetRigidBodyKinematic(false);
-        _poolBoxes.ReturnInstance(box);
+        box.Return();
         _countBoxes++;
     }
 }

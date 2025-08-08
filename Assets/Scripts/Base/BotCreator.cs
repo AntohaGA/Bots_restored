@@ -15,7 +15,7 @@ public class BotCreator : MonoBehaviour
         MaxBots = maxBots;
     }
 
-    public bool CheckBot(Bot bot)
+    public bool IsOurBot(Bot bot)
     {
         if (_bots.Contains(bot))
         {

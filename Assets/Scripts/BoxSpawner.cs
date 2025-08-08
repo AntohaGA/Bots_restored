@@ -2,14 +2,16 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(PoolBoxes))]
 public class BoxSpawner : MonoBehaviour
 {
     private const int CountCollideOverlap = 10;
 
-    [SerializeField] private PoolBoxes _poolBoxes;
     [SerializeField] private Box _prefabBox;
     [SerializeField] private Map _map;
     [SerializeField] private float _spawnInterval = 3;
+
+    private PoolBoxes _poolBoxes;
 
     private int _maxAttempts = 10;
     private float _checkRadius = 1f;
@@ -20,6 +22,7 @@ public class BoxSpawner : MonoBehaviour
 
     private void Awake()
     {
+        _poolBoxes = GetComponent<PoolBoxes>();
         _poolBoxes.Init(_prefabBox);
     }
 
@@ -50,7 +53,14 @@ public class BoxSpawner : MonoBehaviour
     {
         Box box = _poolBoxes.GetInstance();
         box.Init(position);
+        box.OnDestroy += ReturnBox;
         BoxCreated?.Invoke(box);
+    }
+
+    private void ReturnBox(Box box)
+    {
+        box.OnDestroy -= ReturnBox;
+        _poolBoxes.ReturnInstance(box);
     }
 
     private bool TryFindSpawnPosition(out Vector3 spawnPosition)

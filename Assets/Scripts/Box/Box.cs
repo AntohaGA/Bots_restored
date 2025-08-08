@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,6 +12,8 @@ public class Box : MonoBehaviour
     private Rigidbody _rigidbody;
 
     public Vector3 SpotForLift => _spotForLift.position;
+
+    public event Action<Box> OnDestroy;
 
     private void Awake()
     {
@@ -38,5 +41,10 @@ public class Box : MonoBehaviour
         {
             _obstacle.enabled = isEnabled;
         }
+    }
+
+    public void Return()
+    {
+        OnDestroy?.Invoke(this);
     }
 }

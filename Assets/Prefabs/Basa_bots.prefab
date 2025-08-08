@@ -15,8 +15,6 @@ GameObject:
   - component: {fileID: 7704351645599830751}
   - component: {fileID: 9013187201807750556}
   - component: {fileID: 9000764415155789385}
-  - component: {fileID: 6759320814465155782}
-  - component: {fileID: 3870012077987321323}
   - component: {fileID: 1020883964747154106}
   - component: {fileID: 3659791126291752888}
   - component: {fileID: 7183511250486180376}
@@ -112,7 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boxKeeper: {fileID: 0}
-  _builder: {fileID: 0}
+  _map: {fileID: 0}
+  _poolBoxes: {fileID: 0}
 --- !u!114 &7704351645599830751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,32 +150,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _botPrefab: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
   _botTransform: {fileID: 4386548275279230139}
---- !u!114 &6759320814465155782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 125837a8b982c8141bf06cf35f88e646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &3870012077987321323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b78b11b6acf3e694c9d60c54fdd92f38, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _flagPrefab: {fileID: -550033922953199667, guid: f9e060bea3a553942ba306c6e3b6b727, type: 3}
-  _map: {fileID: 0}
 --- !u!114 &1020883964747154106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22b72e7b8aab1946b4839861601ae78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolBoxes: {fileID: 0}
 --- !u!208 &7183511250486180376
 NavMeshObstacle:
   m_ObjectHideFlags: 0

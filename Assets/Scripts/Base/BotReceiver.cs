@@ -5,7 +5,6 @@ public class BotReceiver : MonoBehaviour
 {
     private BaseStorage _boxStorage;
     private BotDetector _botDetector;
-    private BotCreator _botCreator;
 
     private void Awake()
     {
@@ -14,26 +13,17 @@ public class BotReceiver : MonoBehaviour
 
     private void OnEnable()
     {
-        _botDetector.BotReceived += CheckBotOurOrNot;
+        _botDetector.BotReceived += HandleBotWithBox;
     }
 
     private void OnDisable()
     {
-        _botDetector.BotReceived -= CheckBotOurOrNot;
+        _botDetector.BotReceived -= HandleBotWithBox;
     }
 
-    public void Init(BaseStorage boxStorage, BotCreator botCreator)
+    public void Init(BaseStorage boxStorage)
     {
         _boxStorage = boxStorage;
-        _botCreator = botCreator;
-    }
-
-    private void CheckBotOurOrNot(Bot bot)
-    {
-        if (_botCreator.CheckBot(bot))
-        {
-            HandleBotWithBox(bot);
-        }
     }
 
     private void HandleBotWithBox(Bot bot)

@@ -30,12 +30,6 @@ public class BotMovement : MonoBehaviour
         _agent.isStopped = true;
     }
 
-    public void GoToPoint(Vector3 destination)
-    {
-        _agent.isStopped = false;
-        _agent.SetDestination(destination);
-    }
-
     private bool IsAtDestination()
     {
         float minTargetDistante = 1.5f;

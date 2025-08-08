@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1838777947369653201}
   - component: {fileID: 807067650622564403}
   - component: {fileID: 3287423300323265723}
-  - component: {fileID: 1434183544344210776}
   - component: {fileID: 4827404165793705294}
   - component: {fileID: 154138248092786635}
   m_Layer: 3
@@ -125,19 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18d3a55e917e2341ab0d98fc1293dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1434183544344210776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3412877378389697992}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d265fc2d806684044bf96e2369b855ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
 --- !u!114 &4827404165793705294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,7 +154,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: b597cacc0808c8d4a83f23c468c95da4, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 199008f01d51d15488fb390f5890ae51, type: 2}
   m_BuildHeightMesh: 0
 --- !u!65 &154138248092786635
 BoxCollider:

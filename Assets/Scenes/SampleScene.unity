@@ -119,11 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!20 &330585545 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 3318522165689426892, guid: 47d4ac624562cd3489897d8c6a596147, type: 3}
-  m_PrefabInstance: {fileID: 8303871693005542226}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,17 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425263b54189b354495a785776944615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &533248726 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4339919354872009099, guid: ee802bd484872a640ad523264b82cb14, type: 3}
-  m_PrefabInstance: {fileID: 6771695573006734379}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cf34e5fcc80d5843ae2191b2e4fa26d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1030478187 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3287423300323265723, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
@@ -297,34 +281,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: m_Size.x
-      value: 20.493156
-      objectReference: {fileID: 0}
-    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: m_Size.z
-      value: 11.483183
-      objectReference: {fileID: 0}
-    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: m_Center.x
-      value: 5.9121933
-      objectReference: {fileID: 0}
-    - target: {fileID: 1114288066497204651, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: m_Center.z
-      value: 12.35487
-      objectReference: {fileID: 0}
     - target: {fileID: 3294069233453343403, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_Name
       value: Basa_bots
       objectReference: {fileID: 0}
-    - target: {fileID: 3659791126291752888, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _poolBoxes
-      value: 
-      objectReference: {fileID: 533248722}
-    - target: {fileID: 3870012077987321323, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _map
-      value: 
-      objectReference: {fileID: 1030478187}
     - target: {fileID: 5868952572833910253, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.9
@@ -366,13 +326,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _builder
+      propertyPath: _map
       value: 
-      objectReference: {fileID: 533248726}
+      objectReference: {fileID: 1030478187}
     - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: _boxKeeper
       value: 
       objectReference: {fileID: 533248724}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _poolBoxes
+      value: 
+      objectReference: {fileID: 533248722}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -386,21 +350,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1434183544344210776, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
-      propertyPath: _mainCamera
-      value: 
-      objectReference: {fileID: 330585545}
     - target: {fileID: 3412877378389697992, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
       propertyPath: m_Name
       value: Ground_map
-      objectReference: {fileID: 0}
-    - target: {fileID: 3412877378389697992, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3412877378389697992, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 3858462269351818392, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
       propertyPath: m_LocalPosition.x
@@ -507,10 +459,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6675821354978272119, guid: ee802bd484872a640ad523264b82cb14, type: 3}
-      propertyPath: _mainCamera
-      value: 
-      objectReference: {fileID: 330585545}
     - target: {fileID: 9103026375773847765, guid: ee802bd484872a640ad523264b82cb14, type: 3}
       propertyPath: m_Name
       value: ForScripts
@@ -531,10 +479,6 @@ PrefabInstance:
     - target: {fileID: 1281482684899820405, guid: 47d4ac624562cd3489897d8c6a596147, type: 3}
       propertyPath: m_Name
       value: Main Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 4798438081721838367, guid: 47d4ac624562cd3489897d8c6a596147, type: 3}
-      propertyPath: _zoomSpeed
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4817356737826583975, guid: 47d4ac624562cd3489897d8c6a596147, type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,7 +1,6 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Renderer))]
-[RequireComponent(typeof(ClickMapDetector))]
 public class Map : MonoBehaviour
 {
     private Renderer _renderer;

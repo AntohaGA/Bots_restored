@@ -32,6 +32,6 @@ public class BringBoxTask
         yield return new WaitUntil(() => _botAnimator.IsLifted);
 
         _botAnimator.PlayRunWithBox();
-        _botMovement.GoToPoint(_pointDestination);
+        yield return _botMovement.MoveTo(_pointDestination);
     }
 }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BotDetector : MonoBehaviour
 {
+    [SerializeField] BotCreator _botCreator;
+
     public event Action<Bot> BotReceived;
 
     private void OnTriggerEnter(Collider other)
@@ -11,8 +13,21 @@ public class BotDetector : MonoBehaviour
         {
             if (bot.BoxHandler.WithBox)
             {
-                BotReceived?.Invoke(bot);
+                if (IsBotOur(bot))
+                {
+                    BotReceived?.Invoke(bot);
+                }
             }
         }
+    }
+
+    private bool IsBotOur(Bot bot)
+    {
+        if (_botCreator.IsOurBot(bot))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

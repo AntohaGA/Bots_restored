@@ -10,10 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6323561157656628225}
   - component: {fileID: 6345422974980968175}
-  - component: {fileID: 6675821354978272119}
   - component: {fileID: 6636713665145981488}
   - component: {fileID: 1230426693380274688}
-  - component: {fileID: 4339919354872009099}
   m_Layer: 0
   m_Name: ForScripts
   m_TagString: Untagged
@@ -48,19 +46,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8715ca77b2c4454fb56360a3e2becb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6675821354978272119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9103026375773847765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 125837a8b982c8141bf06cf35f88e646, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
 --- !u!114 &6636713665145981488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,17 +74,4 @@ MonoBehaviour:
   _poolBoxes: {fileID: 6345422974980968175}
   _prefabBox: {fileID: 5135942565792788186, guid: 94b2266c1af75bb4ba0e88760a01dcae, type: 3}
   _map: {fileID: 0}
-  _spawnInterval: 3
---- !u!114 &4339919354872009099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9103026375773847765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cf34e5fcc80d5843ae2191b2e4fa26d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+  _spawnInterval: 1
