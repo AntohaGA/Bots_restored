@@ -25,9 +25,9 @@ public class Bot : MonoBehaviour
         BoxLifter = GetComponent<BoxLifter>();
     }
 
-    public void Init(Vector3 spawnPosition)
+    public void Init()
     {
-        Movement.ResetPosition(spawnPosition);
+        Movement.ResetPosition();
         MadeFree();
     }
 

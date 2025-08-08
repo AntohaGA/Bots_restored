@@ -6,7 +6,7 @@ public class BotKeeper : MonoBehaviour
     [SerializeField] private Transform _botSpawn;
 
     private Bot _botPrefab;
-    private List<Bot> _bots;
+    private List<Bot> _bots = new();
 
     public int MaxBots { get; private set; } = 10;
 
@@ -73,9 +73,10 @@ public class BotKeeper : MonoBehaviour
 
     private Bot CreateNewBot(Vector3 spawnPosition)
     {
-        Bot bot = Instantiate(_botPrefab);
-        bot.Init(spawnPosition);
+        Bot bot = Instantiate(_botPrefab, spawnPosition, Quaternion.identity);
+        bot.Init();
         _bots.Add(bot);
+
         return bot;
     }
 }

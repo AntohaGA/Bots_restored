@@ -13,9 +13,9 @@ public class Movement : MonoBehaviour
         _agent.isStopped = true;
     }
 
-    public void ResetPosition(Vector3 position)
+    public void ResetPosition()
     {
-        _agent.Warp(position);
+      //  _agent.Warp(position);
         _agent.ResetPath();
         _agent.isStopped = true;
     }
