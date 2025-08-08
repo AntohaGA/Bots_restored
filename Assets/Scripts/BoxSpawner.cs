@@ -7,11 +7,11 @@ public class BoxSpawner : MonoBehaviour
 {
     private const int CountCollideOverlap = 10;
 
-    [SerializeField] private Box _prefabBox;
     [SerializeField] private Map _map;
     [SerializeField] private float _spawnInterval = 3;
 
     private PoolBoxes _poolBoxes;
+    private Box _prefabBox;
 
     private int _maxAttempts = 10;
     private float _checkRadius = 1f;
@@ -22,6 +22,8 @@ public class BoxSpawner : MonoBehaviour
 
     private void Awake()
     {
+        _prefabBox = Resources.Load<Box>("Prefabs/Box");
+
         _poolBoxes = GetComponent<PoolBoxes>();
         _poolBoxes.Init(_prefabBox);
     }

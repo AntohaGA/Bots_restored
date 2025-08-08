@@ -12,9 +12,11 @@ public class Bot : MonoBehaviour
     private BringBoxTask _currentTask;
     private BotAnimator _botAnimator;
 
+    private Coroutine _bringBoxCoroutine;
+
     public bool IsBusy { get; private set; }
     public Box Box { get; private set; }
-    public BoxLifter BoxHandler { get; private  set; }
+    public BoxLifter BoxHandler { get; private set; }
 
     private void Awake()
     {
@@ -30,18 +32,22 @@ public class Bot : MonoBehaviour
         MadeFree();
     }
 
-    public void BringBox(Box box, Vector3 positionBase)
+    public void BringBoxTask(Box box, Vector3 positionBase)
     {
         IsBusy = true;
         Box = box;
         _currentTask = new BringBoxTask(Box, positionBase, _botAnimator, _movement, _botRotation, BoxHandler);
-        StartCoroutine(RunTask(_currentTask));
+
+        _bringBoxCoroutine = StartCoroutine(RunTask(_currentTask));
     }
 
     public void MadeFree()
     {
         IsBusy = false;
         _botAnimator.PlayWait();
+
+        if (_bringBoxCoroutine != null)
+            StopCoroutine(_bringBoxCoroutine);
     }
 
     private IEnumerator RunTask(BringBoxTask task)

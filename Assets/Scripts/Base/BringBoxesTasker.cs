@@ -19,7 +19,7 @@ public class BringBoxesTasker : MonoBehaviour
         {
             if (_boxKeeper.TryFindNearestBox(transform.position, out Box box))
             {
-                bot.BringBox(box, _pointIn.position);
+                bot.BringBoxTask(box, _pointIn.position);
 
                 return true;
             }

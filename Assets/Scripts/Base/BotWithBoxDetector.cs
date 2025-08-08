@@ -1,11 +1,17 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BotDetector : MonoBehaviour
+public class BotWithBoxDetector : MonoBehaviour
 {
-    [SerializeField] BotCreator _botCreator;
+    private List<Bot> _bots;
 
     public event Action<Bot> BotReceived;
+
+    public void Init(List<Bot> bots)
+    {
+        _bots = bots;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,7 +19,7 @@ public class BotDetector : MonoBehaviour
         {
             if (bot.BoxHandler.WithBox)
             {
-                if (IsBotOur(bot))
+                if (IsOurBot(bot))
                 {
                     BotReceived?.Invoke(bot);
                 }
@@ -21,9 +27,9 @@ public class BotDetector : MonoBehaviour
         }
     }
 
-    private bool IsBotOur(Bot bot)
+    private bool IsOurBot(Bot bot)
     {
-        if (_botCreator.IsOurBot(bot))
+        if (_bots.Contains(bot))
         {
             return true;
         }

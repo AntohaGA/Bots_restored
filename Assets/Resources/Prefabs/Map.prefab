@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4827404165793705294}
   - component: {fileID: 154138248092786635}
   m_Layer: 3
-  m_Name: Ground_map
+  m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

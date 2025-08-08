@@ -3,26 +3,21 @@ using UnityEngine;
 
 public class BotCreator : MonoBehaviour
 {
-    [SerializeField] private Bot _botPrefab;
-    [SerializeField] private Transform _botTransform;
+    [SerializeField] private Transform _botSpawn;
 
+    private Bot _botPrefab;
     private List<Bot> _bots = new();
 
     public int MaxBots { get; private set; } = 10;
 
+    private void Awake()
+    {
+        _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
+    }
+
     public void IncreaseCountBots(int maxBots)
     {
         MaxBots = maxBots;
-    }
-
-    public bool IsOurBot(Bot bot)
-    {
-        if (_bots.Contains(bot))
-        {
-            return true;
-        }
-
-        return false;
     }
 
     public bool TryGetBotForBilding(out Bot bot)
@@ -50,7 +45,7 @@ public class BotCreator : MonoBehaviour
 
         if (_bots.Count < MaxBots)
         {
-            bot = CreateNewBot(_botTransform.position);
+            bot = CreateNewBot(_botSpawn.position);
 
             return true;
         }

@@ -13,15 +13,15 @@ GameObject:
   - component: {fileID: 2681655532559276049}
   - component: {fileID: 9047651089736403063}
   - component: {fileID: 7704351645599830751}
-  - component: {fileID: 9013187201807750556}
   - component: {fileID: 9000764415155789385}
   - component: {fileID: 1020883964747154106}
   - component: {fileID: 3659791126291752888}
+  - component: {fileID: 5634668061061129308}
   - component: {fileID: 7183511250486180376}
   - component: {fileID: 3215369850361106135}
   - component: {fileID: 1114288066497204651}
   m_Layer: 0
-  m_Name: Basa_bots
+  m_Name: Basa
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boxKeeper: {fileID: 0}
-  _map: {fileID: 0}
   _poolBoxes: {fileID: 0}
 --- !u!114 &7704351645599830751
 MonoBehaviour:
@@ -122,18 +121,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 866a3262597e1144b84f4bcdaa9d3085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &9013187201807750556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26162524fcb4dcd488beec8b2579edcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &9000764415155789385
@@ -175,6 +162,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c22b72e7b8aab1946b4839861601ae78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5634668061061129308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294069233453343403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d8b2205be6e1de4fbbdd9a3459008e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _botCreator: {fileID: 9000764415155789385}
 --- !u!208 &7183511250486180376
 NavMeshObstacle:
   m_ObjectHideFlags: 0
