@@ -1,53 +1,55 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(BotMovement))]
-[RequireComponent(typeof(BotAnimator))]
+[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxLifter))]
-[RequireComponent(typeof(BotRotation))]
+[RequireComponent(typeof(Rotation))]
 public class Bot : MonoBehaviour
 {
-    private BotMovement _movement;
-    private BotRotation _botRotation;
-    private BringBoxTask _currentTask;
-    private BotAnimator _botAnimator;
-
     private Coroutine _bringBoxCoroutine;
 
     public bool IsBusy { get; private set; }
     public Box Box { get; private set; }
-    public BoxLifter BoxHandler { get; private set; }
+    public BoxLifter BoxLifter { get; private set; }
+    public Movement Movement { get; private set; }
+    public Rotation Rotation { get; private set; }
+    public Animator Animator { get; private set; }
+    public BringBoxTask BringBoxTask { get; private set; }
 
     private void Awake()
     {
-        _botAnimator = GetComponent<BotAnimator>();
-        _movement = GetComponent<BotMovement>();
-        _botRotation = GetComponent<BotRotation>();
-        BoxHandler = GetComponent<BoxLifter>();
+        Animator = GetComponent<Animator>();
+        Movement = GetComponent<Movement>();
+        Rotation = GetComponent<Rotation>();
+        BoxLifter = GetComponent<BoxLifter>();
     }
 
     public void Init(Vector3 spawnPosition)
     {
-        _movement.ResetPosition(spawnPosition);
+        Movement.ResetPosition(spawnPosition);
         MadeFree();
     }
 
-    public void BringBoxTask(Box box, Vector3 positionBase)
+    public void MadeTaskBringBox(Box box, Vector3 positionBase)
     {
         IsBusy = true;
         Box = box;
-        _currentTask = new BringBoxTask(Box, positionBase, _botAnimator, _movement, _botRotation, BoxHandler);
+        BringBoxTask = new BringBoxTask(this, Box, positionBase);
 
-        _bringBoxCoroutine = StartCoroutine(RunTask(_currentTask));
+        _bringBoxCoroutine = StartCoroutine(RunTask(BringBoxTask));
     }
 
     public void MadeFree()
     {
         IsBusy = false;
-        _botAnimator.PlayWait();
+        Animator.PlayWait();
 
         if (_bringBoxCoroutine != null)
+        {
             StopCoroutine(_bringBoxCoroutine);
+            _bringBoxCoroutine = null;
+        }
     }
 
     private IEnumerator RunTask(BringBoxTask task)

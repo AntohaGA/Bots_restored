@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class BotMovement : MonoBehaviour
+public class Movement : MonoBehaviour
 {
     private NavMeshAgent _agent;
 

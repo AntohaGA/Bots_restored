@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BotRotation : MonoBehaviour
+public class Rotation : MonoBehaviour
 {
     private NavMeshAgent _agent;
 

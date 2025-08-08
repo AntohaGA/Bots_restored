@@ -1,14 +1,14 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class BotAnimator : MonoBehaviour
+[RequireComponent(typeof(UnityEngine.Animator))]
+public class Animator : MonoBehaviour
 {
     private const string RunTrigger = "run";
     private const string WaitTrigger = "wait";
     private const string LiftTrigger = "lift";
     private const string RunWithBoxTrigger = "runWithBox";
 
-    private Animator _animator;
+    private UnityEngine.Animator _animator;
 
     public bool IsLifting { get; private set; } = false;
     public bool IsLifted { get; private set; } = false;
@@ -18,7 +18,7 @@ public class BotAnimator : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _animator = GetComponent<UnityEngine.Animator>();
     }
 
     public void PlayWait()

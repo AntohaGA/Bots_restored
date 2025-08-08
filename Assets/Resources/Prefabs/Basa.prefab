@@ -12,14 +12,13 @@ GameObject:
   - component: {fileID: 133162922177953426}
   - component: {fileID: 2681655532559276049}
   - component: {fileID: 9047651089736403063}
-  - component: {fileID: 7704351645599830751}
   - component: {fileID: 9000764415155789385}
-  - component: {fileID: 1020883964747154106}
   - component: {fileID: 3659791126291752888}
   - component: {fileID: 5634668061061129308}
   - component: {fileID: 7183511250486180376}
   - component: {fileID: 3215369850361106135}
   - component: {fileID: 1114288066497204651}
+  - component: {fileID: 1945629228338278678}
   m_Layer: 0
   m_Name: Basa
   m_TagString: Untagged
@@ -110,19 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boxKeeper: {fileID: 0}
-  _poolBoxes: {fileID: 0}
---- !u!114 &7704351645599830751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866a3262597e1144b84f4bcdaa9d3085, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9000764415155789385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,21 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e6dd443bbb599f428231e24dab2b9cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _botPrefab: {fileID: 330936606838861085, guid: dc90bc2f84be03b45b6fac6fc39cbe96, type: 3}
-  _botTransform: {fileID: 4386548275279230139}
---- !u!114 &1020883964747154106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556b19ad11f9dc648aaa3da22f354ea7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pointIn: {fileID: 3071196249471463540}
+  _botSpawn: {fileID: 4386548275279230139}
 --- !u!114 &3659791126291752888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8b2205be6e1de4fbbdd9a3459008e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _botCreator: {fileID: 9000764415155789385}
 --- !u!208 &7183511250486180376
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -233,6 +204,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20.493156, y: 1.9300001, z: 11.483183}
   m_Center: {x: 5.9121933, y: 1.1855171, z: 12.35487}
+--- !u!114 &1945629228338278678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3294069233453343403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54b7f1325782f8a429c090d7c6c4b490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _pointIn: {fileID: 3071196249471463540}
 --- !u!1 &5994963084569923091
 GameObject:
   m_ObjectHideFlags: 0

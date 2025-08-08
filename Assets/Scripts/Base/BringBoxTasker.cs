@@ -1,25 +1,25 @@
 using UnityEngine;
 
-public class BringBoxesTasker : MonoBehaviour
+public class BringBoxTasker : MonoBehaviour
 {
     [SerializeField] private Transform _pointIn;
 
     private BoxKeeper _boxKeeper;
-    private BotCreator _botCreator;
+    private BotKeeper _botKeeper;
 
-    public void Init(BoxKeeper boxKeeper, BotCreator botCreator)
+    public void Init(BoxKeeper boxKeeper, BotKeeper botCreator)
     {
         _boxKeeper = boxKeeper;
-        _botCreator = botCreator;
+        _botKeeper = botCreator;
     }
 
     public bool TryBringBox()
     {
-        if (_botCreator.TryGetFreeBot(out Bot bot))
+        if (_botKeeper.TryGetFreeBot(out Bot bot))
         {
             if (_boxKeeper.TryFindNearestBox(transform.position, out Box box))
             {
-                bot.BringBoxTask(box, _pointIn.position);
+                bot.MadeTaskBringBox(box, _pointIn.position);
 
                 return true;
             }

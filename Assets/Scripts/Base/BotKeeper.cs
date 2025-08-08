@@ -1,18 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BotCreator : MonoBehaviour
+public class BotKeeper : MonoBehaviour
 {
     [SerializeField] private Transform _botSpawn;
 
     private Bot _botPrefab;
-    private List<Bot> _bots = new();
+    private List<Bot> _bots;
 
     public int MaxBots { get; private set; } = 10;
 
     private void Awake()
     {
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
+    }
+
+    public void Init(List<Bot> bots)
+    {
+        _bots = bots;
     }
 
     public void IncreaseCountBots(int maxBots)
