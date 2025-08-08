@@ -5,8 +5,8 @@ using UnityEngine;
 public class MapFlagPlacer : MonoBehaviour
 {
     [SerializeField] private Flag _flagPrefab;
-    [SerializeField] private Map _map;
 
+    private Map _map;
     private Flag _currentFlag;
     private ClickBaseDetector _clickBaseDetector;
     private ClickMapDetector _clickMapDetector;
@@ -18,13 +18,18 @@ public class MapFlagPlacer : MonoBehaviour
     private void Awake()
     {
         _clickBaseDetector = GetComponent<ClickBaseDetector>();
+    }
+
+    public void Init(Map map)
+    {
+        _map = map;
         _clickMapDetector = _map.GetComponent<ClickMapDetector>();
+        _clickMapDetector.OnMapClicked += PlaceFlag;
     }
 
     private void OnEnable()
     {
         _clickBaseDetector.OnBaseClicked += ToggleFlagPlacement;
-        _clickMapDetector.OnMapClicked += PlaceFlag;
     }
 
     private void OnDisable()

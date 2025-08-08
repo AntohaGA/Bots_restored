@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class MouseScrollInput : MonoBehaviour
 {
-    [SerializeField] private float _zoomSpeed = 10f;
+    private const string Axis = "Mouse ScrollWheel";
+
+    private float _zoomSpeed = 25f;
 
     public float ScrollValue { get; private set; }
 
     private void Update()
     {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        float scroll = Input.GetAxis(Axis);
         ScrollValue = scroll * _zoomSpeed;
     }
 }

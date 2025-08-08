@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class ClickMapDetector : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera;
+    private Camera _mainCamera;
 
     public event Action<Vector3> OnMapClicked;
+
+    private void Awake()
+    {
+        _mainCamera = Camera.main;
+    }
 
     private void OnMouseDown()
     {

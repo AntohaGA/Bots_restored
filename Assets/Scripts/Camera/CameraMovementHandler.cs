@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class CameraMovementHandler : MonoBehaviour
+public class CameraMovementHandler
 {
-    [SerializeField] private float _moveSpeed = 30f;
-    [SerializeField] private float _borderThickness = 20f;
-    [SerializeField] private Vector2 _minPosition;
-    [SerializeField] private Vector2 _maxPosition;
+    private float _moveSpeed = 30f;
+    private float _borderThickness = 20f;
 
+    private Vector2 _minPosition = new(-30, -30);
+    private Vector2 _maxPosition = new(10, 10);
     private Vector3 _cursorPosition;
 
     public void HandleMovement(Transform cameraTransform)

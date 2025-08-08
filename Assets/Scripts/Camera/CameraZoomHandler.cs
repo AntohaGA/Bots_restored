@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CameraZoomHandler : MonoBehaviour
+public class CameraZoomHandler
 {
-    [SerializeField] private float _zoomSpeed = 30f;
-    [SerializeField] private float _minZoom = 10f;
-    [SerializeField] private float _maxZoom = 50f;
+    private float _zoomSpeed = 30f;
+    private float _minZoom = 10f;
+    private float _maxZoom = 50f;
 
     public void HandleZoom(Transform cameraTransform, float scrollValue)
     {

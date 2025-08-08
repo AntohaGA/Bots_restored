@@ -8,21 +8,47 @@ public class BotCreator : MonoBehaviour
 
     private List<Bot> _bots = new();
 
-    private int _maxBots = 3;
+    public int MaxBots { get; private set; } = 10;
+
+    public void IncreaseCountBots(int maxBots)
+    {
+        MaxBots = maxBots;
+    }
+
+    public bool CheckBot(Bot bot)
+    {
+        if (_bots.Contains(bot))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool TryGetBotForBilding(out Bot bot)
+    {
+        if (_bots.Count <= 1)
+        {
+            bot = null;
+
+            return false;
+        }
+        else
+        {
+            bot = TryFindFreeBot();
+
+            return bot != null;
+        }
+    }
 
     public bool TryGetFreeBot(out Bot bot)
     {
-        foreach (var possibleBot in _bots)
-        {
-            if (possibleBot.IsBusy == false)
-            {
-                bot = possibleBot;
+        bot = TryFindFreeBot();
 
-                return true;
-            }
-        }
+        if (bot != null)
+            return true;
 
-        if (_bots.Count < _maxBots)
+        if (_bots.Count < MaxBots)
         {
             bot = CreateNewBot(_botTransform.position);
 
@@ -34,12 +60,22 @@ public class BotCreator : MonoBehaviour
         return false;
     }
 
+    private Bot TryFindFreeBot()
+    {
+        foreach (var possibleBot in _bots)
+        {
+            if (possibleBot.IsBusy == false)
+                return possibleBot;
+        }
+
+        return null;
+    }
+
     private Bot CreateNewBot(Vector3 spawnPosition)
     {
         Bot bot = Instantiate(_botPrefab);
         bot.Init(spawnPosition);
         _bots.Add(bot);
-
         return bot;
     }
 }

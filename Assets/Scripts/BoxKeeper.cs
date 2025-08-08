@@ -50,15 +50,11 @@ public class BoxKeeper : MonoBehaviour
         {
             Debug.Log("closestBox == null");
         }
-
+       
         box = closestBox;
+        BoxesOnMap.Remove(closestBox);
 
         return true;
-    }
-
-    public void ReserveBox(Box box)
-    {
-        BoxesOnMap.Remove(box);
     }
 
     private void AddBox(Box box)
