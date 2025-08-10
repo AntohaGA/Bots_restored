@@ -6,7 +6,7 @@ public class BoxLifter : MonoBehaviour
 
     private Box _currentBox;
 
-    public bool WithBox { get; private set; } = false;
+    public bool WithBox { get; set; } = false;
 
     private void OnEnable()
     {

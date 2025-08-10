@@ -119,17 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &218470843 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9000764415155789385, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-  m_PrefabInstance: {fileID: 1377957858}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6dd443bbb599f428231e24dab2b9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,17 +240,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!114 &533248722 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6345422974980968175, guid: ee802bd484872a640ad523264b82cb14, type: 3}
-  m_PrefabInstance: {fileID: 6771695573006734379}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8715ca77b2c4454fb56360a3e2becb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &533248724 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6636713665145981488, guid: ee802bd484872a640ad523264b82cb14, type: 3}
@@ -273,6 +251,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 425263b54189b354495a785776944615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &786391191 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3071196249471463540, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+  m_PrefabInstance: {fileID: 1377957858}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1030478187 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3287423300323265723, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
@@ -297,14 +280,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1945629228338278678, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _pointIn
+      value: 
+      objectReference: {fileID: 786391191}
     - target: {fileID: 3294069233453343403, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_Name
       value: Basa_bots
       objectReference: {fileID: 0}
-    - target: {fileID: 5634668061061129308, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _botCreator
-      value: 
-      objectReference: {fileID: 218470843}
     - target: {fileID: 5868952572833910253, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.9
@@ -349,24 +332,11 @@ PrefabInstance:
       propertyPath: _botSpawn
       value: 
       objectReference: {fileID: 1332486231}
-    - target: {fileID: 9013187201807750556, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _botCreator
-      value: 
-      objectReference: {fileID: 218470843}
-    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _map
-      value: 
-      objectReference: {fileID: 1030478187}
     - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: _boxKeeper
       value: 
       objectReference: {fileID: 533248724}
-    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _poolBoxes
-      value: 
-      objectReference: {fileID: 533248722}
-    m_RemovedComponents:
-    - {fileID: 9013187201807750556, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -446,7 +416,7 @@ PrefabInstance:
       objectReference: {fileID: 1030478187}
     - target: {fileID: 1230426693380274688, guid: ee802bd484872a640ad523264b82cb14, type: 3}
       propertyPath: _spawnInterval
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6323561157656628225, guid: ee802bd484872a640ad523264b82cb14, type: 3}
       propertyPath: m_LocalPosition.x

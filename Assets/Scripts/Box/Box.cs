@@ -45,6 +45,9 @@ public class Box : MonoBehaviour
 
     public void Return()
     {
+        transform.SetParent(null);
+        SetRigidBodyKinematic(false);
+
         OnDestroy?.Invoke(this);
     }
 }

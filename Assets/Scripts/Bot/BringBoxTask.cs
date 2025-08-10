@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BringBoxTask
+public class BringBoxTask: ITaskable
 {
     private Bot _bot;
     private Box _box;
@@ -14,7 +14,7 @@ public class BringBoxTask
         _pointDestination = pointDestination;
     }
 
-    public IEnumerator Run()
+    public IEnumerator Do()
     {
         _bot.Animator.PlayRun();
         yield return _bot.Movement.MoveTo(_box.SpotForLift);

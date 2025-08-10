@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
-    [SerializeField] private Transform _botSpawn;
+    private Vector3 _positionSpawnBots = new(-5.5f, 1.5f, 10);
 
     private Bot _botPrefab;
     private List<Bot> _bots = new();
@@ -50,7 +50,7 @@ public class BotKeeper : MonoBehaviour
 
         if (_bots.Count < MaxBots)
         {
-            bot = CreateNewBot(_botSpawn.position);
+            bot = CreateNewBot(transform.TransformPoint(_positionSpawnBots));
 
             return true;
         }

@@ -5,42 +5,27 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshObstacle))]
 [RequireComponent(typeof(BotKeeper))]
-[RequireComponent(typeof(BringBoxTasker))]
 [RequireComponent(typeof(BaseStorage))]
 public class Base : MonoBehaviour
 {
     [SerializeField] private BoxKeeper _boxKeeper;
 
-    private BringBoxTasker _bringBoxesTasker;
-    private BotKeeper _botCreator;
+    private BotKeeper _botKeeper;
     private BaseStorage _storage;
+    private MaderTaskBringBox _maderTaskBringBox;
+
+    private Vector3 _pointDestination;
 
     private List<Bot> _bots = new();
 
     private void Awake()
     {
-        _botCreator = GetComponent<BotKeeper>();
-        _bringBoxesTasker = GetComponent<BringBoxTasker>();
+        _botKeeper = GetComponent<BotKeeper>();
         _storage = GetComponent<BaseStorage>();
 
+        _maderTaskBringBox = new MaderTaskBringBox(_botKeeper, _boxKeeper, _pointDestination);
+
         _storage.Init(_bots);
-        _botCreator.Init(_bots);
-        _bringBoxesTasker.Init(_boxKeeper, _botCreator);
-
-    }
-
-    private void Start()
-    {
-        StartCoroutine(DoJobs());
-    }
-
-    private IEnumerator DoJobs()
-    {
-        while (enabled)
-        {
-            _bringBoxesTasker.TryBringBox();
-
-            yield return new WaitForSeconds(0.3f);
-        }
+        _botKeeper.Init(_bots);
     }
 }

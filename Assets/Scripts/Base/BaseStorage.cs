@@ -34,10 +34,7 @@ public class BaseStorage : MonoBehaviour
     {
         if (IsOurBot(bot))
         {
-            bot.Box.transform.SetParent(null);
-            bot.Box.SetRigidBodyKinematic(false);
-            bot.Box.Return();
-            bot.MadeFree();
+            bot.ReleaseBox();
             _countBoxes++;
         }
 

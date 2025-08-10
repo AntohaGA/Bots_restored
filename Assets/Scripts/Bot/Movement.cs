@@ -13,9 +13,8 @@ public class Movement : MonoBehaviour
         _agent.isStopped = true;
     }
 
-    public void ResetPosition()
+    public void Stop()
     {
-      //  _agent.Warp(position);
         _agent.ResetPath();
         _agent.isStopped = true;
     }
@@ -27,12 +26,12 @@ public class Movement : MonoBehaviour
 
         yield return new WaitUntil(IsAtDestination);
 
-        _agent.isStopped = true;
+     //   _agent.isStopped = true;
     }
 
     private bool IsAtDestination()
     {
-        float minTargetDistante = 1.5f;
+        float minTargetDistante = 2f;
         float minTargetVelocity = 0.1f;
 
         if (_agent.pathPending)
