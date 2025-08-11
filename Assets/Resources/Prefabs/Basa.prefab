@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 9000764415155789385}
   - component: {fileID: 3659791126291752888}
   - component: {fileID: 5634668061061129308}
-  - component: {fileID: 1945629228338278678}
+  - component: {fileID: 7140074543206533492}
   - component: {fileID: 7183511250486180376}
   - component: {fileID: 3215369850361106135}
   - component: {fileID: 1114288066497204651}
@@ -138,7 +138,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9357c92d5d456c4cb748f7865212cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boxKeeper: {fileID: 0}
 --- !u!114 &9000764415155789385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,7 +174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d8b2205be6e1de4fbbdd9a3459008e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1945629228338278678
+  _botKeeper: {fileID: 9000764415155789385}
+--- !u!114 &7140074543206533492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -184,9 +184,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3294069233453343403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54b7f1325782f8a429c090d7c6c4b490, type: 3}
+  m_Script: {fileID: 11500000, guid: 3af0933f2d6175a4e9d046145c6957c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _botKeeper: {fileID: 9000764415155789385}
+  _boxKeeper: {fileID: 0}
+  _prefabBase: {fileID: 0}
 --- !u!208 &7183511250486180376
 NavMeshObstacle:
   m_ObjectHideFlags: 0

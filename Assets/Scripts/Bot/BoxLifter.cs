@@ -6,13 +6,6 @@ public class BoxLifter : MonoBehaviour
 
     private Box _currentBox;
 
-    public bool WithBox { get; set; } = false;
-
-    private void OnEnable()
-    {
-        WithBox = false;
-    }
-
     public void Lift(Box box)
     {
         _currentBox = box;
@@ -20,7 +13,6 @@ public class BoxLifter : MonoBehaviour
         if (_currentBox == null)
             return;
 
-        WithBox = true;
         _currentBox.SetRigidBodyKinematic(true);
         _currentBox.transform.SetParent(_handHolder);
         _currentBox.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);

@@ -2,5 +2,5 @@ using System.Collections;
 
 public interface ITaskable
 {
-    public IEnumerator Do();
+    public IEnumerator Do(Bot bot);
 }

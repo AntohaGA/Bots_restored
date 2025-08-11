@@ -5,11 +5,11 @@ public class BoxKeeper : MonoBehaviour
 {
     [SerializeField] private BoxSpawner _spawner;
 
-    public HashSet<Box> BoxesOnMap { get; private set; }
+    public Queue<Box> BoxesOnMap { get; private set; }
 
     private void Awake()
     {
-        BoxesOnMap = new HashSet<Box>();
+        BoxesOnMap = new Queue<Box>();
     }
 
     private void OnEnable()
@@ -22,38 +22,31 @@ public class BoxKeeper : MonoBehaviour
         _spawner.BoxCreated -= AddBox;
     }
 
-    public bool TryFindNearestBox(Vector3 center, out Box box)
+    public Box GetBox()
     {
-        Box closestBox = null;
-        float minDistance = float.MaxValue;
+        Box box = null;
+        /* float minDistance = float.MaxValue;
+         if (BoxesOnMap.Count == 0)
+         {
+             box = null;
+             return false;
+         }
+         foreach (Box checkedBox in BoxesOnMap)
+         {
+             float distance = Vector3.Distance(center, checkedBox.transform.position);
+             if (distance < minDistance)
+             {
+                 closestBox = checkedBox;
+                 minDistance = distance;
+             }
+         }*/
 
-        if (BoxesOnMap.Count == 0)
+        if (BoxesOnMap.Count > 0)
         {
-            box = null;
-
-            return false;
+            box = BoxesOnMap.Dequeue();
         }
 
-        foreach (Box checkedBox in BoxesOnMap)
-        {
-            float distance = Vector3.Distance(center, checkedBox.transform.position);
-
-            if (distance < minDistance)
-            {
-                closestBox = checkedBox;
-                minDistance = distance;
-            }
-        }
-
-        if (closestBox == null) 
-        {
-            Debug.Log("closestBox == null");
-        }
-       
-        box = closestBox;
-        BoxesOnMap.Remove(closestBox);
-
-        return true;
+        return box;
     }
 
     private void AddBox(Box box)
@@ -61,6 +54,6 @@ public class BoxKeeper : MonoBehaviour
         if (box == null)
             return;
 
-        BoxesOnMap.Add(box);
+        BoxesOnMap.Enqueue(box);
     }
 }

@@ -1,25 +1,30 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(BotAnimator))]
 [RequireComponent(typeof(BoxLifter))]
 [RequireComponent(typeof(Rotation))]
 public class Bot : MonoBehaviour
 {
     private Box _box;
 
-    public bool IsBusy { get; private set; }
-    public BoxLifter BoxLifter { get; private set; }
-    public Movement Movement { get; private set; }
-    public Rotation Rotation { get; private set; }
-    public Animator Animator { get; private set; }
+    private Movement _movement;
+    private BotAnimator _animator;
+    private Rotation _rotation;
+    private BoxLifter _boxLifter;
+
+    public event Action<Bot> Worked;
+    public event Action<Bot> LiftedBox;
+    public event Action<Bot> OnFree;
 
     private void Awake()
     {
-        Animator = GetComponent<Animator>();
-        Movement = GetComponent<Movement>();
-        Rotation = GetComponent<Rotation>();
-        BoxLifter = GetComponent<BoxLifter>();
+        _animator = GetComponent<BotAnimator>();
+        _movement = GetComponent<Movement>();
+        _rotation = GetComponent<Rotation>();
+        _boxLifter = GetComponent<BoxLifter>();
     }
 
     public void Init()
@@ -27,23 +32,64 @@ public class Bot : MonoBehaviour
         MadeFree();
     }
 
-    public void MadeFree()
+    public void GoTo(Vector3 destination)
     {
-        Movement.Stop();
-        IsBusy = false;
-        Animator.PlayWait();
-        _box = null;
+        _animator.PlayRun();
+        StartCoroutine(_movement.MoveTo(destination));
+    }
+
+    public void GoToWithBox(Vector3 destination)
+    {
+        _animator.PlayRunWithBox();
+        StartCoroutine(_movement.MoveTo(destination));
+    }
+
+    public void LiftBox(Box box)
+    {
+        _box = box;
+        StartCoroutine(LiftBoxCoroutine());
+
+        LiftedBox?.Invoke(this);
+    }
+
+    private IEnumerator LiftBoxCoroutine()
+    {
+        LookAt();
+
+        _animator.PlayLift();
+        yield return new WaitUntil(() => _animator.IsLifting);
+        _boxLifter.Lift(_box);
+        yield return new WaitUntil(() => _animator.IsLifted);
+    }
+
+    private void LookAt()
+    {
+        StartCoroutine(_rotation.SmoothLookAt(_box.transform));
     }
 
     public void ReleaseBox()
     {
-        _box.Return();
-        MadeFree();
-        BoxLifter.WithBox = false;
+        if (_box != null)
+        {
+            _box.Return();
+            MadeFree();
+        }
+    }
+
+    public void MadeFree()
+    {
+        _movement.Stop();
+        _animator.PlayWait();
+        _box = null;
+
+        OnFree?.Invoke(this);
     }
 
     public void DoJob(ITaskable task)
     {
-        task.Do();
+        Worked?.Invoke(this);
+
+        Debug.Log("в боте метод doJob" + task);
+        StartCoroutine(task.Do(this));
     }
 }

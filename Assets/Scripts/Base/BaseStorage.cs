@@ -6,8 +6,6 @@ public class BaseStorage : MonoBehaviour
 {
     private BotWithBoxDetector _botWithBoxDetector;
 
-    private List<Bot> _bots;
-
     private int _countBoxes = 0;
 
     private void Awake()
@@ -25,29 +23,9 @@ public class BaseStorage : MonoBehaviour
         _botWithBoxDetector.OurBotReceived -= AddBoxOnBase;
     }
 
-    public void Init(List<Bot> bots)
-    {
-        _bots = bots;
-    }
-
     public void AddBoxOnBase(Bot bot)
     {
-        if (IsOurBot(bot))
-        {
-            bot.ReleaseBox();
-            _countBoxes++;
-        }
-
-        return;
-    }
-
-    private bool IsOurBot(Bot bot)
-    {
-        if (_bots.Contains(bot))
-        {
-            return true;
-        }
-
-        return false;
+          bot.ReleaseBox();
+          _countBoxes++;
     }
 }

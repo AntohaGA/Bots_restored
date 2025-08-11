@@ -3,79 +3,78 @@ using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
-    private Vector3 _positionSpawnBots = new(-5.5f, 1.5f, 10);
+    private Vector3 _offsetPositionSpawnBots = new(-5.5f, 1.5f, 10);
 
     private Bot _botPrefab;
-    private List<Bot> _bots = new();
 
-    public int MaxBots { get; private set; } = 10;
+    private List<Bot> _freeBots;
+    private List<Bot> _busyBots;
+    private List<Bot> _withBoxBots;
 
-    private void Awake()
+    private int _maxBots = 1;
+
+    public void Init()
     {
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
-    }
+        _freeBots = new List<Bot>();
+        _busyBots = new List<Bot>();
 
-    public void Init(List<Bot> bots)
-    {
-        _bots = bots;
-    }
-
-    public void IncreaseCountBots(int maxBots)
-    {
-        MaxBots = maxBots;
-    }
-
-    public bool TryGetBotForBilding(out Bot bot)
-    {
-        if (_bots.Count <= 1)
+        for (int i = 0; i < _maxBots; i++)
         {
-            bot = null;
-
-            return false;
-        }
-        else
-        {
-            bot = TryFindFreeBot();
-
-            return bot != null;
+            CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
         }
     }
 
-    public bool TryGetFreeBot(out Bot bot)
+    public bool GetFree(out Bot bot)
     {
-        bot = TryFindFreeBot();
-
-        if (bot != null)
-            return true;
-
-        if (_bots.Count < MaxBots)
-        {
-            bot = CreateNewBot(transform.TransformPoint(_positionSpawnBots));
-
-            return true;
-        }
-
         bot = null;
+
+        if (_freeBots.Count > 0)
+        {
+            bot = _freeBots[0];
+
+            return true;
+        }
 
         return false;
     }
 
-    private Bot TryFindFreeBot()
+    public void SetBotOnfree(Bot bot)
     {
-        foreach (var possibleBot in _bots)
-        {
-            if (possibleBot.IsBusy == false)
-                return possibleBot;
-        }
-
-        return null;
+        _freeBots.Add(bot);
+        _busyBots.Remove(bot);
     }
 
-    private Bot CreateNewBot(Vector3 spawnPosition)
+    public void SetBotWithBox(Bot bot)
+    {
+        _withBoxBots.Add(bot);
+        _busyBots.Remove(bot);
+    }
+
+    public bool IsBotWithBox(Bot bot)
+    {
+        if (_busyBots.Contains(bot))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    private void SetBotOnWork(Bot bot)
+    {
+        _freeBots.Remove(bot);
+        _busyBots.Add(bot);
+    }
+    private Bot CreateBot(Vector3 spawnPosition)
     {
         Bot bot = Instantiate(_botPrefab, spawnPosition, Quaternion.identity);
         bot.Init();
-        _bots.Add(bot);
+        _freeBots.Add(bot);
+
+        bot.Worked += SetBotOnWork;
+        bot.LiftedBox += SetBotWithBox;
+        bot.OnFree += SetBotOnfree;
 
         return bot;
     }

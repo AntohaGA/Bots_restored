@@ -3,29 +3,23 @@ using UnityEngine;
 
 public class BringBoxTask: ITaskable
 {
-    private Bot _bot;
     private Box _box;
     private Vector3 _pointDestination;
 
-    public BringBoxTask(Bot bot, Box box, Vector3 pointDestination)
+    public BringBoxTask(Box box, Vector3 pointDestination)
     {
-        _bot = bot;
         _box = box;
         _pointDestination = pointDestination;
     }
 
-    public IEnumerator Do()
+    public IEnumerator Do(Bot bot)
     {
-        _bot.Animator.PlayRun();
-        yield return _bot.Movement.MoveTo(_box.SpotForLift);
-        yield return _bot.Rotation.SmoothLookAt(_box.transform);
+        Debug.Log("в методе Do задание bringboxTask");
 
-        _bot.Animator.PlayLift();
-        yield return new WaitUntil(() => _bot.Animator.IsLifting);
-        _bot.BoxLifter.Lift(_box);
-        yield return new WaitUntil(() => _bot.Animator.IsLifted);
+        bot.GoTo(_box.SpotForLift);
+        bot.LiftBox(_box);
+        bot.GoToWithBox(_pointDestination);
 
-        _bot.Animator.PlayRunWithBox();
-        yield return _bot.Movement.MoveTo(_pointDestination);
+        yield return null;
     }
 }

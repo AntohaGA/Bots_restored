@@ -25,8 +25,6 @@ public class Movement : MonoBehaviour
         _agent.SetDestination(destination);
 
         yield return new WaitUntil(IsAtDestination);
-
-     //   _agent.isStopped = true;
     }
 
     private bool IsAtDestination()
