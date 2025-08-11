@@ -16,6 +16,6 @@ public class BringBoxTask: ITaskable
     {
         yield return bot.GoTo(_box.SpotForLift);
         yield return bot.LiftBox(_box);
-        yield return bot.GoToWithBox(_pointDestination);
+        yield return bot.GoTo(_pointDestination);
     }
 }

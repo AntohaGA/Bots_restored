@@ -76,7 +76,7 @@ public class BotKeeper : MonoBehaviour
 
         bot.StartedWorking += SetBotOnWork;
         bot.LiftedBox += SetBotWithBox;
-        bot.OnFree += SetBotOnfree;
+        bot.SetFree += SetBotOnfree;
 
         return bot;
     }

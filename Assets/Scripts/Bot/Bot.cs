@@ -9,7 +9,6 @@ using UnityEngine;
 public class Bot : MonoBehaviour
 {
     private Box _box;
-
     private Movement _movement;
     private BotAnimator _animator;
     private Rotation _rotation;
@@ -17,7 +16,7 @@ public class Bot : MonoBehaviour
 
     public event Action<Bot> StartedWorking;
     public event Action<Bot> LiftedBox;
-    public event Action<Bot> OnFree;
+    public event Action<Bot> SetFree;
 
     private void Awake()
     {
@@ -34,16 +33,16 @@ public class Bot : MonoBehaviour
 
     public IEnumerator GoTo(Vector3 destination)
     {
-        _animator.PlayRun();
+        if (_box == null)
+        {
+            _animator.PlayRun();
+        }
+        else
+        {
+            _animator.PlayRunWithBox();
+        }
 
         yield return _movement.MoveTo(destination);
-    }
-
-    public IEnumerator GoToWithBox(Vector3 destination)
-    {
-        _animator.PlayRunWithBox();
-
-        yield return StartCoroutine(_movement.MoveTo(destination));
     }
 
     public IEnumerator LiftBox(Box box)
@@ -59,11 +58,6 @@ public class Bot : MonoBehaviour
         LiftedBox?.Invoke(this);
     }
 
-    private void LookAt()
-    {
-        StartCoroutine(_rotation.SmoothLookAt(_box.transform));
-    }
-
     public void ReleaseBox()
     {
         if (_box != null)
@@ -72,19 +66,27 @@ public class Bot : MonoBehaviour
             MadeFree();
         }
     }
+    public void DoJob(ITaskable task)
+    {
+        if (task == null)
+        {
+            StartedWorking?.Invoke(this);
+            StartCoroutine(task.Do(this));
+        }
+    }
 
-    public void MadeFree()
+    private void LookAt()
+    {
+        if (_box != null)
+            StartCoroutine(_rotation.SmoothLookAt(_box.transform));
+    }
+
+    private void MadeFree()
     {
         _movement.Stop();
         _animator.PlayWait();
         _box = null;
 
-        OnFree?.Invoke(this);
-    }
-
-    public void DoJob(ITaskable task)
-    {
-        StartedWorking?.Invoke(this);
-        StartCoroutine(task.Do(this));
+        SetFree?.Invoke(this);
     }
 }
