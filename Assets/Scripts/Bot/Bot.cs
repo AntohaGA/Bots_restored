@@ -68,7 +68,7 @@ public class Bot : MonoBehaviour
     }
     public void DoJob(ITaskable task)
     {
-        if (task == null)
+        if (task != null)
         {
             StartedWorking?.Invoke(this);
             StartCoroutine(task.Do(this));

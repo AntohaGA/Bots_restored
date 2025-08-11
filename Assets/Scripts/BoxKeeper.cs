@@ -5,11 +5,11 @@ public class BoxKeeper : MonoBehaviour
 {
     [SerializeField] private BoxSpawner _spawner;
 
-    public Queue<Box> BoxesOnMap { get; private set; }
+    private List<Box> _boxesOnMap;
 
     private void Awake()
     {
-        BoxesOnMap = new Queue<Box>();
+        _boxesOnMap = new List<Box>();
     }
 
     private void OnEnable()
@@ -22,29 +22,29 @@ public class BoxKeeper : MonoBehaviour
         _spawner.BoxCreated -= AddBox;
     }
 
-    public Box GetBox()
+    public Box GetClosest(Vector3 center)
     {
         Box box = null;
-        /* float minDistance = float.MaxValue;
-         if (BoxesOnMap.Count == 0)
-         {
-             box = null;
-             return false;
-         }
-         foreach (Box checkedBox in BoxesOnMap)
-         {
-             float distance = Vector3.Distance(center, checkedBox.transform.position);
-             if (distance < minDistance)
-             {
-                 closestBox = checkedBox;
-                 minDistance = distance;
-             }
-         }*/
 
-        if (BoxesOnMap.Count > 0)
+        float minDistance = float.MaxValue;
+
+        if (_boxesOnMap.Count == 0)
         {
-            box = BoxesOnMap.Dequeue();
+            return null;
         }
+
+        foreach (Box checkedBox in _boxesOnMap)
+        {
+            float distance = (center - checkedBox.transform.position).sqrMagnitude;
+
+            if (distance < minDistance)
+            {
+                box = checkedBox;
+                minDistance = distance;
+            }
+        }
+
+        _boxesOnMap.Remove(box);
 
         return box;
     }
@@ -54,6 +54,6 @@ public class BoxKeeper : MonoBehaviour
         if (box == null)
             return;
 
-        BoxesOnMap.Enqueue(box);
+        _boxesOnMap.Add(box);
     }
 }

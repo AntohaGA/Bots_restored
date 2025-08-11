@@ -18,7 +18,7 @@ public class ManagerTasks : MonoBehaviour
     {
         while (enabled)
         {
-            if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.GetTask(out ITaskable _task))
+            if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.CreateTask(out ITaskable _task))
             {
                 bot.DoJob(_task);
             }
