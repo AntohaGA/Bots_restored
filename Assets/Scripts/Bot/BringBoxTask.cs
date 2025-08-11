@@ -14,12 +14,8 @@ public class BringBoxTask: ITaskable
 
     public IEnumerator Do(Bot bot)
     {
-        Debug.Log("в методе Do задание bringboxTask");
-
-        bot.GoTo(_box.SpotForLift);
-        bot.LiftBox(_box);
-        bot.GoToWithBox(_pointDestination);
-
-        yield return null;
+        yield return bot.GoTo(_box.SpotForLift);
+        yield return bot.LiftBox(_box);
+        yield return bot.GoToWithBox(_pointDestination);
     }
 }

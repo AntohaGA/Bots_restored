@@ -43,6 +43,14 @@ public class Box : MonoBehaviour
         }
     }
 
+    public void Take(Transform taker)
+    {
+        SetRigidBodyKinematic(true);
+        transform.SetParent(taker);
+        transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        SetNavMeshObstacle(false);
+    }
+
     public void Return()
     {
         transform.SetParent(null);

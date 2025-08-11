@@ -15,7 +15,7 @@ public class Bot : MonoBehaviour
     private Rotation _rotation;
     private BoxLifter _boxLifter;
 
-    public event Action<Bot> Worked;
+    public event Action<Bot> StartedWorking;
     public event Action<Bot> LiftedBox;
     public event Action<Bot> OnFree;
 
@@ -32,34 +32,31 @@ public class Bot : MonoBehaviour
         MadeFree();
     }
 
-    public void GoTo(Vector3 destination)
+    public IEnumerator GoTo(Vector3 destination)
     {
         _animator.PlayRun();
-        StartCoroutine(_movement.MoveTo(destination));
+
+        yield return _movement.MoveTo(destination);
     }
 
-    public void GoToWithBox(Vector3 destination)
+    public IEnumerator GoToWithBox(Vector3 destination)
     {
         _animator.PlayRunWithBox();
-        StartCoroutine(_movement.MoveTo(destination));
+
+        yield return StartCoroutine(_movement.MoveTo(destination));
     }
 
-    public void LiftBox(Box box)
+    public IEnumerator LiftBox(Box box)
     {
         _box = box;
-        StartCoroutine(LiftBoxCoroutine());
-
-        LiftedBox?.Invoke(this);
-    }
-
-    private IEnumerator LiftBoxCoroutine()
-    {
         LookAt();
 
         _animator.PlayLift();
         yield return new WaitUntil(() => _animator.IsLifting);
         _boxLifter.Lift(_box);
         yield return new WaitUntil(() => _animator.IsLifted);
+
+        LiftedBox?.Invoke(this);
     }
 
     private void LookAt()
@@ -87,9 +84,7 @@ public class Bot : MonoBehaviour
 
     public void DoJob(ITaskable task)
     {
-        Worked?.Invoke(this);
-
-        Debug.Log("в боте метод doJob" + task);
+        StartedWorking?.Invoke(this);
         StartCoroutine(task.Do(this));
     }
 }

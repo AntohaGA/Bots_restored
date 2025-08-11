@@ -3,12 +3,13 @@ using UnityEngine;
 public class CreatorTasksBringBox
 {
     private BoxKeeper _boxKeeper;
+    private Vector3 _pointOffsetDestination = new(5.2f, 1.5f, 10);
     private Vector3 _pointDestination;
 
-    public CreatorTasksBringBox(BoxKeeper boxKeeper, Vector3 pointDestination)
+    public CreatorTasksBringBox(BoxKeeper boxKeeper, Transform basa)
     {
         _boxKeeper = boxKeeper;
-        _pointDestination = pointDestination;
+        _pointDestination = basa.TransformPoint(_pointOffsetDestination);
     }
 
     public bool GetTask(out ITaskable task)

@@ -11,13 +11,14 @@ public class BotKeeper : MonoBehaviour
     private List<Bot> _busyBots;
     private List<Bot> _withBoxBots;
 
-    private int _maxBots = 1;
+    private int _maxBots = 10;
 
     public void Init()
     {
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
         _freeBots = new List<Bot>();
         _busyBots = new List<Bot>();
+        _withBoxBots = new List<Bot>();
 
         for (int i = 0; i < _maxBots; i++)
         {
@@ -39,13 +40,13 @@ public class BotKeeper : MonoBehaviour
         return false;
     }
 
-    public void SetBotOnfree(Bot bot)
+    private void SetBotOnfree(Bot bot)
     {
         _freeBots.Add(bot);
-        _busyBots.Remove(bot);
+        _withBoxBots.Remove(bot);
     }
 
-    public void SetBotWithBox(Bot bot)
+    private void SetBotWithBox(Bot bot)
     {
         _withBoxBots.Add(bot);
         _busyBots.Remove(bot);
@@ -53,7 +54,7 @@ public class BotKeeper : MonoBehaviour
 
     public bool IsBotWithBox(Bot bot)
     {
-        if (_busyBots.Contains(bot))
+        if (_withBoxBots.Contains(bot))
         {
             return true;
         }
@@ -66,13 +67,14 @@ public class BotKeeper : MonoBehaviour
         _freeBots.Remove(bot);
         _busyBots.Add(bot);
     }
+
     private Bot CreateBot(Vector3 spawnPosition)
     {
         Bot bot = Instantiate(_botPrefab, spawnPosition, Quaternion.identity);
         bot.Init();
         _freeBots.Add(bot);
 
-        bot.Worked += SetBotOnWork;
+        bot.StartedWorking += SetBotOnWork;
         bot.LiftedBox += SetBotWithBox;
         bot.OnFree += SetBotOnfree;
 

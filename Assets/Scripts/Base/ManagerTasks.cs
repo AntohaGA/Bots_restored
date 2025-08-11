@@ -11,7 +11,7 @@ public class ManagerTasks : MonoBehaviour
 
     private void Awake()
     {
-        _creatorTasksBringBox = new CreatorTasksBringBox(_boxKeeper, transform.position);
+        _creatorTasksBringBox = new CreatorTasksBringBox(_boxKeeper, transform);
     }
 
     public IEnumerator DoTasks()
@@ -20,8 +20,6 @@ public class ManagerTasks : MonoBehaviour
         {
             if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.GetTask(out ITaskable _task))
             {
-                Debug.Log("bot.DoJob(_task)");
-
                 bot.DoJob(_task);
             }
 

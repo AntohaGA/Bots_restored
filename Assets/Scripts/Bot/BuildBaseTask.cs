@@ -11,8 +11,7 @@ public class BuildBaseTask : ITaskable
     }
 
     public IEnumerator Do(Bot bot)
-    {
-        bot.GoTo(_pointBuildBase);
-        yield return null;
+    {      
+        yield return bot.GoTo(_pointBuildBase);
     }
 }
