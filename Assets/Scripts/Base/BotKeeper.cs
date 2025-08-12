@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
+    private const int StartCountBots = 3;
+
     private Vector3 _offsetPositionSpawnBots = new(-5.5f, 1.5f, 10);
 
     private Bot _botPrefab;
-
     private List<Bot> _freeBots;
     private List<Bot> _busyBots;
     private List<Bot> _withBoxBots;
 
-    private int _maxBots = 3;
+    public int CountBots { get; private set; } = StartCountBots;
 
     private void OnDestroy()
     {
@@ -53,7 +54,7 @@ public class BotKeeper : MonoBehaviour
         _busyBots = new List<Bot>();
         _withBoxBots = new List<Bot>();
 
-        for (int i = 0; i < _maxBots; i++)
+        for (int i = 0; i < CountBots; i++)
         {
             CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
         }
@@ -101,7 +102,12 @@ public class BotKeeper : MonoBehaviour
         _busyBots.Add(bot);
     }
 
-    private Bot CreateBot(Vector3 spawnPosition)
+    public void CreateNewBot()
+    {
+        CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
+    }
+
+    private void CreateBot(Vector3 spawnPosition)
     {
         Bot bot = Instantiate(_botPrefab, spawnPosition, Quaternion.identity);
         bot.Init();
@@ -110,7 +116,5 @@ public class BotKeeper : MonoBehaviour
         bot.StartedWorking += SetBotOnWork;
         bot.LiftedBox += SetBotWithBox;
         bot.SetFree += SetBotOnfree;
-
-        return bot;
     }
 }

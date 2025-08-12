@@ -9,9 +9,8 @@ public class CreatorTasksBuildBase
         _basePrefab = Resources.Load<Base>("Resources/Base");
     }
 
-    public ITaskable Get(Vector3 point)
+    public void CreateTask(out ITaskable task, Vector3 pointSpawn)
     {
-
-        return null;
+        task = new BuildBaseTask(pointSpawn);
     }
 }

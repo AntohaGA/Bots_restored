@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxSpawner))]
 public class BoxKeeper : MonoBehaviour
 {
-    [SerializeField] private BoxSpawner _spawner;
+    private BoxSpawner _spawner;
 
     private List<Box> _boxesOnMap;
 
     private void Awake()
     {
+        _spawner = GetComponent<BoxSpawner>();
         _boxesOnMap = new List<Box>();
     }
 

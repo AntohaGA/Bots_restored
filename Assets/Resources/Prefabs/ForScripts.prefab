@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6345422974980968175}
   - component: {fileID: 6636713665145981488}
   - component: {fileID: 1230426693380274688}
+  - component: {fileID: 1094889474551157508}
   m_Layer: 0
   m_Name: ForScripts
   m_TagString: Untagged
@@ -71,7 +72,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09566ea8f03846f4c8729f04b88623b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _poolBoxes: {fileID: 6345422974980968175}
-  _prefabBox: {fileID: 5135942565792788186, guid: 94b2266c1af75bb4ba0e88760a01dcae, type: 3}
   _map: {fileID: 0}
   _spawnInterval: 1
+--- !u!114 &1094889474551157508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9103026375773847765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7710232b7c379ff449cd60546ba5ba99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _basePrefab: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+  _boxKeeper: {fileID: 6636713665145981488}
+  _clickMapDetector: {fileID: 0}

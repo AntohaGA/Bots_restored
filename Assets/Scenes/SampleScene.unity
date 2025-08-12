@@ -374,6 +374,10 @@ PrefabInstance:
       propertyPath: _boxKeeper
       value: 
       objectReference: {fileID: 533248724}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _clickMapDetector
+      value: 
+      objectReference: {fileID: 1030478194}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

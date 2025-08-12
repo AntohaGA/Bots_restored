@@ -17,23 +17,23 @@ public class Base : MonoBehaviour
     private BotWithBoxDetector _botWithBoxDetector;
     private FlagPlacer _flagPlacer;
 
-    private void Awake()
+    public void InitDependencies(BoxKeeper boxKeeper, ClickMapDetector clickMapDetector)
+    {
+        _boxKeeper = boxKeeper;
+        _clickMapDetector = clickMapDetector;
+    }
+
+    public void Initialize()
     {
         _botKeeper = GetComponent<BotKeeper>();
         _botKeeper.Init();
-
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
         _botWithBoxDetector.Init(_botKeeper);
-
         _managerTasks = GetComponent<ManagerTasks>();
         _managerTasks.Init(_botKeeper, _boxKeeper);
-
         _flagPlacer = GetComponent<FlagPlacer>();
         _flagPlacer.Init(_clickMapDetector);
-    }
 
-    private void Start()
-    {
         StartCoroutine(_managerTasks.DoTasks());
     }
 }
