@@ -4,12 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(ClickBaseDetector))]
 public class FlagPlacer : MonoBehaviour
 {
-    [SerializeField] private Flag _flagPrefab;
-    [SerializeField] private Map _map;
+    private ClickMapDetector _clickMapDetector;
 
+    private Flag _flagPrefab;
     private Flag _currentFlag;
     private ClickBaseDetector _clickBaseDetector;
-    private ClickMapDetector _clickMapDetector;
 
     private bool _isReadyPlacingFlag = false;
 
@@ -17,14 +16,19 @@ public class FlagPlacer : MonoBehaviour
 
     private void Awake()
     {
+        _flagPrefab = Resources.Load<Flag>("Prefabs/Flag");
         _clickBaseDetector = GetComponent<ClickBaseDetector>();
-        _clickMapDetector = _map.GetComponent<ClickMapDetector>();
+    }
+
+    public void Init(ClickMapDetector clickMapDetector)
+    {
+        _clickMapDetector = clickMapDetector;
+        _clickMapDetector.OnMapClicked += PlaceFlag;
     }
 
     private void OnEnable()
     {
         _clickBaseDetector.OnBaseClicked += ToggleFlagPlacement;
-        _clickMapDetector.OnMapClicked += PlaceFlag;
     }
 
     private void OnDisable()

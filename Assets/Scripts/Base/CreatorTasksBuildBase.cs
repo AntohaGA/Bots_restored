@@ -4,14 +4,13 @@ public class CreatorTasksBuildBase
 {
     private Base _basePrefab;
 
-    public CreatorTasksBuildBase(Base basePrefab)
+    public CreatorTasksBuildBase()
     {
-        _basePrefab = basePrefab;
+        _basePrefab = Resources.Load<Base>("Resources/Base");
     }
 
     public ITaskable Get(Vector3 point)
     {
-
 
         return null;
     }

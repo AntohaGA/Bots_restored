@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class BotWithBoxDetector : MonoBehaviour
 {
-    [SerializeField] private BotKeeper _botKeeper;
+    private BotKeeper _botKeeper;
 
     public event Action<Bot> OurBotReceived;
+
+    public void Init(BotKeeper botKeeper)
+    {
+        _botKeeper = botKeeper;
+    }
 
     private void OnTriggerEnter(Collider other)
     {

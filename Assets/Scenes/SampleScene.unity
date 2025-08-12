@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!20 &131672995 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 3318522165689426892, guid: 47d4ac624562cd3489897d8c6a596147, type: 3}
+  m_PrefabInstance: {fileID: 8303871693005542226}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +267,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18d3a55e917e2341ab0d98fc1293dd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1030478194 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1434183544344210776, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
+  m_PrefabInstance: {fileID: 6591795659280916692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef391395de006bf43913eee3e7287505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1377957858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -330,7 +346,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6265278207344177128, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _map
+      value: 
+      objectReference: {fileID: 1030478187}
+    - target: {fileID: 6265278207344177128, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _flagPrefab
+      value: 
+      objectReference: {fileID: -550033922953199667, guid: f9e060bea3a553942ba306c6e3b6b727, type: 3}
+    - target: {fileID: 6265278207344177128, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 131672995}
+    - target: {fileID: 6265278207344177128, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _clickMapDetector
+      value: 
+      objectReference: {fileID: 1030478194}
+    - target: {fileID: 6759320814465155782, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 131672995}
     - target: {fileID: 7140074543206533492, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: _boxKeeper
+      value: 
+      objectReference: {fileID: 533248724}
+    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: _boxKeeper
       value: 
       objectReference: {fileID: 533248724}
@@ -347,6 +387,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 154138248092786635, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434183544344210776, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
+      propertyPath: _mainCamera
+      value: 
+      objectReference: {fileID: 131672995}
     - target: {fileID: 3412877378389697992, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
       propertyPath: m_Name
       value: Ground_map

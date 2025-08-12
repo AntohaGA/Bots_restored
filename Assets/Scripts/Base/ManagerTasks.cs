@@ -3,17 +3,19 @@ using UnityEngine;
 
 public class ManagerTasks : MonoBehaviour
 {
-    [SerializeField] private BotKeeper _botKeeper;
-    [SerializeField] private BoxKeeper _boxKeeper;
-    [SerializeField] private Base _prefabBase;
-
+    private BotKeeper _botKeeper;
+    private BoxKeeper _boxKeeper;
     private CreatorTasksBringBox _creatorTasksBringBox;
+    private CreatorTasksBuildBase _creatorTasksBuildBase;
 
     private bool _isBotCreating = true;
 
-    private void Awake()
+    public void Init(BotKeeper botKeeper, BoxKeeper boxKeeper)
     {
+        _botKeeper = botKeeper;
+        _boxKeeper = boxKeeper;
         _creatorTasksBringBox = new CreatorTasksBringBox(_boxKeeper, transform);
+        _creatorTasksBuildBase = new CreatorTasksBuildBase();
     }
 
     public IEnumerator DoTasks()
