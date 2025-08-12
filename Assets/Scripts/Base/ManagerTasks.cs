@@ -9,6 +9,8 @@ public class ManagerTasks : MonoBehaviour
 
     private CreatorTasksBringBox _creatorTasksBringBox;
 
+    private bool _isBotCreating = true;
+
     private void Awake()
     {
         _creatorTasksBringBox = new CreatorTasksBringBox(_boxKeeper, transform);
@@ -18,10 +20,18 @@ public class ManagerTasks : MonoBehaviour
     {
         while (enabled)
         {
-            if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.CreateTask(out ITaskable _task))
+            if (_isBotCreating)
             {
-                bot.DoJob(_task);
+                if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.CreateTask(out ITaskable _task))
+                {
+                    bot.DoJob(_task);
+                }
             }
+            else
+            {
+
+            }
+
 
             yield return new WaitForSeconds(0.3f);
         }

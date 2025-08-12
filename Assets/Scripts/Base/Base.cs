@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BaseStorage))]
 [RequireComponent(typeof(ManagerTasks))]
 [RequireComponent(typeof(BotWithBoxDetector))]
-
+[RequireComponent(typeof(FlagPlacer))]
 public class Base : MonoBehaviour
 {
     private BotKeeper _botKeeper;

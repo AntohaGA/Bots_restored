@@ -11,7 +11,40 @@ public class BotKeeper : MonoBehaviour
     private List<Bot> _busyBots;
     private List<Bot> _withBoxBots;
 
-    private int _maxBots = 10;
+    private int _maxBots = 3;
+
+    private void OnDestroy()
+    {
+        UnsubscribeAllBots();
+    }
+
+    private void UnsubscribeAllBots()
+    {
+        foreach (var bot in _freeBots)
+        {
+            UnsubscribeBot(bot);
+        }
+
+        foreach (var bot in _busyBots)
+        {
+            UnsubscribeBot(bot);
+        }
+
+        foreach (var bot in _withBoxBots)
+        {
+            UnsubscribeBot(bot);
+        }
+    }
+
+    private void UnsubscribeBot(Bot bot)
+    {
+        if (bot == null)
+            return;
+
+        bot.StartedWorking -= SetBotOnWork;
+        bot.LiftedBox -= SetBotWithBox;
+        bot.SetFree -= SetBotOnfree;
+    }
 
     public void Init()
     {

@@ -240,17 +240,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!114 &454240652 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9000764415155789385, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-  m_PrefabInstance: {fileID: 1377957858}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e6dd443bbb599f428231e24dab2b9cd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &533248724 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6636713665145981488, guid: ee802bd484872a640ad523264b82cb14, type: 3}
@@ -281,14 +270,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3215369850361106135, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Size.x
+      value: 19.371334
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215369850361106135, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Size.z
+      value: 13.52816
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215369850361106135, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Center.x
+      value: 0.11574566
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215369850361106135, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
+      propertyPath: m_Center.z
+      value: 0.16475618
+      objectReference: {fileID: 0}
     - target: {fileID: 3294069233453343403, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_Name
       value: Basa_bots
       objectReference: {fileID: 0}
-    - target: {fileID: 5634668061061129308, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _botKeeper
-      value: 
-      objectReference: {fileID: 454240652}
     - target: {fileID: 5868952572833910253, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 11.9
@@ -330,14 +331,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7140074543206533492, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _boxKeeper
-      value: 
-      objectReference: {fileID: 533248724}
-    - target: {fileID: 7140074543206533492, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-      propertyPath: _prefabBase
-      value: 
-      objectReference: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
-    - target: {fileID: 9047651089736403063, guid: bd17e7ade62794a47806437333cd90d4, type: 3}
       propertyPath: _boxKeeper
       value: 
       objectReference: {fileID: 533248724}
@@ -401,7 +394,7 @@ PrefabInstance:
     - target: {fileID: 4827404165793705294, guid: 6472eef9cf3a1a04aa58b45611b1b778, type: 3}
       propertyPath: m_NavMeshData
       value: 
-      objectReference: {fileID: 23800000, guid: 199008f01d51d15488fb390f5890ae51, type: 2}
+      objectReference: {fileID: 23800000, guid: 87708812e518bee46922a62fc1875c66, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -421,7 +414,7 @@ PrefabInstance:
       objectReference: {fileID: 1030478187}
     - target: {fileID: 1230426693380274688, guid: ee802bd484872a640ad523264b82cb14, type: 3}
       propertyPath: _spawnInterval
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6323561157656628225, guid: ee802bd484872a640ad523264b82cb14, type: 3}
       propertyPath: m_LocalPosition.x

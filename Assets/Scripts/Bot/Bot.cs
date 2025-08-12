@@ -86,7 +86,6 @@ public class Bot : MonoBehaviour
         _movement.Stop();
         _animator.PlayWait();
         _box = null;
-
         SetFree?.Invoke(this);
     }
 }

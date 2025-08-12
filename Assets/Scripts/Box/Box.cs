@@ -46,16 +46,15 @@ public class Box : MonoBehaviour
     public void Take(Transform taker)
     {
         SetRigidBodyKinematic(true);
+        SetNavMeshObstacle(false);
         transform.SetParent(taker);
         transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        SetNavMeshObstacle(false);
     }
 
     public void Return()
     {
         transform.SetParent(null);
         SetRigidBodyKinematic(false);
-
         OnDestroy?.Invoke(this);
     }
 }
