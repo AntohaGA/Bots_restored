@@ -3,23 +3,20 @@ using UnityEngine;
 
 public class ManagerTasks : MonoBehaviour
 {
-    private const int CountBoxesForNewBot = 3;
-    private const int CountBoxesForNewBase = 5;
+    private const int CountBoxesForNewBot = 30;
+    private const int CountBoxesForNewBase = 2;
     private const float SecondsDelayBetweenTasks = 0.1f;
-    private const int MinCountBotsOnBase = 1;
+    private const int MinCountBotsOnBase = 0;
 
-    [SerializeField] private BaseStorage _baseStorage;
+    [SerializeField] private BoxStorage _baseStorage;
     [SerializeField] private FlagPlacer _flagPlacer;
 
+    private Flag _flag;
     private BotKeeper _botKeeper;
-    private BoxKeeper _boxKeeper;
-    private BaseSpawner _baseSpawner;
     private CreatorTasksBringBox _creatorTasksBringBox;
     private CreatorTasksBuildBase _creatorTasksBuildBase;
 
-    private Vector3 _baseSpawnPosition;
-
-    private bool _isBotCreating = true;
+    private bool _isBaseBuild = false;
 
     private void OnDisable()
     {
@@ -29,50 +26,56 @@ public class ManagerTasks : MonoBehaviour
     public void Init(BotKeeper botKeeper, BoxKeeper boxKeeper, BaseSpawner baseSpawner)
     {
         _flagPlacer.FlagPlaced += ToggleBuildStatus;
-
         _botKeeper = botKeeper;
-        _boxKeeper = boxKeeper;
-        _baseSpawner = baseSpawner;
-        _creatorTasksBringBox = new CreatorTasksBringBox(_boxKeeper, transform);
-        _creatorTasksBuildBase = new CreatorTasksBuildBase();
+        _creatorTasksBringBox = new CreatorTasksBringBox(boxKeeper, transform);
+        _creatorTasksBuildBase = new CreatorTasksBuildBase(baseSpawner);
     }
 
-    private void ToggleBuildStatus(Vector3 spawnPostion)
+    private void ToggleBuildStatus(Flag flag)
     {
-        _isBotCreating = false;
-        _baseSpawnPosition = spawnPostion;
+        _isBaseBuild = true;
+        _flag = flag;
     }
 
     public IEnumerator DoTasks()
     {
-        WaitForSeconds delayBetweenTasks = new WaitForSeconds(SecondsDelayBetweenTasks);
+        WaitForSeconds delayBetweenTasks = new(SecondsDelayBetweenTasks);
 
         while (enabled)
         {
-            if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.CreateTask(out ITaskable task))
+            if (_botKeeper.GetFree(out Bot bot))
             {
-                bot.DoJob(task);
-
-                if (_isBotCreating)
+                if (_isBaseBuild)
                 {
-                    if (_baseStorage.GetBoxes(CountBoxesForNewBot))
+                    if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.TryGetBoxes(CountBoxesForNewBase))
+                    {
+                        _creatorTasksBuildBase.CreateTask(out ITaskable buildBase, _flag);
+                        bot.DoJob(buildBase);
+                        _flag = null;
+                        _isBaseBuild = false;
+                    }
+                    else
+                    if (_creatorTasksBringBox.CreateTask(out ITaskable bringBox))
+                    {
+                        bot.DoJob(bringBox);
+
+                        if (_baseStorage.TryGetBoxes(CountBoxesForNewBot))
+                        {
+                            _botKeeper.CreateNewBot();
+                        }
+                    }
+                }
+                else
+                if (_creatorTasksBringBox.CreateTask(out ITaskable bringBox))
+                {
+                    bot.DoJob(bringBox);
+
+                    if (_baseStorage.TryGetBoxes(CountBoxesForNewBot))
                     {
                         _botKeeper.CreateNewBot();
                     }
                 }
-
-                else
-                {
-                    if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.GetBoxes(CountBoxesForNewBase))
-                    {
-                        _creatorTasksBuildBase.CreateTask(_baseSpawner, out ITaskable task2, _baseSpawnPosition);
-                        bot.DoJob(task2);
-                        Debug.Log("отправился строить базу");
-                        _isBotCreating = true;
-                    }
-                }
             }
-
 
             yield return delayBetweenTasks;
         }

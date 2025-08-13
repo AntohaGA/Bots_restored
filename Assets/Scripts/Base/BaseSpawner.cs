@@ -26,7 +26,7 @@ public class BaseSpawner : MonoBehaviour
 
     private void SpawnFirstBase()
     {
-        Vector3 positionFirstBase = new Vector3(0, 0, 0);
+        Vector3 positionFirstBase = new (0, 0, 0);
         SpawnBase(positionFirstBase);
     }
 }

@@ -1,9 +1,14 @@
-using UnityEngine;
-
 public class CreatorTasksBuildBase
 {
-    public void CreateTask(BaseSpawner baseSpawner, out ITaskable task, Vector3 pointSpawn)
+    private BaseSpawner _baseSpawner;
+
+    public CreatorTasksBuildBase(BaseSpawner baseSpawner)
     {
-        task = new BuildBaseTask(baseSpawner, pointSpawn);
+        _baseSpawner = baseSpawner;
+    }
+
+    public void CreateTask(out ITaskable task, Flag flag)
+    {
+        task = new BuildBaseTask(_baseSpawner, flag);
     }
 }

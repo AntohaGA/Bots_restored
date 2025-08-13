@@ -48,6 +48,7 @@ public class Bot : MonoBehaviour
     public IEnumerator LiftBox(Box box)
     {
         _box = box;
+        Debug.Log("LiftBox(Box box) в боте" + _box);
         LookAt();
 
         _animator.PlayLift();
@@ -58,14 +59,6 @@ public class Bot : MonoBehaviour
         LiftedBox?.Invoke(this);
     }
 
-    public void ReleaseBox()
-    {
-        if (_box != null)
-        {
-            _box.Return();
-            MadeFree();
-        }
-    }
     public void DoJob(ITaskable task)
     {
         if (task != null)
@@ -81,11 +74,16 @@ public class Bot : MonoBehaviour
             StartCoroutine(_rotation.SmoothLookAt(_box.transform));
     }
 
-    private void MadeFree()
+    public void MadeFree()
     {
+        if (_box != null)
+        {
+            _box.Return();
+            _box = null;
+        }
+
         _movement.Stop();
         _animator.PlayWait();
-        _box = null;
         SetFree?.Invoke(this);
     }
 }

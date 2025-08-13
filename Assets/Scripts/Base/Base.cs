@@ -3,17 +3,17 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshObstacle))]
 [RequireComponent(typeof(BotKeeper))]
-[RequireComponent(typeof(BaseStorage))]
+[RequireComponent(typeof(BoxStorage))]
 [RequireComponent(typeof(ManagerTasks))]
 [RequireComponent(typeof(BotWithBoxDetector))]
 [RequireComponent(typeof(FlagPlacer))]
 public class Base : MonoBehaviour
 {
-    [SerializeField] BoxKeeper _boxKeeper;
-    [SerializeField] ClickMapDetector _clickMapDetector;
+    private BoxKeeper _boxKeeper;
+    private ClickMapDetector _clickMapDetector;
+    private BaseSpawner _baseSpawner;
 
     private BotKeeper _botKeeper;
-    private BaseSpawner _baseSpawner;
     private ManagerTasks _managerTasks;
     private BotWithBoxDetector _botWithBoxDetector;
     private FlagPlacer _flagPlacer;

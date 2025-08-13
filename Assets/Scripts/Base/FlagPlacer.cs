@@ -11,7 +11,7 @@ public class FlagPlacer : MonoBehaviour
 
     private bool _isReadyPlacingFlag = false;
 
-    public event Action<Vector3> FlagPlaced;
+    public event Action<Flag> FlagPlaced;
 
     private void Awake()
     {
@@ -52,7 +52,7 @@ public class FlagPlacer : MonoBehaviour
             _currentFlag = Instantiate(_flagPrefab, position, Quaternion.identity);
             _isReadyPlacingFlag = false;
 
-            FlagPlaced?.Invoke(position);
+            FlagPlaced?.Invoke(_currentFlag);
         }
     }
 }

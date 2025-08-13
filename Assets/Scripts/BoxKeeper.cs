@@ -5,7 +5,6 @@ using UnityEngine;
 public class BoxKeeper : MonoBehaviour
 {
     private BoxSpawner _spawner;
-
     private List<Box> _boxesOnMap;
 
     private void Awake()

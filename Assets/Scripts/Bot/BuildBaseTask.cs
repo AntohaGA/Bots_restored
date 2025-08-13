@@ -2,22 +2,25 @@ using System.Collections;
 using UnityEngine;
 
 public class BuildBaseTask : ITaskable
-{
-    private Vector3 _pointBuildBase;
+{ 
+    private Flag _flag;
     private BaseSpawner _spawner;
 
-    public BuildBaseTask(BaseSpawner baseSpawner, Vector3 pointBuildBase)
+    public BuildBaseTask(BaseSpawner baseSpawner, Flag flag)
     {
-        _pointBuildBase = pointBuildBase;
+        _flag = flag;
         _spawner = baseSpawner;
     }
 
     public IEnumerator Do(Bot bot)
-    {      
-        yield return bot.GoTo(_pointBuildBase);
+    {
+        Debug.Log("иду строить базу");
 
-        Debug.Log("отправился строить базу корутина");
+        yield return bot.GoTo(_flag.transform.position);
 
-        _spawner.SpawnBase(_pointBuildBase);
+        _spawner.SpawnBase(_flag.transform.position);        
+
+        Debug.Log("освободился после постройки базы");
+        bot.MadeFree();
     }
 }

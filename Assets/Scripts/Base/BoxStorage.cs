@@ -1,10 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(BotWithBoxDetector))]
-public class BaseStorage : MonoBehaviour
+public class BoxStorage : MonoBehaviour
 {
-
-
     private BotWithBoxDetector _botWithBoxDetector;
     private int _countBoxes = 0;
 
@@ -23,9 +21,9 @@ public class BaseStorage : MonoBehaviour
         _botWithBoxDetector.OurBotReceived -= AddBoxOnBase;
     }
 
-    public bool GetBoxes(int count)
+    public bool TryGetBoxes(int count)
     {
-        if(_countBoxes >= count)
+        if (_countBoxes >= count)
         {
             _countBoxes -= count;
 
@@ -37,7 +35,7 @@ public class BaseStorage : MonoBehaviour
 
     private void AddBoxOnBase(Bot bot)
     {
-          bot.ReleaseBox();
-          _countBoxes++;
+        bot.MadeFree();
+        _countBoxes++;
     }
 }
