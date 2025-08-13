@@ -2,9 +2,15 @@ using UnityEngine;
 
 public class BaseSpawner : MonoBehaviour
 {
-    [SerializeField] private Base _basePrefab;
     [SerializeField] private BoxKeeper _boxKeeper;
     [SerializeField] private ClickMapDetector _clickMapDetector;
+
+    private Base _basePrefab;
+    
+    private void Awake()
+    {
+        _basePrefab = Resources.Load<Base>("Prefabs/Basa");   
+    }
 
     private void Start()
     {
