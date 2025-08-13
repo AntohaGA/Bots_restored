@@ -13,14 +13,16 @@ public class Base : MonoBehaviour
     [SerializeField] ClickMapDetector _clickMapDetector;
 
     private BotKeeper _botKeeper;
+    private BaseSpawner _baseSpawner;
     private ManagerTasks _managerTasks;
     private BotWithBoxDetector _botWithBoxDetector;
     private FlagPlacer _flagPlacer;
 
-    public void InitDependencies(BoxKeeper boxKeeper, ClickMapDetector clickMapDetector)
+    public void InitDependencies(BoxKeeper boxKeeper, ClickMapDetector clickMapDetector, BaseSpawner baseSpawner)
     {
         _boxKeeper = boxKeeper;
         _clickMapDetector = clickMapDetector;
+        _baseSpawner = baseSpawner;
     }
 
     public void Initialize()
@@ -30,7 +32,7 @@ public class Base : MonoBehaviour
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
         _botWithBoxDetector.Init(_botKeeper);
         _managerTasks = GetComponent<ManagerTasks>();
-        _managerTasks.Init(_botKeeper, _boxKeeper);
+        _managerTasks.Init(_botKeeper, _boxKeeper, _baseSpawner);
         _flagPlacer = GetComponent<FlagPlacer>();
         _flagPlacer.Init(_clickMapDetector);
 

@@ -159,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _baseStorage: {fileID: 3659791126291752888}
+  _flagPlacer: {fileID: 6265278207344177128}
 --- !u!114 &6759320814465155782
 MonoBehaviour:
   m_ObjectHideFlags: 0

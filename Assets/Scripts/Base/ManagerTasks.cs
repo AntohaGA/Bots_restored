@@ -13,6 +13,7 @@ public class ManagerTasks : MonoBehaviour
 
     private BotKeeper _botKeeper;
     private BoxKeeper _boxKeeper;
+    private BaseSpawner _baseSpawner;
     private CreatorTasksBringBox _creatorTasksBringBox;
     private CreatorTasksBuildBase _creatorTasksBuildBase;
 
@@ -22,20 +23,21 @@ public class ManagerTasks : MonoBehaviour
 
     private void OnDisable()
     {
-        _flagPlacer.FlagPlaced -= ToggleBuildStation;
+        _flagPlacer.FlagPlaced -= ToggleBuildStatus;
     }
 
-    public void Init(BotKeeper botKeeper, BoxKeeper boxKeeper)
+    public void Init(BotKeeper botKeeper, BoxKeeper boxKeeper, BaseSpawner baseSpawner)
     {
-        _flagPlacer.FlagPlaced += ToggleBuildStation;
+        _flagPlacer.FlagPlaced += ToggleBuildStatus;
 
         _botKeeper = botKeeper;
         _boxKeeper = boxKeeper;
+        _baseSpawner = baseSpawner;
         _creatorTasksBringBox = new CreatorTasksBringBox(_boxKeeper, transform);
         _creatorTasksBuildBase = new CreatorTasksBuildBase();
     }
 
-    private void ToggleBuildStation(Vector3 spawnPostion)
+    private void ToggleBuildStatus(Vector3 spawnPostion)
     {
         _isBotCreating = false;
         _baseSpawnPosition = spawnPostion;
@@ -47,27 +49,30 @@ public class ManagerTasks : MonoBehaviour
 
         while (enabled)
         {
-            if (_isBotCreating)
+            if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.CreateTask(out ITaskable task))
             {
-                if (_botKeeper.GetFree(out Bot bot) && _creatorTasksBringBox.CreateTask(out ITaskable _task))
-                {
-                    bot.DoJob(_task);
+                bot.DoJob(task);
 
+                if (_isBotCreating)
+                {
                     if (_baseStorage.GetBoxes(CountBoxesForNewBot))
                     {
                         _botKeeper.CreateNewBot();
                     }
                 }
-            }
 
-            else
-            {
-                if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.GetBoxes(CountBoxesForNewBase))
+                else
                 {
-                    _creatorTasksBuildBase.CreateTask(out ITaskable _task, new Vector3(10, 0, 10));
-                    _isBotCreating = true;
+                    if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.GetBoxes(CountBoxesForNewBase))
+                    {
+                        _creatorTasksBuildBase.CreateTask(_baseSpawner, out ITaskable task2, _baseSpawnPosition);
+                        bot.DoJob(task2);
+                        Debug.Log("отправился строить базу");
+                        _isBotCreating = true;
+                    }
                 }
             }
+
 
             yield return delayBetweenTasks;
         }
