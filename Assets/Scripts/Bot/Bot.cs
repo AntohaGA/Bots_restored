@@ -17,6 +17,7 @@ public class Bot : MonoBehaviour
     public event Action<Bot> StartedWorking;
     public event Action<Bot> LiftedBox;
     public event Action<Bot> SetFree;
+    public event Action<Bot> DropedBase;
 
     private void Awake()
     {
@@ -78,6 +79,11 @@ public class Bot : MonoBehaviour
         _movement.Stop();
         _animator.PlayWait();
         SetFree?.Invoke(this);
+    }
+
+    public void DropBase()
+    {
+        DropedBase?.Invoke(this);
     }
 
     private void LookAt()

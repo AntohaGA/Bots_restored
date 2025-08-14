@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 
 public class BotStateChanger
 {
-    private List<Bot> _freeBots = new();
-    private List<Bot> _busyBots = new();
-    private List<Bot> _withBoxBots = new();
+    public List<Bot> _freeBots = new();
+    public List<Bot> _busyBots = new();
+    public List<Bot> _withBoxBots = new();
 
     public void AddNewBot(Bot bot)
     {
@@ -14,6 +13,11 @@ public class BotStateChanger
 
         _freeBots.Add(bot);
         SubscribeBotEvents(bot);
+    }
+
+    public int GetCountBots()
+    {
+        return _freeBots.Count+ _busyBots.Count + _withBoxBots.Count;
     }
 
     public bool GetFree(out Bot bot)
@@ -45,19 +49,11 @@ public class BotStateChanger
 
     public void Remove(Bot bot)
     {
-        if (_freeBots.Contains(bot))
-        {
-            _freeBots.Remove(bot);
-        }
+        UnsubscribeBot(bot);
 
         if (_busyBots.Contains(bot))
         {
             _withBoxBots.Remove(bot);
-        }
-
-        if (_withBoxBots.Contains(bot))
-        {
-            _busyBots.Remove(bot);
         }
     }
 
@@ -66,6 +62,7 @@ public class BotStateChanger
         bot.StartedWorking += OnBotStartedWorking;
         bot.LiftedBox += OnBotLiftedBox;
         bot.SetFree += OnBotSetFree;
+        bot.DropedBase += Remove;
     }
 
     private void UnsubscribeBot(Bot bot)
@@ -76,6 +73,7 @@ public class BotStateChanger
         bot.StartedWorking -= OnBotStartedWorking;
         bot.LiftedBox -= OnBotLiftedBox;
         bot.SetFree -= OnBotSetFree;
+        bot.DropedBase -= Remove;
     }
 
     private void UnsubscribeAllBots()

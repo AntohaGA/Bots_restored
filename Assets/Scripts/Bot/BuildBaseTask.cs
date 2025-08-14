@@ -1,6 +1,4 @@
 using System.Collections;
-using UnityEngine;
-
 public class BuildBaseTask : ITaskable
 { 
     private Flag _flag;
@@ -14,13 +12,10 @@ public class BuildBaseTask : ITaskable
 
     public IEnumerator Do(Bot bot)
     {
-        Debug.Log("иду строить базу");
+        bot.DropBase();
 
         yield return bot.GoTo(_flag.transform.position);
 
         _spawner.SpawnBase(_flag.transform.position, bot);        
-
-        Debug.Log("освободился после постройки базы");
-        bot.MadeFree();
     }
 }

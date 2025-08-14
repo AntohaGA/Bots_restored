@@ -1,16 +1,22 @@
-using System;
 using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
-    private const int StartCountBots = 0;
+    private const int StartCountBots = 3;
 
     private Vector3 _offsetPositionSpawnBots = new(-5.5f, 1.5f, 10);
 
     private Bot _botPrefab;
     private BotStateChanger _botStateChanger;
 
-    public int CountBots { get; private set; } = 0;
+    public int CountBots => _botStateChanger.GetCountBots();
+
+    private void Update()
+    {
+      /*  Debug.Log("_freeBots - " + _botStateChanger._freeBots.Count);
+        Debug.Log("_busyBots - " + _botStateChanger._busyBots.Count);
+        Debug.Log("_withBoxBots - " + _botStateChanger._withBoxBots.Count);*/
+    }
 
     private void OnDestroy()
     {
@@ -21,11 +27,6 @@ public class BotKeeper : MonoBehaviour
     {
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
         _botStateChanger = new BotStateChanger();
-
-        for (int i = 0; i < StartCountBots; i++)
-        {
-            CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
-        }
     }
 
     public bool GetFree(out Bot bot)
@@ -45,28 +46,23 @@ public class BotKeeper : MonoBehaviour
 
     public void AddNewBot(Bot bot)
     {
-        if(bot == null)
-        {
-            CreateBot(new(0,0,0));
-        }
-        else
+        if (bot != null)
         {
             _botStateChanger.AddNewBot(bot);
         }
-
-         CountBots++;
+        else
+        {
+            for (int i = 0; i < StartCountBots; i++)
+            {
+                CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
+            }
+        }
     }
 
     private void CreateBot(Vector3 spawnPosition)
     {
         var bot = Instantiate(_botPrefab, spawnPosition, Quaternion.identity);
         bot.Init();
-        CountBots++;
         _botStateChanger.AddNewBot(bot);
-    }
-
-    internal void Remove(Bot bot)
-    {
-        _botStateChanger.Remove(bot);
     }
 }
