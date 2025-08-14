@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
-    private const int StartCountBots = 1;
+    private const int StartCountBots = 3;
 
     private Vector3 _offsetPositionSpawnBots = new(-5.5f, 1.5f, 10);
 

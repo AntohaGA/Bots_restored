@@ -49,8 +49,6 @@ public class ManagerTasks : MonoBehaviour
                 {
                     if (_botKeeper.CountBots <= MinCountBotsOnBase)
                     {
-                        Debug.Log("количество ботов на базе" + _botKeeper.CountBots);
-
                         TryCreateBot();
                     }
                     else
@@ -58,7 +56,10 @@ public class ManagerTasks : MonoBehaviour
                         TrySpawnBase(bot);
                     }
 
-                    TryBringBox(bot);
+                    if (_botKeeper.GetFree(out bot))
+                    {
+                        TryBringBox(bot);
+                    }
                 }
                 else
                 {
@@ -66,14 +67,14 @@ public class ManagerTasks : MonoBehaviour
                     TryCreateBot();
                 }
             }
-            Debug.Log("режим - " + _isBaseBuild);
+
             yield return delay;
         }
     }
 
     private bool TrySpawnBase(Bot bot)
     {
-        if (_botKeeper.CountBots <= MinCountBotsOnBase && _baseStorage.TryGetBoxes(CountBoxesForNewBase))
+        if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.TryGetBoxes(CountBoxesForNewBase))
         {
             _creatorTasksBuildBase.CreateTask(out ITaskable buildBase, _flag);
             bot.DoJob(buildBase);
