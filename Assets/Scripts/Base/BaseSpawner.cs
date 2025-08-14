@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BaseSpawner : MonoBehaviour
 {
@@ -9,24 +10,24 @@ public class BaseSpawner : MonoBehaviour
     
     private void Awake()
     {
-        _basePrefab = Resources.Load<Base>("Prefabs/Basa");   
-    }
+        _basePrefab = Resources.Load<Base>("Prefabs/Basa");
 
-    private void Start()
-    {
         SpawnFirstBase();
     }
 
-    public void SpawnBase(Vector3 position)
+    public void SpawnBase(Vector3 position, Bot bot)
     {
         Base baseInstance = Instantiate(_basePrefab, position, Quaternion.identity);
         baseInstance.InitDependencies(_boxKeeper, _clickMapDetector, this);
-        baseInstance.Initialize();
+        baseInstance.Initialize(bot);
     }
 
     private void SpawnFirstBase()
     {
-        Vector3 positionFirstBase = new (0, 0, 0);
-        SpawnBase(positionFirstBase);
+        Bot bot = null;
+
+        Base baseInstance = Instantiate(_basePrefab, new(0, 0, 0), Quaternion.identity);
+        baseInstance.InitDependencies(_boxKeeper, _clickMapDetector, this);
+        baseInstance.Initialize(bot);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 public class BotStateChanger
 {
@@ -40,6 +41,24 @@ public class BotStateChanger
         _freeBots.Clear();
         _busyBots.Clear();
         _withBoxBots.Clear();
+    }
+
+    public void Remove(Bot bot)
+    {
+        if (_freeBots.Contains(bot))
+        {
+            _freeBots.Remove(bot);
+        }
+
+        if (_busyBots.Contains(bot))
+        {
+            _withBoxBots.Remove(bot);
+        }
+
+        if (_withBoxBots.Contains(bot))
+        {
+            _busyBots.Remove(bot);
+        }
     }
 
     private void SubscribeBotEvents(Bot bot)

@@ -53,7 +53,10 @@ public class ManagerTasks : MonoBehaviour
                     }
                     else
                     {
-                        TrySpawnBase(bot);
+                        if (TrySpawnBase(bot))
+                        {
+                            _botKeeper.Remove(bot);
+                        }
                     }
 
                     if (_botKeeper.GetFree(out bot))

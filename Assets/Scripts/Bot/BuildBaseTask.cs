@@ -18,7 +18,7 @@ public class BuildBaseTask : ITaskable
 
         yield return bot.GoTo(_flag.transform.position);
 
-        _spawner.SpawnBase(_flag.transform.position);        
+        _spawner.SpawnBase(_flag.transform.position, bot);        
 
         Debug.Log("освободился после постройки базы");
         bot.MadeFree();

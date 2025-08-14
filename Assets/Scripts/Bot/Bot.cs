@@ -67,12 +67,6 @@ public class Bot : MonoBehaviour
         }
     }
 
-    private void LookAt()
-    {
-        if (_box != null)
-            StartCoroutine(_rotation.SmoothLookAt(_box.transform));
-    }
-
     public void MadeFree()
     {
         if (_box != null)
@@ -84,5 +78,11 @@ public class Bot : MonoBehaviour
         _movement.Stop();
         _animator.PlayWait();
         SetFree?.Invoke(this);
+    }
+
+    private void LookAt()
+    {
+        if (_box != null)
+            StartCoroutine(_rotation.SmoothLookAt(_box.transform));
     }
 }

@@ -25,10 +25,12 @@ public class Base : MonoBehaviour
         _baseSpawner = baseSpawner;
     }
 
-    public void Initialize()
+    public void Initialize(Bot bot)
     {
         _botKeeper = GetComponent<BotKeeper>();
         _botKeeper.Init();
+        _botKeeper.AddNewBot(bot);
+
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
         _botWithBoxDetector.Init(_botKeeper);
         _managerTasks = GetComponent<ManagerTasks>();
