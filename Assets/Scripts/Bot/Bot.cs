@@ -48,7 +48,6 @@ public class Bot : MonoBehaviour
     public IEnumerator LiftBox(Box box)
     {
         _box = box;
-        Debug.Log("LiftBox(Box box) в боте" + _box);
         LookAt();
 
         _animator.PlayLift();

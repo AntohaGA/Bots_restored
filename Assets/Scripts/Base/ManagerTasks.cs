@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ManagerTasks : MonoBehaviour
 {
-    private const int CountBoxesForNewBot = 30;
-    private const int CountBoxesForNewBase = 2;
+    private const int CountBoxesForNewBot = 3;
+    private const int CountBoxesForNewBase = 5;
     private const float SecondsDelayBetweenTasks = 0.1f;
-    private const int MinCountBotsOnBase = 0;
+    private const int MinCountBotsOnBase = 1;
 
     [SerializeField] private BoxStorage _baseStorage;
     [SerializeField] private FlagPlacer _flagPlacer;
@@ -39,7 +39,7 @@ public class ManagerTasks : MonoBehaviour
 
     public IEnumerator DoTasks()
     {
-        WaitForSeconds delayBetweenTasks = new(SecondsDelayBetweenTasks);
+        WaitForSeconds delay = new(SecondsDelayBetweenTasks);
 
         while (enabled)
         {
@@ -47,37 +47,66 @@ public class ManagerTasks : MonoBehaviour
             {
                 if (_isBaseBuild)
                 {
-                    if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.TryGetBoxes(CountBoxesForNewBase))
+                    if (_botKeeper.CountBots <= MinCountBotsOnBase)
                     {
-                        _creatorTasksBuildBase.CreateTask(out ITaskable buildBase, _flag);
-                        bot.DoJob(buildBase);
-                        _flag = null;
-                        _isBaseBuild = false;
+                        Debug.Log("количество ботов на базе" + _botKeeper.CountBots);
+
+                        TryCreateBot();
                     }
                     else
-                    if (_creatorTasksBringBox.CreateTask(out ITaskable bringBox))
                     {
-                        bot.DoJob(bringBox);
-
-                        if (_baseStorage.TryGetBoxes(CountBoxesForNewBot))
-                        {
-                            _botKeeper.CreateNewBot();
-                        }
+                        TrySpawnBase(bot);
                     }
+
+                    TryBringBox(bot);
                 }
                 else
-                if (_creatorTasksBringBox.CreateTask(out ITaskable bringBox))
                 {
-                    bot.DoJob(bringBox);
-
-                    if (_baseStorage.TryGetBoxes(CountBoxesForNewBot))
-                    {
-                        _botKeeper.CreateNewBot();
-                    }
+                    TryBringBox(bot);
+                    TryCreateBot();
                 }
             }
-
-            yield return delayBetweenTasks;
+            Debug.Log("режим - " + _isBaseBuild);
+            yield return delay;
         }
+    }
+
+    private bool TrySpawnBase(Bot bot)
+    {
+        if (_botKeeper.CountBots <= MinCountBotsOnBase && _baseStorage.TryGetBoxes(CountBoxesForNewBase))
+        {
+            _creatorTasksBuildBase.CreateTask(out ITaskable buildBase, _flag);
+            bot.DoJob(buildBase);
+            _flag = null;
+            _isBaseBuild = false;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryBringBox(Bot bot)
+    {
+        if (_creatorTasksBringBox.CreateTask(out ITaskable bringBox))
+        {
+            bot.DoJob(bringBox);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryCreateBot()
+    {
+        if (_baseStorage.TryGetBoxes(CountBoxesForNewBot))
+        {
+            _botKeeper.CreateNewBot();
+
+            return true;
+        }
+
+        return false;
     }
 }

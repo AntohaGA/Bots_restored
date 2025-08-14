@@ -9,7 +9,7 @@ public class BotKeeper : MonoBehaviour
     private Bot _botPrefab;
     private BotStateChanger _botStateChanger;
 
-    public int CountBots { get; private set; } = StartCountBots;
+    public int CountBots { get; private set; } = 0;
 
     private void OnDestroy()
     {
@@ -21,7 +21,7 @@ public class BotKeeper : MonoBehaviour
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
         _botStateChanger = new BotStateChanger();
 
-        for (int i = 0; i < CountBots; i++)
+        for (int i = 0; i < StartCountBots; i++)
         {
             CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
         }
@@ -46,6 +46,7 @@ public class BotKeeper : MonoBehaviour
     {
         var bot = Instantiate(_botPrefab, spawnPosition, Quaternion.identity);
         bot.Init();
+        CountBots++;
         _botStateChanger.AddNewBot(bot);
     }
 }
