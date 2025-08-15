@@ -6,18 +6,12 @@ public class Movement : MonoBehaviour
 {
     private NavMeshAgent _agent;
     private BotAnimator _botAnimator;
-    private bool _hasBox;
 
     public void Init(NavMeshAgent agent, BotAnimator botAnimator)
     {
         _agent = agent;
         _agent.isStopped = true;
         _botAnimator = botAnimator;
-    }
-
-    public void SetHasBox(bool hasBox)
-    {
-        _hasBox = hasBox;
     }
 
     public void Stop()
@@ -27,11 +21,11 @@ public class Movement : MonoBehaviour
         _botAnimator.PlayWait();
     }
 
-    public IEnumerator MoveTo(Vector3 destination)
+    public IEnumerator MoveTo(Vector3 destination, bool HasBox)
     {
         _agent.isStopped = false;
 
-        if (_hasBox)
+        if (HasBox)
             _botAnimator.PlayRunWithBox();
         else
             _botAnimator.PlayRun();

@@ -49,16 +49,17 @@ public class ManagerTasks : MonoBehaviour
                 {
                     if (_botKeeper.CountBots <= MinCountBotsOnBase)
                     {
-                        TryCreateBot();
+                        if (TryCreateBot() == false)
+                        {
+                            TryBringBox(bot);
+                        }
                     }
                     else
                     {
-                        TrySpawnBase(bot);
-                    }
-
-                    if (_botKeeper.GetFree(out bot))
-                    {
-                        TryBringBox(bot);
+                        if (TrySpawnBase(bot) == false)
+                        {
+                            TryBringBox(bot);
+                        }
                     }
                 }
                 else

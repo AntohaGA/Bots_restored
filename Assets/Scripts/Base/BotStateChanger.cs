@@ -47,11 +47,21 @@ public class BotStateChanger
         _withBoxBots.Clear();
     }
 
-    public void Remove(Bot bot)
+    private void RemoveFromBase(Bot bot)
     {
         UnsubscribeBot(bot);
 
+        if (_freeBots.Contains(bot))
+        {
+            _freeBots.Remove(bot);
+        }
+
         if (_busyBots.Contains(bot))
+        {
+            _busyBots.Remove(bot);
+        }
+
+        if (_withBoxBots.Contains(bot))
         {
             _withBoxBots.Remove(bot);
         }
@@ -62,7 +72,7 @@ public class BotStateChanger
         bot.StartedWorking += OnBotStartedWorking;
         bot.LiftedBox += OnBotLiftedBox;
         bot.SetFree += OnBotSetFree;
-        bot.DropedBase += Remove;
+        bot.DropedBase += RemoveFromBase;
     }
 
     private void UnsubscribeBot(Bot bot)
@@ -73,7 +83,7 @@ public class BotStateChanger
         bot.StartedWorking -= OnBotStartedWorking;
         bot.LiftedBox -= OnBotLiftedBox;
         bot.SetFree -= OnBotSetFree;
-        bot.DropedBase -= Remove;
+        bot.DropedBase -= RemoveFromBase;
     }
 
     private void UnsubscribeAllBots()

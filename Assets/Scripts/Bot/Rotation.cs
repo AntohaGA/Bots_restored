@@ -18,7 +18,13 @@ public class Rotation : MonoBehaviour
         _agent = agent;
     }
 
-    public IEnumerator SmoothLookAt(Transform target)
+    public void LookAt(Box box)
+    {
+        if (box != null)
+            StartCoroutine(SmoothLookAt(box.transform));
+    }
+
+    private IEnumerator SmoothLookAt(Transform target)
     {
         PrepareForRotation();
         Quaternion endRot = CalculateTargetRotation(target);

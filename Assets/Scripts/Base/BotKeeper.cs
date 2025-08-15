@@ -11,12 +11,6 @@ public class BotKeeper : MonoBehaviour
 
     public int CountBots => _botStateChanger.GetCountBots();
 
-    private void Update()
-    {
-        Debug.Log("Bots - " + CountBots);
-
-    }
-
     private void OnDestroy()
     {
         _botStateChanger?.Clear();

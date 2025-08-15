@@ -39,14 +39,12 @@ public class Bot : MonoBehaviour
 
     public IEnumerator GoTo(Vector3 destination)
     {
-        _movement.SetHasBox(_boxLifter.WithBox);
-
-        yield return _movement.MoveTo(destination);
+        yield return _movement.MoveTo(destination, _boxLifter.WithBox);
     }
 
     public IEnumerator LiftBox(Box box)
     {
-        LookAt(box);
+        _rotation.LookAt(box);
 
         yield return _boxLifter.Lift(box);
 
@@ -72,11 +70,5 @@ public class Bot : MonoBehaviour
     public void DropBase()
     {
         DropedBase?.Invoke(this);
-    }
-
-    private void LookAt(Box box)
-    {
-        if (box != null)
-            StartCoroutine(_rotation.SmoothLookAt(box.transform));
     }
 }
