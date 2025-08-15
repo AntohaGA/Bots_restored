@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ManagerTasks : MonoBehaviour
+public class QueueTasks : MonoBehaviour
 {
     private const float SecondsDelayBetweenTasks = 0.1f;
     private const int MinCountBotsOnBase = 1;
