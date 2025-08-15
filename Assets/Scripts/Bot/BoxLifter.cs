@@ -17,11 +17,10 @@ public class BoxLifter : MonoBehaviour
     public IEnumerator Lift(Box box)
     {
         _box = box;
-
         _botAnimator.PlayLift();
         yield return new WaitUntil(() => _botAnimator.IsLifting);
 
-        box.Take(_handHolder);
+        _box.Take(_handHolder);
         yield return new WaitUntil(() => _botAnimator.IsLifted);
     }
 
