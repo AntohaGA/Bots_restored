@@ -14,7 +14,7 @@ public class BaseSpawner : MonoBehaviour
         SpawnFirstBase();
     } 
 
-    public void SpawnBase(Vector3 position, Bot bot)
+    public void Spawn(Vector3 position, Bot bot)
     {
         Base baseInstance = Instantiate(_basePrefab, position, Quaternion.identity);
         baseInstance.InitDependencies(_boxKeeper, _clickMapDetector, this);
@@ -24,6 +24,6 @@ public class BaseSpawner : MonoBehaviour
     private void SpawnFirstBase()
     {
         Bot bot = null;
-        SpawnBase(new(0, 0, 0), bot);
+        Spawn(new(0, 0, 0), bot);
     }
 }

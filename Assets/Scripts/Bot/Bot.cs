@@ -67,7 +67,7 @@ public class Bot : MonoBehaviour
         SetFree?.Invoke(this);
     }
 
-    public void DropBase()
+    public void DetachBase()
     {
         DropedBase?.Invoke(this);
     }

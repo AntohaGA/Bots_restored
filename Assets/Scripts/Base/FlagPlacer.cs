@@ -5,9 +5,9 @@ using UnityEngine;
 public class FlagPlacer : MonoBehaviour
 {
     private ClickMapDetector _clickMapDetector;
+    private ClickBaseDetector _clickBaseDetector;
     private Flag _flagPrefab;
     private Flag _currentFlag;
-    private ClickBaseDetector _clickBaseDetector;
 
     private bool _isReadyPlacingFlag = false;
 
@@ -21,7 +21,6 @@ public class FlagPlacer : MonoBehaviour
     public void Init(ClickMapDetector clickMapDetector)
     {
         _flagPrefab = Resources.Load<Flag>("Prefabs/Flag");
-
         _clickMapDetector = clickMapDetector;
         _clickMapDetector.OnMapClicked += PlaceFlag;
     }

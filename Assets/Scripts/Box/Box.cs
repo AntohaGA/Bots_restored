@@ -11,7 +11,7 @@ public class Box : MonoBehaviour
     private NavMeshObstacle _obstacle;
     private Rigidbody _rigidbody;
 
-    public Vector3 SpotForLift => _spotForLift.position;
+    public Vector3 SpotLift => _spotForLift.position;
 
     public event Action<Box> OnDestroy;
 

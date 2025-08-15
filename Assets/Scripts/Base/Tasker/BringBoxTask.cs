@@ -4,18 +4,18 @@ using UnityEngine;
 public class BringBoxTask: ITaskable
 {
     private Box _box;
-    private Vector3 _pointDestination;
+    private Vector3 _destination;
 
-    public BringBoxTask(Box box, Vector3 pointDestination)
+    public BringBoxTask(Box box, Vector3 destination)
     {
         _box = box;
-        _pointDestination = pointDestination;
+        _destination = destination;
     }
 
     public IEnumerator Do(Bot bot)
     {
-        yield return bot.GoTo(_box.SpotForLift);
+        yield return bot.GoTo(_box.SpotLift);
         yield return bot.LiftBox(_box);
-        yield return bot.GoTo(_pointDestination);
+        yield return bot.GoTo(_destination);
     }
 }
