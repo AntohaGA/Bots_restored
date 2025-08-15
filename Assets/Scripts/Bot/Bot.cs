@@ -1,18 +1,20 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(BotAnimator))]
 [RequireComponent(typeof(BoxLifter))]
 [RequireComponent(typeof(Rotation))]
 public class Bot : MonoBehaviour
 {
-    private Box _box;
     private Movement _movement;
-    private BotAnimator _animator;
     private Rotation _rotation;
     private BoxLifter _boxLifter;
+    private NavMeshAgent _agent;
+    private BotAnimator _botAnimator;
 
     public event Action<Bot> StartedWorking;
     public event Action<Bot> LiftedBox;
@@ -21,40 +23,32 @@ public class Bot : MonoBehaviour
 
     private void Awake()
     {
-        _animator = GetComponent<BotAnimator>();
+        _botAnimator = GetComponent<BotAnimator>();
         _movement = GetComponent<Movement>();
         _rotation = GetComponent<Rotation>();
         _boxLifter = GetComponent<BoxLifter>();
+        _agent = GetComponent<NavMeshAgent>();
     }
 
     public void Init()
     {
-        MadeFree();
+        _rotation.Init(_agent);
+        _movement.Init(_agent, _botAnimator);
+        _boxLifter.Init(_botAnimator);
     }
 
     public IEnumerator GoTo(Vector3 destination)
     {
-        if (_box == null)
-        {
-            _animator.PlayRun();
-        }
-        else
-        {
-            _animator.PlayRunWithBox();
-        }
+        _movement.SetHasBox(_boxLifter.WithBox);
 
         yield return _movement.MoveTo(destination);
     }
 
     public IEnumerator LiftBox(Box box)
     {
-        _box = box;
-        LookAt();
+        LookAt(box);
 
-        _animator.PlayLift();
-        yield return new WaitUntil(() => _animator.IsLifting);
-        _boxLifter.Lift(_box);
-        yield return new WaitUntil(() => _animator.IsLifted);
+        yield return _boxLifter.Lift(box);
 
         LiftedBox?.Invoke(this);
     }
@@ -70,14 +64,8 @@ public class Bot : MonoBehaviour
 
     public void MadeFree()
     {
-        if (_box != null)
-        {
-            _box.Return();
-            _box = null;
-        }
-
+        _boxLifter.DropBox();
         _movement.Stop();
-        _animator.PlayWait();
         SetFree?.Invoke(this);
     }
 
@@ -86,9 +74,9 @@ public class Bot : MonoBehaviour
         DropedBase?.Invoke(this);
     }
 
-    private void LookAt()
+    private void LookAt(Box box)
     {
-        if (_box != null)
-            StartCoroutine(_rotation.SmoothLookAt(_box.transform));
+        if (box != null)
+            StartCoroutine(_rotation.SmoothLookAt(box.transform));
     }
 }

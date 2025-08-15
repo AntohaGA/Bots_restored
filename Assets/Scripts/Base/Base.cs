@@ -28,8 +28,7 @@ public class Base : MonoBehaviour
     public void Initialize(Bot bot)
     {
         _botKeeper = GetComponent<BotKeeper>();
-        _botKeeper.Init();
-        _botKeeper.AddNewBot(bot);
+        _botKeeper.Init(bot);
 
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
         _botWithBoxDetector.Init(_botKeeper);

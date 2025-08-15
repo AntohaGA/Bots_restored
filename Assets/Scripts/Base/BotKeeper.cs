@@ -13,9 +13,8 @@ public class BotKeeper : MonoBehaviour
 
     private void Update()
     {
-      /*  Debug.Log("_freeBots - " + _botStateChanger._freeBots.Count);
-        Debug.Log("_busyBots - " + _botStateChanger._busyBots.Count);
-        Debug.Log("_withBoxBots - " + _botStateChanger._withBoxBots.Count);*/
+        Debug.Log("Bots - " + CountBots);
+
     }
 
     private void OnDestroy()
@@ -23,10 +22,22 @@ public class BotKeeper : MonoBehaviour
         _botStateChanger?.Clear();
     }
 
-    public void Init()
+    public void Init(Bot bot)
     {
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
         _botStateChanger = new BotStateChanger();
+
+        if (bot != null)
+        {
+            _botStateChanger.AddNewBot(bot);
+        }
+        else
+        {
+            for (int i = 0; i < StartCountBots; i++)
+            {
+                CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
+            }
+        }
     }
 
     public bool GetFree(out Bot bot)
@@ -42,21 +53,6 @@ public class BotKeeper : MonoBehaviour
     public void CreateNewBot()
     {
         CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
-    }
-
-    public void AddNewBot(Bot bot)
-    {
-        if (bot != null)
-        {
-            _botStateChanger.AddNewBot(bot);
-        }
-        else
-        {
-            for (int i = 0; i < StartCountBots; i++)
-            {
-                CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
-            }
-        }
     }
 
     private void CreateBot(Vector3 spawnPosition)

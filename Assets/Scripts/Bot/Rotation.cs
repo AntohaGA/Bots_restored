@@ -10,8 +10,12 @@ public class Rotation : MonoBehaviour
 
     private void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
         _transform = GetComponent<Transform>();
+    }
+
+    public void Init(NavMeshAgent agent)
+    {
+        _agent = agent;
     }
 
     public IEnumerator SmoothLookAt(Transform target)

@@ -27,22 +27,6 @@ public class Box : MonoBehaviour
         transform.SetPositionAndRotation(position, Quaternion.identity);
     }
 
-    public void SetRigidBodyKinematic(bool isKinematic)
-    {
-        if (_rigidbody != null)
-        {
-            _rigidbody.isKinematic = isKinematic;
-        }
-    }
-
-    public void SetNavMeshObstacle(bool isEnabled)
-    {
-        if (_obstacle != null)
-        {
-            _obstacle.enabled = isEnabled;
-        }
-    }
-
     public void Take(Transform taker)
     {
         SetRigidBodyKinematic(true);
@@ -56,5 +40,21 @@ public class Box : MonoBehaviour
         transform.SetParent(null);
         SetRigidBodyKinematic(false);
         OnDestroy?.Invoke(this);
+    }
+
+    private void SetRigidBodyKinematic(bool isKinematic)
+    {
+        if (_rigidbody != null)
+        {
+            _rigidbody.isKinematic = isKinematic;
+        }
+    }
+
+    private void SetNavMeshObstacle(bool isEnabled)
+    {
+        if (_obstacle != null)
+        {
+            _obstacle.enabled = isEnabled;
+        }
     }
 }

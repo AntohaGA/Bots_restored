@@ -26,7 +26,6 @@ public class BoxKeeper : MonoBehaviour
     public Box GetClosest(Vector3 center)
     {
         Box box = null;
-
         float minDistance = float.MaxValue;
 
         if (_boxesOnMap.Count == 0)
