@@ -17,6 +17,7 @@ public class Base : MonoBehaviour
     private ManagerTasks _managerTasks;
     private BotWithBoxDetector _botWithBoxDetector;
     private FlagPlacer _flagPlacer;
+    private BoxStorage _boxStorage;
 
     public void InitDependencies(BoxKeeper boxKeeper, ClickMapDetector clickMapDetector, BaseSpawner baseSpawner)
     {
@@ -27,8 +28,9 @@ public class Base : MonoBehaviour
 
     public void Initialize(Bot bot)
     {
+        _boxStorage = GetComponent<BoxStorage>();
         _botKeeper = GetComponent<BotKeeper>();
-        _botKeeper.Init(bot);
+        _botKeeper.Init(bot, _boxStorage);
 
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
         _botWithBoxDetector.Init(_botKeeper);

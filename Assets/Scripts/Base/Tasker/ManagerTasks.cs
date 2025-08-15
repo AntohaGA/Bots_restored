@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ManagerTasks : MonoBehaviour
 {
-    private const int CountBoxesForNewBot = 3;
-    private const int CountBoxesForNewBase = 5;
     private const float SecondsDelayBetweenTasks = 0.1f;
     private const int MinCountBotsOnBase = 1;
 
@@ -28,7 +26,7 @@ public class ManagerTasks : MonoBehaviour
         _flagPlacer.FlagPlaced += ToggleBuildStatus;
         _botKeeper = botKeeper;
         _creatorTasksBringBox = new CreatorTasksBringBox(boxKeeper, transform);
-        _creatorTasksBuildBase = new CreatorTasksBuildBase(baseSpawner);
+        _creatorTasksBuildBase = new CreatorTasksBuildBase(baseSpawner, _baseStorage);
     }
 
     private void ToggleBuildStatus(Flag flag)
@@ -49,24 +47,19 @@ public class ManagerTasks : MonoBehaviour
                 {
                     if (_botKeeper.CountBots <= MinCountBotsOnBase)
                     {
-                        if (TryCreateBot() == false)
-                        {
-                            TryBringBox(bot);
-                        }
+                        TryCreateBot();
                     }
                     else
                     {
-                        if (TrySpawnBase(bot) == false)
-                        {
-                            TryBringBox(bot);
-                        }
-                    }
+                        TrySpawnBase(bot);
+                    }                  
                 }
                 else
                 {
-                    TryBringBox(bot);
                     TryCreateBot();
                 }
+
+                TryBringBox(bot);
             }
 
             yield return delay;
@@ -75,9 +68,8 @@ public class ManagerTasks : MonoBehaviour
 
     private bool TrySpawnBase(Bot bot)
     {
-        if (_botKeeper.CountBots > MinCountBotsOnBase && _baseStorage.TryGetBoxes(CountBoxesForNewBase))
+        if (_creatorTasksBuildBase.TryCreateTask(out ITaskable buildBase, _flag))
         {
-            _creatorTasksBuildBase.CreateTask(out ITaskable buildBase, _flag);
             bot.DoJob(buildBase);
             _flag = null;
             _isBaseBuild = false;
@@ -102,10 +94,8 @@ public class ManagerTasks : MonoBehaviour
 
     private bool TryCreateBot()
     {
-        if (_baseStorage.TryGetBoxes(CountBoxesForNewBot))
+        if (_botKeeper.TryCreateNewBot())
         {
-            _botKeeper.CreateNewBot();
-
             return true;
         }
 
