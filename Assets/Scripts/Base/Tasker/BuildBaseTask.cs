@@ -1,4 +1,5 @@
 using System.Collections;
+
 public class BuildBaseTask : ITaskable
 { 
     private Flag _flag;
@@ -16,6 +17,6 @@ public class BuildBaseTask : ITaskable
 
         yield return bot.GoTo(_flag.transform.position);
 
-        _baseSpawner.Spawn(_flag.transform.position, bot);        
+        _baseSpawner.Spawn(_flag.transform.position, bot);
     }
 }

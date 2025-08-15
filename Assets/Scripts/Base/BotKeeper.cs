@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
-    private const int FirstBaseCountBots = 1;
+    private const int CountBotsOnFirstBase = 4;
     private const int BotPrice = 3;
 
     private Vector3 _offsetPositionSpawnBots = new(-5.5f, 1.5f, 10);
@@ -30,7 +30,7 @@ public class BotKeeper : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < FirstBaseCountBots; i++)
+            for (int i = 0; i < CountBotsOnFirstBase; i++)
             {
                 CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
             }

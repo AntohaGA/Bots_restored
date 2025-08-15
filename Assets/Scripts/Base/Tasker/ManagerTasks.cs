@@ -52,14 +52,17 @@ public class ManagerTasks : MonoBehaviour
                     else
                     {
                         TrySpawnBase(bot);
-                    }                  
+                    }
                 }
                 else
                 {
                     TryCreateBot();
                 }
 
-                TryBringBox(bot);
+                if (_botKeeper.GetFree(out bot))
+                {
+                    TryBringBox(bot);
+                }
             }
 
             yield return delay;
