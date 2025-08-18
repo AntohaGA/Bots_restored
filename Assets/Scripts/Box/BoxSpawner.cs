@@ -14,7 +14,7 @@ public class BoxSpawner : MonoBehaviour
     private Box _prefabBox;
 
     private int _maxAttempts = 10;
-    private float _checkRadius = 1f;
+    private float _checkRadius = 1.4f;
 
     private readonly Collider[] _overlapResults = new Collider[CountCollideOverlap];
 

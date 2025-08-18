@@ -5,7 +5,7 @@ public class Map : MonoBehaviour
 {
     private Renderer _renderer;
     private float _borderThickness = 2;
-    private float _ySpawnPosition = 1.3f;
+    private float _ySpawnPosition = 1.5f;
 
     public Vector2 MinBounds { get; private set; }
     public Vector2 MaxBounds { get; private set; }

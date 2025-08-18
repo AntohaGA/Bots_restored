@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(MouseInputHandler))]
 public class FlagPlacer : MonoBehaviour
 {
-     private MouseInputHandler _mouseInputHandler;
+    private MouseInputHandler _mouseInputHandler;
     private Flag _flagPrefab;
     private Flag _currentFlag;
     private Base _selectedBase;
