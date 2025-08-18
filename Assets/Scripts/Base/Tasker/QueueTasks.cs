@@ -14,7 +14,7 @@ public class QueueTasks : MonoBehaviour
     private CreatorTasksBringBox _creatorTasksBringBox;
     private CreatorTasksBuildBase _creatorTasksBuildBase;
 
-    private bool _isBaseBuild = false;
+    public bool IsBaseBuild { get; private set; } = false;
 
     private void OnDisable()
     {
@@ -31,7 +31,7 @@ public class QueueTasks : MonoBehaviour
 
     private void ToggleBuildStatus(Flag flag)
     {
-        _isBaseBuild = true;
+        IsBaseBuild = true;
         _flag = flag;
     }
 
@@ -41,7 +41,7 @@ public class QueueTasks : MonoBehaviour
 
         while (enabled)
         {
-            if (_isBaseBuild)
+            if (IsBaseBuild)
             {
                 if (_botKeeper.CountBots <= MinCountBotsOnBase)
                 {
@@ -82,7 +82,7 @@ public class QueueTasks : MonoBehaviour
             _botKeeper.RemoveBot(bot);
             bot.DoJob(buildBase);
             _flag = null;
-            _isBaseBuild = false;
+            IsBaseBuild = false;
 
             return true;
         }

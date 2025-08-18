@@ -16,11 +16,11 @@ public class Base : MonoBehaviour
     private BotWithBoxDetector _botWithBoxDetector;
     private BoxStorage _boxStorage;
 
-    public Flag FlagBase { get; internal set; }
+    public Flag FlagBase { get; internal set; } 
 
     private void OnDisable()
     {
-        Unsubscribe();
+        _botWithBoxDetector.BotReceived -= OnBotReceived;
     }
 
     public void InitDependencies(BoxKeeper boxKeeper, BaseSpawner baseSpawner)
@@ -34,11 +34,9 @@ public class Base : MonoBehaviour
         _boxStorage = GetComponent<BoxStorage>();
         _botKeeper = GetComponent<BotKeeper>();
         _botKeeper.Init(bot, _boxStorage);
-
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
         _managerTasks = GetComponent<QueueTasks>();
         _managerTasks.Init(_botKeeper, _boxKeeper, _baseSpawner);
-
         Subscribe();
 
         StartCoroutine(_managerTasks.DoTasks());
@@ -47,11 +45,6 @@ public class Base : MonoBehaviour
     private void Subscribe()
     {
         _botWithBoxDetector.BotReceived += OnBotReceived;
-    }
-
-    private void Unsubscribe()
-    {
-        _botWithBoxDetector.BotReceived -= OnBotReceived;
     }
 
     private void OnBotReceived(Bot bot)

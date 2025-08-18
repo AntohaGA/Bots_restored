@@ -5,19 +5,17 @@ public class FlagPlacer : MonoBehaviour
 {
     private Flag _flagPrefab;
     private Flag _currentFlag;
-
-    [SerializeField] private LayerMask _baseLayerMask;
-    [SerializeField] private LayerMask _groundLayerMask;
-
-    private bool _isReadyPlacingFlag = false;
-
-    public event Action<Flag> FlagPlaced;
-
     private Base _selectedBase;
     private Transform _flagTransform;
     private Camera _camera;
+    private Vector3 _targetFlagPosition;
 
-    public void Init()
+    private float _flagMoveSpeed = 50f;
+    private bool _isMovingFlag = false;
+
+    public event Action<Flag> FlagPlaced;
+
+    private void Awake()
     {
         _flagPrefab = Resources.Load<Flag>("Prefabs/Flag");
         _camera = Camera.main;
@@ -27,46 +25,69 @@ public class FlagPlacer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+            HandleClick();
+        }
 
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _baseLayerMask))
+        if (_isMovingFlag && _flagTransform != null)
+        {
+            MoveFlag();
+        }
+    }
+
+    private void HandleClick()
+    {
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        {
+            Base baseHit = hit.collider.GetComponentInParent<Base>();
+
+            if (baseHit != null)
             {
-                Base baseHit = hit.collider.GetComponentInParent<Base>();
+                _selectedBase = baseHit;
 
-                if (baseHit != null)
+                if(_selectedBase.FlagBase == null)
                 {
-                    _selectedBase = baseHit;
-                    _flagTransform = _selectedBase.FlagBase.transform;// сделать событие с передачей флага с координатами
-                    Debug.Log("База выбрана: " + _selectedBase.name);
+                    _currentFlag = Instantiate(_flagPrefab, hit.transform.position, Quaternion.identity); //моя строчка
+                    _selectedBase.FlagBase = _currentFlag;
                 }
-            }
-            else
 
-            if (_selectedBase != null && Physics.Raycast(ray, out hit, Mathf.Infinity, _groundLayerMask))
+                _flagTransform = _selectedBase.FlagBase.transform;
+                _isMovingFlag = true;
+            }
+        }
+
+        if (_isMovingFlag && Physics.Raycast(ray, out hit, 100f))
+        {
+            Map map = hit.collider.GetComponentInParent<Map>();
+
+            if (map != null)
             {
-                _flagTransform.position = hit.point;
-                Debug.Log("Флаг установлен в позиции: " + hit.point);
+                _targetFlagPosition = hit.point;
+                _flagTransform.position = _targetFlagPosition;
+                _isMovingFlag = false;
                 _selectedBase = null;
                 _flagTransform = null;
             }
         }
     }
-    private void ToggleFlagPlacement()
-    {
-        _isReadyPlacingFlag = !(_isReadyPlacingFlag);
-    }
 
-    private void PlaceFlag(Vector3 position)
+    private void MoveFlag()
     {
-        if (_isReadyPlacingFlag)
+        if (_flagTransform == null)
+            return;
+
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
-            if (_currentFlag != null)
-                Destroy(_currentFlag.gameObject);
+            Map map = hit.collider.GetComponentInParent<Map>();
 
-            _currentFlag = Instantiate(_flagPrefab, position, Quaternion.identity);
-            _isReadyPlacingFlag = false;
-
-            FlagPlaced?.Invoke(_currentFlag);
+            if (map != null)
+            {
+                _targetFlagPosition = hit.point;
+                _flagTransform.position = Vector3.MoveTowards(_flagTransform.position, _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
+            }
         }
     }
 }

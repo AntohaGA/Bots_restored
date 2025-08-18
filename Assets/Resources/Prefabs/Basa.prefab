@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3659791126291752888}
   - component: {fileID: 5634668061061129308}
   - component: {fileID: 7140074543206533492}
-  - component: {fileID: 6759320814465155782}
   - component: {fileID: 6265278207344177128}
   - component: {fileID: 7183511250486180376}
   - component: {fileID: 3215369850361106135}
@@ -108,8 +107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9357c92d5d456c4cb748f7865212cfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _boxKeeper: {fileID: 0}
-  _clickMapDetector: {fileID: 0}
 --- !u!114 &9000764415155789385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,18 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _baseStorage: {fileID: 3659791126291752888}
   _flagPlacer: {fileID: 6265278207344177128}
---- !u!114 &6759320814465155782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3294069233453343403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aae38acc13ead9d459f16a9d4e452048, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6265278207344177128
 MonoBehaviour:
   m_ObjectHideFlags: 0
