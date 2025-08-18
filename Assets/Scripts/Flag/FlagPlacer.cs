@@ -1,8 +1,9 @@
-using System;
 using UnityEngine;
 
 public class FlagPlacer : MonoBehaviour
 {
+    private const float MaxDistanceCast = 100f;
+
     private Flag _flagPrefab;
     private Flag _currentFlag;
     private Base _selectedBase;
@@ -12,8 +13,6 @@ public class FlagPlacer : MonoBehaviour
 
     private float _flagMoveSpeed = 50f;
     private bool _isMovingFlag = false;
-
-    public event Action<Flag> FlagPlaced;
 
     private void Awake()
     {
@@ -38,7 +37,7 @@ public class FlagPlacer : MonoBehaviour
     {
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistanceCast))
         {
             Base baseHit = hit.collider.GetComponentInParent<Base>();
 
@@ -48,7 +47,7 @@ public class FlagPlacer : MonoBehaviour
 
                 if(_selectedBase.FlagBase == null)
                 {
-                    _currentFlag = Instantiate(_flagPrefab, hit.transform.position, Quaternion.identity); //моя строчка
+                    _currentFlag = Instantiate(_flagPrefab, hit.transform.position, Quaternion.identity);
                     _selectedBase.FlagBase = _currentFlag;
                 }
 
@@ -57,7 +56,7 @@ public class FlagPlacer : MonoBehaviour
             }
         }
 
-        if (_isMovingFlag && Physics.Raycast(ray, out hit, 100f))
+        if (_isMovingFlag && Physics.Raycast(ray, out hit, MaxDistanceCast))
         {
             Map map = hit.collider.GetComponentInParent<Map>();
 
@@ -66,6 +65,7 @@ public class FlagPlacer : MonoBehaviour
                 _targetFlagPosition = hit.point;
                 _flagTransform.position = _targetFlagPosition;
                 _isMovingFlag = false;
+                _selectedBase.ToggleBuildStatus();
                 _selectedBase = null;
                 _flagTransform = null;
             }
@@ -79,14 +79,15 @@ public class FlagPlacer : MonoBehaviour
 
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistanceCast))
         {
             Map map = hit.collider.GetComponentInParent<Map>();
 
             if (map != null)
             {
                 _targetFlagPosition = hit.point;
-                _flagTransform.position = Vector3.MoveTowards(_flagTransform.position, _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
+                _flagTransform.position = Vector3.MoveTowards(_flagTransform.position,
+                                                                _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
             }
         }
     }

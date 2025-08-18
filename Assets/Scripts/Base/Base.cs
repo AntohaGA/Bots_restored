@@ -42,6 +42,11 @@ public class Base : MonoBehaviour
         StartCoroutine(_managerTasks.DoTasks());
     }
 
+    public void ToggleBuildStatus()
+    {
+        _managerTasks.ToggleBuildStatus(FlagBase);
+    }
+
     private void Subscribe()
     {
         _botWithBoxDetector.BotReceived += OnBotReceived;

@@ -16,20 +16,14 @@ public class QueueTasks : MonoBehaviour
 
     public bool IsBaseBuild { get; private set; } = false;
 
-    private void OnDisable()
-    {
-        _flagPlacer.FlagPlaced -= ToggleBuildStatus;
-    }
-
     public void Init(BotKeeper botKeeper, BoxKeeper boxKeeper, BaseSpawner baseSpawner)
     {
-        _flagPlacer.FlagPlaced += ToggleBuildStatus;
         _botKeeper = botKeeper;
         _creatorTasksBringBox = new CreatorTasksBringBox(boxKeeper, transform);
         _creatorTasksBuildBase = new CreatorTasksBuildBase(baseSpawner, _baseStorage);
     }
 
-    private void ToggleBuildStatus(Flag flag)
+    public void ToggleBuildStatus(Flag flag)
     {
         IsBaseBuild = true;
         _flag = flag;
