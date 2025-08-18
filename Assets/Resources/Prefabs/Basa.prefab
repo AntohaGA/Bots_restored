@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 7183511250486180376}
   - component: {fileID: 3215369850361106135}
   - component: {fileID: 1114288066497204651}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Basa
   m_TagString: Untagged
   m_Icon: {fileID: 0}

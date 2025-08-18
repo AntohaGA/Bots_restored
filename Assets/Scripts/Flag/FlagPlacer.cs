@@ -1,14 +1,13 @@
 using UnityEngine;
 
+[RequireComponent(typeof(MouseInputHandler))]
 public class FlagPlacer : MonoBehaviour
 {
-    private const float MaxDistanceCast = 100f;
-
+     private MouseInputHandler _mouseInputHandler;
     private Flag _flagPrefab;
     private Flag _currentFlag;
     private Base _selectedBase;
     private Transform _flagTransform;
-    private Camera _camera;
     private Vector3 _targetFlagPosition;
 
     private float _flagMoveSpeed = 100f;
@@ -17,12 +16,12 @@ public class FlagPlacer : MonoBehaviour
     private void Awake()
     {
         _flagPrefab = Resources.Load<Flag>("Prefabs/Flag");
-        _camera = Camera.main;
+        _mouseInputHandler = GetComponent<MouseInputHandler>();
     }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (_mouseInputHandler.IsLeftClickDown())
         {
             HandleClick();
         }
@@ -35,9 +34,7 @@ public class FlagPlacer : MonoBehaviour
 
     private void HandleClick()
     {
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistanceCast))
+        if (_mouseInputHandler.TryRaycast(out RaycastHit hit))
         {
             if (_isMovingFlag)
             {
@@ -95,9 +92,7 @@ public class FlagPlacer : MonoBehaviour
         if (_flagTransform == null)
             return;
 
-        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out RaycastHit hit, MaxDistanceCast))
+        if (_mouseInputHandler.TryRaycast(out RaycastHit hit))
         {
             Map map = hit.collider.GetComponentInParent<Map>();
 
@@ -105,7 +100,7 @@ public class FlagPlacer : MonoBehaviour
             {
                 _targetFlagPosition = hit.point;
                 _flagTransform.position = Vector3.MoveTowards(_flagTransform.position,
-                                                                _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
+                                                                            _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
             }
         }
     }
