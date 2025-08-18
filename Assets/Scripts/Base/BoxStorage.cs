@@ -3,23 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(BotWithBoxDetector))]
 public class BoxStorage : MonoBehaviour
 {
-    private BotWithBoxDetector _botWithBoxDetector;
     private int _countBoxes = 0;
-
-    private void Awake()
-    {
-        _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
-    }
-
-    private void OnEnable()
-    {
-        _botWithBoxDetector.OurBotReceived += AddBoxOnBase;
-    }
-
-    private void OnDisable()
-    {
-        _botWithBoxDetector.OurBotReceived -= AddBoxOnBase;
-    }
 
     public bool TryGetBoxes(int count)
     {
@@ -33,9 +17,8 @@ public class BoxStorage : MonoBehaviour
         return false;
     }
 
-    private void AddBoxOnBase(Bot bot)
+    public void AddBoxOnBase()
     {
-        bot.MadeFree();
         _countBoxes++;
     }
 }

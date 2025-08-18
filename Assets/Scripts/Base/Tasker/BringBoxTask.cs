@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BringBoxTask: ITaskable
+public class BringBoxTask: ITask
 {
     private Box _box;
     private Vector3 _destination;

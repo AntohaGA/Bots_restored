@@ -34,7 +34,7 @@ public class BoxLifter : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Попытка сбросить коробку, но _box равен null");
+            Debug.Log("Попытка сбросить коробку, но _box равен null");
         }
     }
 }

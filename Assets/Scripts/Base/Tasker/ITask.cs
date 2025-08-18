@@ -1,6 +1,6 @@
 using System.Collections;
 
-public interface ITaskable
+public interface ITask
 {
     public IEnumerator Do(Bot bot);
 }

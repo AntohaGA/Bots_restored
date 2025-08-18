@@ -3,10 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class BotAnimator : MonoBehaviour
 {
-    private const string RunTrigger = "run";
-    private const string WaitTrigger = "wait";
-    private const string LiftTrigger = "lift";
-    private const string RunWithBoxTrigger = "runWithBox";
+    private static readonly int RunTrigger = Animator.StringToHash("run");
+    private static readonly int WaitTrigger = Animator.StringToHash("wait");
+    private static readonly int LiftTrigger = Animator.StringToHash("lift");
+    private static readonly int RunWithBoxTrigger = Animator.StringToHash("runWithBox");
 
     private Animator _animator;
 

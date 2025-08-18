@@ -4,7 +4,6 @@ public class BotStateChanger
 {
     public List<Bot> _freeBots = new();
     public List<Bot> _busyBots = new();
-    public List<Bot> _withBoxBots = new();
 
     public void AddNewBot(Bot bot)
     {
@@ -12,21 +11,22 @@ public class BotStateChanger
             return;
 
         _freeBots.Add(bot);
-        SubscribeBotEvents(bot);
     }
 
     public int GetCountBots()
     {
-        return _freeBots.Count+ _busyBots.Count + _withBoxBots.Count;
+        return _freeBots.Count + _busyBots.Count;
     }
 
-    public bool GetFree(out Bot bot)
+    public bool TakeFreeBot(out Bot bot)
     {
         bot = null;
 
         if (_freeBots.Count > 0)
         {
             bot = _freeBots[0];
+            _freeBots.RemoveAt(0);
+            _busyBots.Add(bot);
 
             return true;
         }
@@ -34,23 +34,14 @@ public class BotStateChanger
         return false;
     }
 
-    public bool IsBotWithBox(Bot bot)
-    {
-        return (bot != null) && (_withBoxBots.Contains(bot));
-    }
-
     public void Clear()
     {
-        UnsubscribeAllBots();
         _freeBots.Clear();
         _busyBots.Clear();
-        _withBoxBots.Clear();
     }
 
-    private void RemoveFromBase(Bot bot)
+    public void RemoveFromBase(Bot bot)
     {
-        UnsubscribeBot(bot);
-
         if (_freeBots.Contains(bot))
         {
             _freeBots.Remove(bot);
@@ -60,65 +51,18 @@ public class BotStateChanger
         {
             _busyBots.Remove(bot);
         }
-
-        if (_withBoxBots.Contains(bot))
-        {
-            _withBoxBots.Remove(bot);
-        }
     }
 
-    private void SubscribeBotEvents(Bot bot)
-    {
-        bot.StartedWorking += OnBotStartedWorking;
-        bot.LiftedBox += OnBotLiftedBox;
-        bot.SetFree += OnBotSetFree;
-        bot.DropedBase += RemoveFromBase;
-    }
-
-    private void UnsubscribeBot(Bot bot)
-    {
-        if (bot == null)
-            return;
-
-        bot.StartedWorking -= OnBotStartedWorking;
-        bot.LiftedBox -= OnBotLiftedBox;
-        bot.SetFree -= OnBotSetFree;
-        bot.DropedBase -= RemoveFromBase;
-    }
-
-    private void UnsubscribeAllBots()
-    {
-        foreach (var bot in _freeBots)
-            UnsubscribeBot(bot);
-
-        foreach (var bot in _busyBots)
-            UnsubscribeBot(bot);
-
-        foreach (var bot in _withBoxBots)
-            UnsubscribeBot(bot);
-    }
-
-    private void OnBotStartedWorking(Bot bot)
-    {
-        _freeBots.Remove(bot);
-
-        if (_busyBots.Contains(bot) == false)
-            _busyBots.Add(bot);
-    }
-
-    private void OnBotLiftedBox(Bot bot)
-    {
-        _busyBots.Remove(bot);
-
-        if (_withBoxBots.Contains(bot) == false)
-            _withBoxBots.Add(bot);
-    }
-
-    private void OnBotSetFree(Bot bot)
+    public void BotSetFree(Bot bot)
     {
         if (_freeBots.Contains(bot) == false)
             _freeBots.Add(bot);
 
-        _withBoxBots.Remove(bot);
+        _busyBots.Remove(bot);
+    }
+
+    public bool CheckBot(Bot bot)
+    {
+        return _busyBots.Contains(bot);
     }
 }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class BotKeeper : MonoBehaviour
 {
-    private const int CountBotsOnFirstBase = 4;
     private const int BotPrice = 3;
 
     private Vector3 _offsetPositionSpawnBots = new(-5.5f, 1.5f, 10);
@@ -23,28 +22,17 @@ public class BotKeeper : MonoBehaviour
         _botPrefab = Resources.Load<Bot>("Prefabs/Bot");
         _botStateChanger = new BotStateChanger();
         _boxStorage = boxStorage;
-
-        if (bot != null)
-        {
-            _botStateChanger.AddNewBot(bot);
-        }
-        else
-        {
-            for (int i = 0; i < CountBotsOnFirstBase; i++)
-            {
-                CreateBot(transform.TransformPoint(_offsetPositionSpawnBots));
-            }
-        }
+        _botStateChanger.AddNewBot(bot);
     }
 
     public bool GetFree(out Bot bot)
     {
-        return _botStateChanger.GetFree(out bot);
+        return _botStateChanger.TakeFreeBot(out bot);
     }
 
-    public bool IsBotWithBox(Bot bot)
+    public void SetFree(Bot bot)
     {
-        return _botStateChanger.IsBotWithBox(bot);
+        _botStateChanger.BotSetFree(bot);
     }
 
     public bool TryCreateNewBot()
@@ -57,6 +45,16 @@ public class BotKeeper : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void RemoveBot(Bot bot)
+    {
+        _botStateChanger.RemoveFromBase(bot);
+    }
+
+    public bool IsOurBot(Bot bot)
+    {
+        return _botStateChanger.CheckBot(bot);
     }
 
     private void CreateBot(Vector3 spawnPosition)

@@ -11,7 +11,7 @@ public class CreatorTasksBuildBase
         _boxStorage = boxStorage;
     }
 
-    public bool TryCreateTask(out ITaskable task, Flag flag)
+    public bool TryCreateTask(out ITask task, Flag flag)
     {
         if (_boxStorage.TryGetBoxes(_basePrice))
         {

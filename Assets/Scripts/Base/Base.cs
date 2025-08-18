@@ -6,23 +6,26 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BoxStorage))]
 [RequireComponent(typeof(QueueTasks))]
 [RequireComponent(typeof(BotWithBoxDetector))]
-[RequireComponent(typeof(FlagPlacer))]
 public class Base : MonoBehaviour
 {
     private BoxKeeper _boxKeeper;
-    private ClickMapDetector _clickMapDetector;
     private BaseSpawner _baseSpawner;
 
     private BotKeeper _botKeeper;
     private QueueTasks _managerTasks;
     private BotWithBoxDetector _botWithBoxDetector;
-    private FlagPlacer _flagPlacer;
     private BoxStorage _boxStorage;
 
-    public void InitDependencies(BoxKeeper boxKeeper, ClickMapDetector clickMapDetector, BaseSpawner baseSpawner)
+    public Flag FlagBase { get; internal set; }
+
+    private void OnDisable()
+    {
+        Unsubscribe();
+    }
+
+    public void InitDependencies(BoxKeeper boxKeeper, BaseSpawner baseSpawner)
     {
         _boxKeeper = boxKeeper;
-        _clickMapDetector = clickMapDetector;
         _baseSpawner = baseSpawner;
     }
 
@@ -33,12 +36,31 @@ public class Base : MonoBehaviour
         _botKeeper.Init(bot, _boxStorage);
 
         _botWithBoxDetector = GetComponent<BotWithBoxDetector>();
-        _botWithBoxDetector.Init(_botKeeper);
         _managerTasks = GetComponent<QueueTasks>();
         _managerTasks.Init(_botKeeper, _boxKeeper, _baseSpawner);
-        _flagPlacer = GetComponent<FlagPlacer>();
-        _flagPlacer.Init(_clickMapDetector);
+
+        Subscribe();
 
         StartCoroutine(_managerTasks.DoTasks());
+    }
+
+    private void Subscribe()
+    {
+        _botWithBoxDetector.BotReceived += OnBotReceived;
+    }
+
+    private void Unsubscribe()
+    {
+        _botWithBoxDetector.BotReceived -= OnBotReceived;
+    }
+
+    private void OnBotReceived(Bot bot)
+    {
+        if (_botKeeper.IsOurBot(bot))
+        {
+            _botKeeper.SetFree(bot);
+            bot.MadeFree();
+            _boxStorage.AddBoxOnBase();
+        }
     }
 }

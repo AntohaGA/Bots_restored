@@ -3,20 +3,13 @@ using UnityEngine;
 
 public class BotWithBoxDetector : MonoBehaviour
 {
-    private BotKeeper _botKeeper;
-
-    public event Action<Bot> OurBotReceived;
-
-    public void Init(BotKeeper botKeeper)
-    {
-        _botKeeper = botKeeper;
-    }
+    public event Action<Bot> BotReceived;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Bot bot) && _botKeeper.IsBotWithBox(bot) )
+        if (other.TryGetComponent(out Bot bot) && bot.WithBox)
         {
-            OurBotReceived?.Invoke(bot);          
+            BotReceived?.Invoke(bot);
         }
     }
 }

@@ -41,27 +41,33 @@ public class QueueTasks : MonoBehaviour
 
         while (enabled)
         {
-            if (_botKeeper.GetFree(out Bot bot))
+            if (_isBaseBuild)
             {
-                if (_isBaseBuild)
-                {
-                    if (_botKeeper.CountBots <= MinCountBotsOnBase)
-                    {
-                        TryCreateBot();
-                    }
-                    else
-                    {
-                        TrySpawnBase(bot);
-                    }
-                }
-                else
+                if (_botKeeper.CountBots <= MinCountBotsOnBase)
                 {
                     TryCreateBot();
                 }
-
-                if (_botKeeper.GetFree(out bot))
+                else
                 {
-                    TryBringBox(bot);
+                    if (_botKeeper.GetFree(out Bot builder))
+                    {
+                        if (TrySpawnBase(builder) == false)
+                        {
+                            _botKeeper.SetFree(builder);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                TryCreateBot();
+            }
+
+            if (_botKeeper.GetFree(out Bot carrier))
+            {
+                if (TryBringBox(carrier) == false)
+                {
+                    _botKeeper.SetFree(carrier);
                 }
             }
 
@@ -71,8 +77,9 @@ public class QueueTasks : MonoBehaviour
 
     private bool TrySpawnBase(Bot bot)
     {
-        if (_creatorTasksBuildBase.TryCreateTask(out ITaskable buildBase, _flag))
+        if (_creatorTasksBuildBase.TryCreateTask(out ITask buildBase, _flag))
         {
+            _botKeeper.RemoveBot(bot);
             bot.DoJob(buildBase);
             _flag = null;
             _isBaseBuild = false;
@@ -85,7 +92,7 @@ public class QueueTasks : MonoBehaviour
 
     private bool TryBringBox(Bot bot)
     {
-        if (_creatorTasksBringBox.CreateTask(out ITaskable bringBox))
+        if (_creatorTasksBringBox.CreateTask(out ITask bringBox))
         {
             bot.DoJob(bringBox);
 

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -16,10 +15,7 @@ public class Bot : MonoBehaviour
     private NavMeshAgent _agent;
     private BotAnimator _botAnimator;
 
-    public event Action<Bot> StartedWorking;
-    public event Action<Bot> LiftedBox;
-    public event Action<Bot> SetFree;
-    public event Action<Bot> DropedBase;
+    public bool WithBox => _boxLifter.WithBox;
 
     private void Awake()
     {
@@ -47,15 +43,12 @@ public class Bot : MonoBehaviour
         _rotation.LookAt(box);
 
         yield return _boxLifter.Lift(box);
-
-        LiftedBox?.Invoke(this);
     }
 
-    public void DoJob(ITaskable task)
+    public void DoJob(ITask task)
     {
         if (task != null)
         {
-            StartedWorking?.Invoke(this);
             StartCoroutine(task.Do(this));
         }
     }
@@ -64,11 +57,5 @@ public class Bot : MonoBehaviour
     {
         _boxLifter.DropBox();
         _movement.Stop();
-        SetFree?.Invoke(this);
-    }
-
-    public void DetachBase()
-    {
-        DropedBase?.Invoke(this);
     }
 }

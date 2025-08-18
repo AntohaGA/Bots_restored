@@ -12,7 +12,7 @@ public class CreatorTasksBringBox
         _pointDestination = basa.TransformPoint(_pointOffsetDestination);
     }
 
-    public bool CreateTask(out ITaskable task)
+    public bool CreateTask(out ITask task)
     {
         Box box = _boxKeeper.GetClosest(_pointDestination);
 
