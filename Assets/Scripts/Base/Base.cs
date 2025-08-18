@@ -54,7 +54,7 @@ public class Base : MonoBehaviour
 
     private void OnBotReceived(Bot bot)
     {
-        if (_botKeeper.IsOurBot(bot))
+        if (_botKeeper.IsOurBusyBot(bot))
         {
             _botKeeper.SetFree(bot);
             bot.MadeFree();

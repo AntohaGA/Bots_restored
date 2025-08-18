@@ -61,7 +61,7 @@ public class BotStateChanger
         _busyBots.Remove(bot);
     }
 
-    public bool CheckBot(Bot bot)
+    public bool CheckBusyBot(Bot bot)
     {
         return _busyBots.Contains(bot);
     }

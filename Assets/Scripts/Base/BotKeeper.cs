@@ -52,9 +52,9 @@ public class BotKeeper : MonoBehaviour
         _botStateChanger.RemoveFromBase(bot);
     }
 
-    public bool IsOurBot(Bot bot)
+    public bool IsOurBusyBot(Bot bot)
     {
-        return _botStateChanger.CheckBot(bot);
+        return _botStateChanger.CheckBusyBot(bot);
     }
 
     private void CreateBot(Vector3 spawnPosition)

@@ -11,7 +11,7 @@ public class FlagPlacer : MonoBehaviour
     private Camera _camera;
     private Vector3 _targetFlagPosition;
 
-    private float _flagMoveSpeed = 50f;
+    private float _flagMoveSpeed = 100f;
     private bool _isMovingFlag = false;
 
     private void Awake()
@@ -39,37 +39,55 @@ public class FlagPlacer : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, MaxDistanceCast))
         {
-            Base baseHit = hit.collider.GetComponentInParent<Base>();
-
-            if (baseHit != null)
+            if (_isMovingFlag)
             {
-                _selectedBase = baseHit;
-
-                if(_selectedBase.FlagBase == null)
-                {
-                    _currentFlag = Instantiate(_flagPrefab, hit.transform.position, Quaternion.identity);
-                    _selectedBase.FlagBase = _currentFlag;
-                }
-
-                _flagTransform = _selectedBase.FlagBase.transform;
-                _isMovingFlag = true;
+                TryPlaceFlagOnMap(hit);
+            }
+            else
+            {
+                TrySelectBase(hit);
             }
         }
+    }
 
-        if (_isMovingFlag && Physics.Raycast(ray, out hit, MaxDistanceCast))
+    private void TryPlaceFlagOnMap(RaycastHit hit)
+    {
+        Map map = hit.collider.GetComponentInParent<Map>();
+
+        if (map != null)
         {
-            Map map = hit.collider.GetComponentInParent<Map>();
-
-            if (map != null)
-            {
-                _targetFlagPosition = hit.point;
-                _flagTransform.position = _targetFlagPosition;
-                _isMovingFlag = false;
-                _selectedBase.ToggleBuildStatus();
-                _selectedBase = null;
-                _flagTransform = null;
-            }
+            _targetFlagPosition = hit.point;
+            _flagTransform.position = _targetFlagPosition;
+            _isMovingFlag = false;
+            _selectedBase.ToggleBuildStatus();
+            ResetSelection();
         }
+    }
+
+    private void TrySelectBase(RaycastHit hit)
+    {
+        Base baseHit = hit.collider.GetComponentInParent<Base>();
+
+        if (baseHit != null)
+        {
+            _selectedBase = baseHit;
+
+            if (_selectedBase.FlagBase == null)
+            {
+                _currentFlag = Instantiate(_flagPrefab, hit.point, Quaternion.identity);
+                _selectedBase.FlagBase = _currentFlag;
+            }
+
+            _flagTransform = _selectedBase.FlagBase.transform;
+            _isMovingFlag = true;
+        }
+    }
+
+    private void ResetSelection()
+    {
+        _selectedBase = null;
+        _flagTransform = null;
+        _currentFlag = null;
     }
 
     private void MoveFlag()
