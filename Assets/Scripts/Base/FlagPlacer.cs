@@ -5,22 +5,42 @@ public class FlagPlacer : MonoBehaviour
 {
     private Flag _flagPrefab;
     private Flag _flag;
+    private Transform _flagTransform;
+    private Vector3 _targetFlagPosition;
+
+    private float _flagMoveSpeed = 100f;
 
     public event Action<Flag> FlagPlased;
+
+    public bool IsMovingFlag { get; set; } = false;
 
     private void Awake()
     {
         _flagPrefab = Resources.Load<Flag>("Prefabs/Flag");
         _flag = Instantiate(_flagPrefab, transform.position, Quaternion.identity);
+        _flagTransform = _flag.transform;
     }
 
-    public Transform GetFlagTransform()
+    public void MoveFlag(Vector3 targetPosition)
     {
-        return _flag.transform;
+        _targetFlagPosition = targetPosition;
+        _flagTransform.position = Vector3.MoveTowards(_flagTransform.position, _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
     }
 
-    public void ReturnFlag()
+    public bool TryPlaceFlagOnMap(RaycastHit hit)
     {
-        FlagPlased(_flag);
+        Map map = hit.collider.GetComponentInParent<Map>();
+
+        if (map != null)
+        {
+            _targetFlagPosition = hit.point;
+            _flagTransform.position = _targetFlagPosition;
+            IsMovingFlag = false;
+            FlagPlased?.Invoke(_flag);
+
+            return true;
+        }
+
+        return false;
     }
 }

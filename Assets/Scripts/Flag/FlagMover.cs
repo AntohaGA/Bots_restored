@@ -4,12 +4,7 @@ using UnityEngine;
 public class FlagMover : MonoBehaviour
 {
     private MouseInputHandler _mouseInputHandler;
-    private Base _selectedBase;
-    private Transform _flagTransform;
-    private Vector3 _targetFlagPosition;
-
-    private float _flagMoveSpeed = 100f;
-    private bool _isMovingFlag = false;
+    private FlagPlacer _flagPlacer;
 
     private void Awake()
     {
@@ -23,9 +18,17 @@ public class FlagMover : MonoBehaviour
             HandleClick();
         }
 
-        if (_isMovingFlag && _flagTransform != null)
+        if (_flagPlacer != null && _flagPlacer.IsMovingFlag)
         {
-            MoveFlag();
+            if (_mouseInputHandler.TryRaycast(out RaycastHit hit))
+            {
+                Map map = hit.collider.GetComponentInParent<Map>();
+
+                if (map != null)
+                {
+                    _flagPlacer.MoveFlag(hit.point);
+                }
+            }
         }
     }
 
@@ -33,28 +36,17 @@ public class FlagMover : MonoBehaviour
     {
         if (_mouseInputHandler.TryRaycast(out RaycastHit hit))
         {
-            if (_isMovingFlag)
+            if (_flagPlacer != null && _flagPlacer.IsMovingFlag)
             {
-                TryPlaceFlagOnMap(hit);
+                if (_flagPlacer.TryPlaceFlagOnMap(hit))
+                {
+                    _flagPlacer = null;
+                }
             }
             else
             {
                 TrySelectBase(hit);
             }
-        }
-    }
-
-    private void TryPlaceFlagOnMap(RaycastHit hit)
-    {
-        Map map = hit.collider.GetComponentInParent<Map>();
-
-        if (map != null)
-        {
-            _targetFlagPosition = hit.point;
-            _flagTransform.position = _targetFlagPosition;
-            _isMovingFlag = false;
-            _selectedBase.FlagPlacer.ReturnFlag();
-            ResetSelection();
         }
     }
 
@@ -64,33 +56,8 @@ public class FlagMover : MonoBehaviour
 
         if (baseHit != null)
         {
-            _selectedBase = baseHit;
-            _flagTransform = _selectedBase.FlagPlacer.GetFlagTransform();
-            _isMovingFlag = true;
-        }
-    }
-
-    private void ResetSelection()
-    {
-        _selectedBase = null;
-        _flagTransform = null;
-    }
-
-    private void MoveFlag()
-    {
-        if (_flagTransform == null)
-            return;
-
-        if (_mouseInputHandler.TryRaycast(out RaycastHit hit))
-        {
-            Map map = hit.collider.GetComponentInParent<Map>();
-
-            if (map != null)
-            {
-                _targetFlagPosition = hit.point;
-                _flagTransform.position = Vector3.MoveTowards(_flagTransform.position,
-                                                                            _targetFlagPosition, _flagMoveSpeed * Time.deltaTime);
-            }
+            _flagPlacer = baseHit.FlagPlacer;
+            _flagPlacer.IsMovingFlag = true;
         }
     }
 }
