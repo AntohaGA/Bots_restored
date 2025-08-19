@@ -1,11 +1,9 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MouseInputHandler))]
-public class FlagPlacer : MonoBehaviour
+public class FlagMover : MonoBehaviour
 {
     private MouseInputHandler _mouseInputHandler;
-    private Flag _flagPrefab;
-    private Flag _currentFlag;
     private Base _selectedBase;
     private Transform _flagTransform;
     private Vector3 _targetFlagPosition;
@@ -15,7 +13,6 @@ public class FlagPlacer : MonoBehaviour
 
     private void Awake()
     {
-        _flagPrefab = Resources.Load<Flag>("Prefabs/Flag");
         _mouseInputHandler = GetComponent<MouseInputHandler>();
     }
 
@@ -56,7 +53,7 @@ public class FlagPlacer : MonoBehaviour
             _targetFlagPosition = hit.point;
             _flagTransform.position = _targetFlagPosition;
             _isMovingFlag = false;
-            _selectedBase.ToggleBuildStatus();
+            _selectedBase.FlagPlacer.ReturnFlag();
             ResetSelection();
         }
     }
@@ -68,14 +65,7 @@ public class FlagPlacer : MonoBehaviour
         if (baseHit != null)
         {
             _selectedBase = baseHit;
-
-            if (_selectedBase.FlagBase == null)
-            {
-                _currentFlag = Instantiate(_flagPrefab, hit.point, Quaternion.identity);
-                _selectedBase.FlagBase = _currentFlag;
-            }
-
-            _flagTransform = _selectedBase.FlagBase.transform;
+            _flagTransform = _selectedBase.FlagPlacer.GetFlagTransform();
             _isMovingFlag = true;
         }
     }
@@ -84,7 +74,6 @@ public class FlagPlacer : MonoBehaviour
     {
         _selectedBase = null;
         _flagTransform = null;
-        _currentFlag = null;
     }
 
     private void MoveFlag()

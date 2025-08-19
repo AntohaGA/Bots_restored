@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(BoxStorage))]
 [RequireComponent(typeof(QueueTasks))]
 [RequireComponent(typeof(BotWithBoxDetector))]
+[RequireComponent(typeof(FlagPlacer))]
 public class Base : MonoBehaviour
 {
     private BoxKeeper _boxKeeper;
@@ -16,11 +17,12 @@ public class Base : MonoBehaviour
     private BotWithBoxDetector _botWithBoxDetector;
     private BoxStorage _boxStorage;
 
-    public Flag FlagBase { get; internal set; } 
+    public FlagPlacer FlagPlacer { get; private set; }
 
     private void OnDisable()
     {
         _botWithBoxDetector.BotReceived -= OnBotReceived;
+        FlagPlacer.FlagPlased -= ToggleBuildStatus;
     }
 
     public void InitDependencies(BoxKeeper boxKeeper, BaseSpawner baseSpawner)
@@ -31,6 +33,7 @@ public class Base : MonoBehaviour
 
     public void Initialize(Bot bot)
     {
+        FlagPlacer = GetComponent<FlagPlacer>();
         _boxStorage = GetComponent<BoxStorage>();
         _botKeeper = GetComponent<BotKeeper>();
         _botKeeper.Init(bot, _boxStorage);
@@ -42,14 +45,15 @@ public class Base : MonoBehaviour
         StartCoroutine(_managerTasks.DoTasks());
     }
 
-    public void ToggleBuildStatus()
-    {
-        _managerTasks.ToggleBuildStatus(FlagBase);
-    }
-
     private void Subscribe()
     {
         _botWithBoxDetector.BotReceived += OnBotReceived;
+        FlagPlacer.FlagPlased += ToggleBuildStatus;
+    }
+
+    private void ToggleBuildStatus(Flag flag)
+    {
+        _managerTasks.ToggleBuildStatus(flag);
     }
 
     private void OnBotReceived(Bot bot)
